@@ -9,6 +9,6 @@ import scrapy
 
 
 class TutorialItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+    key = scrapy.Field()
+    value = scrapy.Field()
+

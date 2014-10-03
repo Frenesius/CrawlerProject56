@@ -5,11 +5,9 @@ Created on 30 Sep 2014
 '''
 import scrapy
 
-class GraphicsCard:
+class GraphicsCard(scrapy.Item):
 
-    name = scrapy.Field();
-    url = scrapy.Field();
-    videochip = scrapy.Field();
-    memory = scrapy.Field(); 
+    key = scrapy.Field();
+    value = scrapy.Field();
 
 
