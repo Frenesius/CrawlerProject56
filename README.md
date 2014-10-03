@@ -1,4 +1,10 @@
 CrawlerProject56
 ================
 
-Py crawler pc parts/specs
+
+Dependencies
+================
++Python 2.7
++scrapy
+
+
