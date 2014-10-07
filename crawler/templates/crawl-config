@@ -1,5 +1,5 @@
 [DEFAULT]
-xpathkey = //*[@id='tab:specificaties']/table/tr[]/td[]/text()
+xpathkey = //*[@id='tab:specificaties']/table/tr[%s]/td[]/text()
 xpathvalue = //*[@id='tab:specificaties']/table/tr[]/td[]/text()
 crawl = 1
 
