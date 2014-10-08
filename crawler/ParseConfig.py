@@ -6,13 +6,10 @@ class ParseConfig:
     xpathvalue = None
     crawl = None
     crawlList = 0
-
+    config = ConfigParser.ConfigParser()
+    file = "../crawler/crawl-conf/GPU.conf" #7
     try:
-        config = ConfigParser.ConfigParser()
-        file = "../crawler/crawl-conf/GPU.conf" #7
         config.read(file)
-
-
         xpathkey = config.get('DEFAULT', 'xpathkey')
         xpathvalue = config.get('DEFAULT', 'xpathvalue')
         crawl = config.get('DEFAULT', 'crawl')
