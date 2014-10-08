@@ -9,8 +9,9 @@ class ParseConfig:
 
     try:
         config = ConfigParser.ConfigParser()
-        file = "crawl-conf/GPU.conf" #7
+        file = "../crawler/crawl-conf/GPU.conf" #7
         config.read(file)
+
 
         xpathkey = config.get('DEFAULT', 'xpathkey')
         xpathvalue = config.get('DEFAULT', 'xpathvalue')
@@ -21,7 +22,7 @@ class ParseConfig:
     def getConfig(self):
         config = ConfigParser.ConfigParser()
         try:
-            file = "crawl-conf/GPU.conf" #7
+            file = "../crawl-conf/GPU.conf" #7
             config.read(file)
         except:
             print "Something went wrong while reading the file: " + file
@@ -32,9 +33,12 @@ class ParseConfig:
         pass
 
     def sumSection(self):
-        conf = ConfigParser.ConfigParser()
-        file = "crawl-conf/GPU.conf"
-        conf.read(file)
+        try:
+            conf = ConfigParser.ConfigParser()
+            file = "../crawl-conf/GPU.conf"
+            conf.read(file)
+        except:
+            "sumSection Wrong"
 
         sumCrawl = 0
         for x in range(1,100):
@@ -46,18 +50,19 @@ class ParseConfig:
         return sumCrawl
 
     def getCrawlList(self):
-        conf = ConfigParser.ConfigParser()
-        file = "crawl-conf/GPU.conf"
-        conf.read(file)
-
-        crawlList = []
+        try:
+            conf = ConfigParser.ConfigParser()
+            file = "crawler/crawl-conf/GPU.conf"
+            conf.read(file)
+        except:
+            "CrawlList wrong"
+        listCrawl = []
         for x in range(1,100):
             a = "ROW"+str(x)
             if conf.has_section(a):
                 crawl = conf.get(a, 'crawl')
                 if crawl == "1":
-                    crawlList.append(x)
-        return crawlList
-
+                    listCrawl.append(x)
+        return listCrawl
 p = ParseConfig()
-print p.getCrawlList()
+p.getCrawlList()
