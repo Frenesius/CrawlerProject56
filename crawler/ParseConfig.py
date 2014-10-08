@@ -21,9 +21,9 @@ class ParseConfig:
         pass
 
     def sumSection(self):
-
-
-        conf = ParseConfig.config.read(file)
+        conf = ConfigParser.ConfigParser()
+        file = "crawler/crawl-conf/GPU.conf"
+        conf.read(file)
 
         sumCrawl = 0
         for x in range(1,100):
@@ -49,5 +49,3 @@ class ParseConfig:
                 if crawl == "1":
                     listCrawl.append(x)
         return listCrawl
-p = ParseConfig()
-p.getCrawlList()
