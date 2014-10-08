@@ -9,7 +9,7 @@ class ParseConfig:
 
     try:
         config = ConfigParser.ConfigParser()
-        file = "crawl-conf/GPU.conf" #TODO fix exception
+        file = "crawl-conf/GPU.conf" #7
         config.read(file)
 
         xpathkey = config.get('DEFAULT', 'xpathkey')
@@ -21,7 +21,7 @@ class ParseConfig:
     def getConfig(self):
         config = ConfigParser.ConfigParser()
         try:
-            file = "crawl-conf/GPU.conf" #TODO fix exception
+            file = "crawl-conf/GPU.conf" #7
             config.read(file)
         except:
             print "Something went wrong while reading the file: " + file
@@ -45,7 +45,19 @@ class ParseConfig:
                     sumCrawl += 1
         return sumCrawl
 
+    def getCrawlList(self):
+        conf = ConfigParser.ConfigParser()
+        file = "crawl-conf/GPU.conf"
+        conf.read(file)
+
+        crawlList = []
+        for x in range(1,100):
+            a = "ROW"+str(x)
+            if conf.has_section(a):
+                crawl = conf.get(a, 'crawl')
+                if crawl == "1":
+                    crawlList.append(x)
+        return crawlList
 
 p = ParseConfig()
-
-print p.sumSection()
+print p.getCrawlList()
