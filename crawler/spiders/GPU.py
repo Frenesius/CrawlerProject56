@@ -10,11 +10,11 @@ class GPU(scrapy.Spider):
 
     def parse(self, response):
         p = ParseConfig.ParseConfig()
-        listCrawl = p.getCrawlList()
+        listCrawl = p.getCrawlList("crawler/crawl-conf/GPU.conf")
         print "SECTIONS FOUND: " + str(p.sumSection())
         for x in listCrawl:
 
-            key = response.xpath(p.getKeyxPath(x) % x).extract()
-            value= response.xpath(p.getValuexPath(x) % x ).extract()
-            print key, value
+            key = response.xpath(p.getKeyxPath(x, "crawler/crawl-conf/GPU.conf") % x).extract()
+            value= response.xpath(p.getValuexPath(x, "crawler/crawl-conf/GPU.conf") % x ).extract()
+            print "ROW",x, key, value
 

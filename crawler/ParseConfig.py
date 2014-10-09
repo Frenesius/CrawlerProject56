@@ -34,10 +34,10 @@ class ParseConfig:
                     sumCrawl += 1
         return sumCrawl
 
-    def getCrawlList(self):
+    def getCrawlList(self, filePath):
         try:
             conf = ConfigParser.ConfigParser()
-            file = "crawler/crawl-conf/GPU.conf"
+            file = filePath
             conf.read(file)
         except:
             "CrawlList wrong"
@@ -49,9 +49,9 @@ class ParseConfig:
                 if crawl == "1":
                     listCrawl.append(x)
         return listCrawl
-    def getValuexPath(self, int):
+    def getValuexPath(self, int, filePath):
         conf = ConfigParser.ConfigParser()
-        file = "crawler/crawl-conf/GPU.conf"
+        file = filePath
         conf.read(file)
 
         if conf.has_option("ROW"+str(int), "xpathvalue"):
@@ -60,9 +60,9 @@ class ParseConfig:
             customPath = conf.get("DEFAULT", "xpathvalue")
         return customPath
 
-    def getKeyxPath(self, int):
+    def getKeyxPath(self, int, filePath):
         conf = ConfigParser.ConfigParser()
-        file = "crawler/crawl-conf/GPU.conf"
+        file = filePath
         conf.read(file)
 
         if conf.has_option("ROW"+str(int), "xpathkey"):
