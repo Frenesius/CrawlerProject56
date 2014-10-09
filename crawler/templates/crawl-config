@@ -1,4 +1,4 @@
-#   Config file for the [COMP PART] Crawler
+#   Config file for the GPU Crawler
 #
 #   DEFAULT section has all the defaults, if you want specific
 #   Crawler works with key:value pairs
@@ -10,24 +10,24 @@
 #   You can define a custom xpath for every row and change the crawl
 
 [DEFAULT]
-xpathkey = //*[@id='tab:specificaties']/table/tr[%s]/td[]/text()
-xpathvalue = //*[@id='tab:specificaties']/table/tr[]/td[]/text()
+xpathkey = //*[@id='tab:specificaties']/table/tr[%s]/td[1]/text()
+xpathvalue = //*[@id='tab:specificaties']/table/tr[%s]/td[2]/text()
 crawl = 1
+id = 255%s
 
 [ROW1]
+id = 1
 crawl = 0
 
 [ROW2]
 crawl = 0
 
 [ROW3]
-
+xpathvalue = //*[@id="tab:specificaties"]/table/tr[%s]/td[2]/a/text()
 [ROW4]
-
-
+xpathvalue = //*[@id="tab:specificaties"]/table/tr[%s]/td[2]/a/text()
 [ROW5]
-
-
+xpathvalue = //*[@id="tab:specificaties"]/table/tr[%s]/td[2]/a/text()
 [ROW6]
 crawl = 0
 
@@ -41,8 +41,6 @@ crawl = 0
 crawl = 0
 
 [ROW10]
-
-
 [ROW11]
 crawl = 0
 
@@ -50,47 +48,23 @@ crawl = 0
 crawl = 0
 
 [ROW13]
-
-
 [ROW14]
-
-
 [ROW15]
-crawl = 0
-
 [ROW16]
-crawl = 0
-
 [ROW17]
-crawl = 0
-
 [ROW18]
-crawl = 0
-
 [ROW19]
 crawl = 0
 
 [ROW20]
-crawl = 0
-
 [ROW21]
-crawl = 0
-
 [ROW22]
-crawl = 0
-
 [ROW23]
-crawl = 0
-
 [ROW24]
 crawl = 0
 
 [ROW25]
-crawl = 0
-
 [ROW26]
-crawl = 0
-
 [ROW27]
 crawl = 0
 
@@ -98,47 +72,24 @@ crawl = 0
 crawl = 0
 
 [ROW29]
-crawl = 0
-
 [ROW30]
-crawl = 0
-
 [ROW31]
-crawl = 0
-
 [ROW32]
-crawl = 0
 
 [ROW33]
 crawl = 0
 
 [ROW34]
-crawl = 0
-
 [ROW35]
-crawl = 0
-
 [ROW36]
-crawl = 0
-
 [ROW37]
-crawl = 0
-
 [ROW38]
 crawl = 0
 
 [ROW39]
-crawl = 0
-
 [ROW40]
-crawl = 0
-
 [ROW41]
-crawl = 0
-
 [ROW42]
-crawl = 0
-
 [ROW43]
 crawl = 0
 
@@ -152,11 +103,7 @@ crawl = 0
 crawl = 0
 
 [ROW47]
-crawl = 0
-
 [ROW48]
-crawl = 0
-
 [ROW49]
 crawl = 0
 
@@ -177,6 +124,20 @@ crawl = 0
 
 [ROW55]
 crawl = 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
