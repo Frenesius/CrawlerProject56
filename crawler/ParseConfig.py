@@ -7,7 +7,7 @@ class ParseConfig:
     crawl = None
     crawlList = 0
     config = ConfigParser.ConfigParser()
-    file = "../crawler/crawl-conf/GPU.conf" #7
+    file = "crawler/crawl-conf/GPU.conf" #7
 
     try:
         config.read(file)
@@ -21,9 +21,8 @@ class ParseConfig:
         pass
 
     def sumSection(self):
-        conf = ConfigParser.ConfigParser()
-        file = "crawler/crawl-conf/GPU.conf"
-        conf.read(file)
+        conf = self.config
+        conf.read(self.file)
 
         sumCrawl = 0
         for x in range(1,100):

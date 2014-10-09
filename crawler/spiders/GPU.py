@@ -18,8 +18,6 @@ class GPU(scrapy.Spider):
     else:
         print("ERROR: key does not exist in dictonairy")
 
-
-
     def parse(self, response):
         print "PARSING #####################################"
         p = ParseConfig.ParseConfig()
@@ -31,3 +29,9 @@ class GPU(scrapy.Spider):
             value= response.xpath(p.getValuexPath(x, self.path) % x ).extract()
             print "ROW",x, key, value
         print "DONE PARSING #####################################"
+
+
+
+
+
+

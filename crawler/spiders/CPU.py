@@ -1,4 +1,4 @@
-'''
+
 import scrapy
 
 from crawler import ParseConfig
@@ -28,4 +28,3 @@ class CPU(scrapy.Spider):
             key = response.xpath(p.getKeyxPath(x, self.path) % x).extract()
             value= response.xpath(p.getValuexPath(x, self.path) % x ).extract()
             print "ROW",x, key, value
-'''
