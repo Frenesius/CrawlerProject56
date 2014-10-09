@@ -49,3 +49,24 @@ class ParseConfig:
                 if crawl == "1":
                     listCrawl.append(x)
         return listCrawl
+    def getValuexPath(self, int):
+        conf = ConfigParser.ConfigParser()
+        file = "crawler/crawl-conf/GPU.conf"
+        conf.read(file)
+
+        if conf.has_option("ROW"+str(int), "xpathvalue"):
+            customPath = conf.get("ROW"+str(int), "xpathvalue")
+        else:
+            customPath = conf.get("DEFAULT", "xpathvalue")
+        return customPath
+
+    def getKeyxPath(self, int):
+        conf = ConfigParser.ConfigParser()
+        file = "crawler/crawl-conf/GPU.conf"
+        conf.read(file)
+
+        if conf.has_option("ROW"+str(int), "xpathkey"):
+            customPath = conf.get("ROW"+str(int), "xpathkey")
+        else:
+            customPath = conf.get("DEFAULT", "xpathkey")
+        return customPath

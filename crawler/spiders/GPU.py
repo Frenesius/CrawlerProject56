@@ -11,10 +11,10 @@ class GPU(scrapy.Spider):
     def parse(self, response):
         p = ParseConfig.ParseConfig()
         listCrawl = p.getCrawlList()
-
-        print "SECTIONS FOUND: " + p.sumSection()
+        print "SECTIONS FOUND: " + str(p.sumSection())
         for x in listCrawl:
-            key = response.xpath("//*[@id='tab:specificaties']/table/tr["+str(x)+"]/td[1]/text()").extract()
-            value= response.xpath("//*[@id='tab:specificaties']/table/tr["+str(x)+"]/td[2]/text()").extract()
+
+            key = response.xpath(p.getKeyxPath(x) % x).extract()
+            value= response.xpath(p.getValuexPath(x) % x ).extract()
             print key, value
 
