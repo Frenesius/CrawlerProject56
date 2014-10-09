@@ -49,6 +49,7 @@ class ParseConfig:
                 if crawl == "1":
                     listCrawl.append(x)
         return listCrawl
+
     def getValuexPath(self, int, filePath):
         conf = ConfigParser.ConfigParser()
         file = filePath

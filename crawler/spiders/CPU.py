@@ -1,19 +1,31 @@
+'''
 import scrapy
-from scrapy import Spider
+
 from crawler import ParseConfig
+from crawler.templates import GenericSpider
+import Config as config
 
+class CPU(scrapy.Spider):
+    name = "CPUcrawl"
+    pathName = "CPUpath"
 
-class GPU(scrapy.Spider):
-    name = "CPUcrawl";
     allowed_domains = ["tweakers.net"]
-    start_urls = ["http://tweakers.net/pricewatch/394885/intel-core-i7-4790k-boxed/specificaties/"]
+    start_urls = []
+    path = None
+
+    if name in config.componentList:
+        start_urls = config.componentList[name]
+        path = config.componentList[pathName]
+    else:
+        print("ERROR: key does not exist in dictonairy")
 
     def parse(self, response):
         p = ParseConfig.ParseConfig()
-        listCrawl = p.getCrawlList("crawler/crawl-conf/CPU.conf")
+        listCrawl = p.getCrawlList(self.path)
         print "SECTIONS FOUND: " + str(p.sumSection())
         for x in listCrawl:
 
-            key = response.xpath(p.getKeyxPath(x, "crawler/crawl-conf/CPU.conf") % x).extract()
-            value= response.xpath(p.getValuexPath(x, "crawler/crawl-conf/CPU.conf") % x ).extract()
+            key = response.xpath(p.getKeyxPath(x, self.path) % x).extract()
+            value= response.xpath(p.getValuexPath(x, self.path) % x ).extract()
             print "ROW",x, key, value
+'''
