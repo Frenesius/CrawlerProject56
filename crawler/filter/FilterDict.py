@@ -2,6 +2,9 @@ __author__ = 'j'
 import re as regex
 
 class FilterDict():
+    '''
+    This class is used to filter the dictionaries that are crawled.
+    '''
     timesFiltered = 0
 
 
@@ -9,6 +12,13 @@ class FilterDict():
         pass
 
     def filterDictionary(self, dictionary):
+        '''
+
+
+        :rtype : Dict
+        :param dictionary: A Dictionary that is just crawled.
+        :return:Returns a dictionary that is filtered.
+        '''
         filteredDict = {}
         filteredDict = self.filterEmpty(dictionary)
 
@@ -16,6 +26,11 @@ class FilterDict():
         self.printDict(filteredDict)
 
     def filterEmpty(self, dictionary):
+        '''
+
+        :param dictionary: A dictionary that needs to be filtered.
+        :return: Returns a dictionary that is filtered from [\xa0], [] and [ ]
+        '''
         newDict = {}
         y = 0
 
@@ -37,11 +52,13 @@ class FilterDict():
         self.timesFiltered += 1
         return newDict
 
-    def filterSpaces(self):
-        pass
-
-
     def printDict(self, dict):
+        '''
+        Prints the dictionary that is send in.
+        :param dict: A dictionary that needs to be printed
+        :return: isPrinted, a Boolean
+        '''
+        isPrinted = False
         print " ++++++++++++++++++++"
         print " PRINTING NEWEST DICT"
         print " Dict has been %s times filtered!" % self.timesFiltered
@@ -54,3 +71,6 @@ class FilterDict():
             value =  dict.values()[y]
             print key, value
             y +=1
+
+        isPrinted = True
+        return isPrinted

@@ -19,6 +19,11 @@ class GPU(scrapy.Spider):
         print("ERROR: key does not exist in dictonairy")
 
     def parse(self, response):
+        '''
+        Parses the crawled data into dictionary
+        :param response: Response from Scrapy spider
+        :return: None
+        '''
         gpuDict = dict()
 
         print "         PARSING"
