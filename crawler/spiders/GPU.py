@@ -34,7 +34,7 @@ class GPU(scrapy.Spider):
 
         print "         DONE PARSING"
         print "         Parsing Dict"
-        filter.FilterDict().printDict(filter.FilterDict().getDict(gpuDict))
+        filter.FilterDict().filterDictionary(gpuDict)
         print "         SUCCESS"
 
 
