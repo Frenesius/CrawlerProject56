@@ -29,14 +29,14 @@ class GPU(scrapy.Spider):
         for x in listCrawl:
             key = response.xpath(p.getKeyxPath(x, self.path) % x).extract()
             value= response.xpath(p.getValuexPath(x, self.path) % x ).extract()
-            print \
-            "Adding in dict"
+
             gpuDict.update({str(key): str(value)})
 
         print "         DONE PARSING"
         print "         Parsing Dict"
-        filter.FilterDict().getDict(gpuDict)
+        filter.FilterDict().printDict(filter.FilterDict().getDict(gpuDict))
         print "         SUCCESS"
+
 
 
 
