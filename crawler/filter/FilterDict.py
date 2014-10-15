@@ -48,7 +48,7 @@ class FilterDict():
             elif regex.search(pattern3, key) or regex.search(pattern3, value):
                 print "filtered"
             else:
-                newDict.update({str(key): str(value)})
+                newDict.update({key.encode('ascii', errors='ignore'): str(value)})
         self.timesFiltered += 1
         return newDict
 
@@ -69,7 +69,7 @@ class FilterDict():
         for x in dict:
             key =  dict.keys()[y]
             value =  dict.values()[y]
-            print key, value
+            print key.encode('ascii', errors='ignore'), value.encode('ascii', errors='ignore')
             y +=1
 
         isPrinted = True

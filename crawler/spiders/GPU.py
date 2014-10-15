@@ -4,6 +4,8 @@ from scrapy import Spider
 from crawler import ParseConfig
 import Config as config
 import crawler.filter.FilterDict as filter
+from crawler.neo4jdb import connection
+
 class GPU(scrapy.Spider):
     name = "GPUcrawl";
     pathName = "GPUpath"
@@ -35,12 +37,25 @@ class GPU(scrapy.Spider):
             key = response.xpath(p.getKeyxPath(x, self.path) % x).extract()
             value= response.xpath(p.getValuexPath(x, self.path) % x ).extract()
 
-            gpuDict.update({str(key): str(value)})
+            gpuDict.update({str(key).encode('ascii', errors='ignore'): str(value).encode('ascii', errors='ignore')})
 
         print "         DONE PARSING"
         print "         Parsing Dict"
         filter.FilterDict().filterDictionary(gpuDict)
         print "         SUCCESS"
+
+
+        print "=====DEBUG======="
+
+        '''
+        Connect to DB and add a dict as node
+        '''
+        conn = connection.connection()
+        conn.openDb()
+
+        print "Reading the config: %s" % conn.isRead
+        print "Database connection: %s" % conn.isConnect
+        print "=====DEBUG======="
 
 
 

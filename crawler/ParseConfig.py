@@ -7,7 +7,7 @@ class ParseConfig:
     crawl = None
     crawlList = 0
     config = ConfigParser.ConfigParser()
-    file = "crawler/crawl-conf/GPU.conf" #7
+    file = "crawler/configs/GPU.conf" #7
 
     try:
         config.read(file)
