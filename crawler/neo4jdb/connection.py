@@ -45,3 +45,9 @@ class connection:
 
     def getCountNodes(self, graph_db):
         print graph_db.get_node_count()
+
+    def createNodeFromDict(self, graph_db, dict):
+        isCreated = False
+        graph_db.create(dict)
+        isCreated = True
+        return isCreated

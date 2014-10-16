@@ -9,3 +9,11 @@ Dependencies
 + Pip
 + Scrapy
 + Py2neo
++ Neo4j 2.1.7
+
+Usage
+=============
+
+
+Licence
+=============

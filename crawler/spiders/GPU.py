@@ -5,6 +5,10 @@ from crawler import ParseConfig
 import Config as config
 import crawler.filter.FilterDict as filter
 from crawler.neo4jdb import connection
+import py2neo
+from py2neo.neo4j import Node
+from py2neo import neo4j
+
 
 class GPU(scrapy.Spider):
     name = "GPUcrawl";
@@ -45,17 +49,29 @@ class GPU(scrapy.Spider):
         print "         SUCCESS"
 
 
-        print "=====DEBUG======="
+        print "=====START \t DEBUG======="
 
         '''
-        Connect to DB and add a dict as node
+        Connect to DB and add a dict as node - Done
+        Get node
+        Add relationships
         '''
         conn = connection.connection()
         graph_db = conn.openDb()
-        graph_db.create(self.filteredDict)
+        #conn.createNodeFromDict(graph_db, self.filteredDict)
+        a = Node.abstract(**{"Id": "5"})
+
+        print a["Label"]
+        print a["Id"]
+
+        #graph_db.create(self.filteredDict,
+         #               (0, "TEST", a, {"since": 2006}))
+
+
+
         print "Reading the config: %s" % conn.isRead
         print "Database connection: %s" % conn.isConnect
-        print "=====DEBUG======="
+        print "=====END \t DEBUG======="
 
 
 
