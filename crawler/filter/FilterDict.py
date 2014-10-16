@@ -21,9 +21,11 @@ class FilterDict():
         '''
         filteredDict = {}
         filteredDict = self.filterEmpty(dictionary)
-
+        filteredDict = self.filterUnicode(filteredDict)
 
         self.printDict(filteredDict)
+
+        return filteredDict
 
     def filterEmpty(self, dictionary):
         '''
@@ -69,8 +71,23 @@ class FilterDict():
         for x in dict:
             key =  dict.keys()[y]
             value =  dict.values()[y]
-            print key.encode('ascii', errors='ignore'), value.encode('ascii', errors='ignore')
+            print key, value
             y +=1
 
         isPrinted = True
         return isPrinted
+
+    def filterUnicode(self, dict):
+        filteredDict = {}
+        y = 0
+        for x in dict:
+            key =  dict.keys()[y]
+            value =  dict.values()[y]
+            tempKey = str(key).replace("[u'", "")
+            tempValue = str(value).replace("[u'", "")
+            tempKey2 = str(tempKey).replace("']", "")
+            tempValue2 = str(tempValue).replace("']", "")
+
+            filteredDict.update({tempKey2: tempValue2})
+            y+=1
+        return filteredDict

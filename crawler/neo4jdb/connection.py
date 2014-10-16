@@ -39,3 +39,9 @@ class connection:
 
     def closeDb(self):
         pass
+
+    def getSomeData(self, graph_db):
+        print graph_db.get_node(0)
+
+    def getCountNodes(self, graph_db):
+        print graph_db.get_node_count()

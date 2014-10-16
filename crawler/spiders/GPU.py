@@ -12,7 +12,7 @@ class GPU(scrapy.Spider):
     start_urls = []
     allowed_domains = ["tweakers.net"]
     path = None
-
+    filteredDict = {}
 
     if name in config.componentList:
         start_urls = config.componentList[name]
@@ -41,7 +41,7 @@ class GPU(scrapy.Spider):
 
         print "         DONE PARSING"
         print "         Parsing Dict"
-        filter.FilterDict().filterDictionary(gpuDict)
+        self.filteredDict = filter.FilterDict().filterDictionary(gpuDict)
         print "         SUCCESS"
 
 
@@ -51,8 +51,8 @@ class GPU(scrapy.Spider):
         Connect to DB and add a dict as node
         '''
         conn = connection.connection()
-        conn.openDb()
-
+        graph_db = conn.openDb()
+        graph_db.create(self.filteredDict)
         print "Reading the config: %s" % conn.isRead
         print "Database connection: %s" % conn.isConnect
         print "=====DEBUG======="
