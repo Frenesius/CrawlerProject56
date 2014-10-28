@@ -35,7 +35,6 @@ class GPU(scrapy.Spider):
         conn = connection.connection()              #initiates connection
         graph_db = conn.openDb()
 
-
         nodeDict = dict()
 
         baseNode = conn.getNode(graph_db, self.label)
@@ -51,7 +50,7 @@ class GPU(scrapy.Spider):
             key = response.xpath(p.getKeyxPath(x, self.path) % x).extract()
             value= response.xpath(p.getValuexPath(x, self.path) % x ).extract()
 
-            nodeDict.update({str(key).encode('ascii', errors='ignore'): str(value).encode('ascii', errors='ignore')})
+            nodeDict.update({str(key): str(value)})
 
         print "\tDone parsing config"
         print "\tParsing Dict"

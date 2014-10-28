@@ -6,7 +6,7 @@ from crawler.templates import GenericSpider
 import Config as config
 
 class CPU(scrapy.Spider):
-    name = "CPUcrawl"
+    name = "CPUcrawl2"
     pathName = "CPUpath"
 
     allowed_domains = ["tweakers.net"]
