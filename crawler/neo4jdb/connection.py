@@ -51,3 +51,10 @@ class connection:
         graph_db.create(dict)
         isCreated = True
         return isCreated
+
+    def getNode(self, graph_db, label): #Gets node from database. label = the Label of the Hardware, always include this in self
+        node = None
+        result = neo4j.CypherQuery(graph_db, "MATCH (n) WHERE n.Label = \""+ str(label)+"\" RETURN n").execute()
+        for r in result:
+            node = r[0]
+        return node

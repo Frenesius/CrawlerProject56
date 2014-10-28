@@ -7,6 +7,7 @@ import crawler.filter.FilterDict as filter
 from crawler.neo4jdb import connection
 from py2neo.neo4j import Node
 from py2neo import neo4j, cypher
+import py2neo
 
 
 class GPU(scrapy.Spider):
@@ -30,7 +31,7 @@ class GPU(scrapy.Spider):
         :param response: Response from Scrapy spider
         :return: None
         '''
-        gpuDict = dict()
+        nodeDict = dict()
 
         print "         PARSING"
         p = ParseConfig.ParseConfig()
@@ -41,11 +42,11 @@ class GPU(scrapy.Spider):
             key = response.xpath(p.getKeyxPath(x, self.path) % x).extract()
             value= response.xpath(p.getValuexPath(x, self.path) % x ).extract()
 
-            gpuDict.update({str(key).encode('ascii', errors='ignore'): str(value).encode('ascii', errors='ignore')})
+            nodeDict.update({str(key).encode('ascii', errors='ignore'): str(value).encode('ascii', errors='ignore')})
 
         print "         DONE PARSING"
         print "         Parsing Dict"
-        self.filteredDict = filter.FilterDict().filterDictionary(gpuDict)
+        self.filteredDict = filter.FilterDict().filterDictionary(nodeDict)
         print "         SUCCESS"
 
 
@@ -56,21 +57,18 @@ class GPU(scrapy.Spider):
         Get node
         Add relationships
         '''
-        print "Connecting to Database"
+
         conn = connection.connection()              #initiates connection
         graph_db = conn.openDb()
+        print "Reading the config: %s" % conn.isRead
+        print "Database connection: %s" % conn.isConnect
+
         print "Adding Node to database"
         test, = graph_db.create(self.filteredDict)  #Creates Node
         test.add_labels(str(self.label))            #Adds label to the Node
 
-
-
- 
-
-
-
-        print "Reading the config: %s" % conn.isRead
-        print "Database connection: %s" % conn.isConnect
+        baseNode = conn.getNode(graph_db, self.label)
+        
         print "=====END \t DEBUG======="
 
 
