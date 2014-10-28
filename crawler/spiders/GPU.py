@@ -5,13 +5,13 @@ from crawler import ParseConfig
 import Config as config
 import crawler.filter.FilterDict as filter
 from crawler.neo4jdb import connection
-import py2neo
 from py2neo.neo4j import Node
-from py2neo import neo4j
+from py2neo import neo4j, cypher
 
 
 class GPU(scrapy.Spider):
     name = "GPUcrawl";
+    label = "GRAPHICSCARD"
     pathName = "GPUpath"
     start_urls = []
     allowed_domains = ["tweakers.net"]
@@ -56,16 +56,16 @@ class GPU(scrapy.Spider):
         Get node
         Add relationships
         '''
-        conn = connection.connection()
+        print "Connecting to Database"
+        conn = connection.connection()              #initiates connection
         graph_db = conn.openDb()
-        #conn.createNodeFromDict(graph_db, self.filteredDict)
-        a = Node.abstract(**{"Id": "5"})
+        print "Adding Node to database"
+        test, = graph_db.create(self.filteredDict)  #Creates Node
+        test.add_labels(str(self.label))            #Adds label to the Node
 
-        print a["Label"]
-        print a["Id"]
 
-        #graph_db.create(self.filteredDict,
-         #               (0, "TEST", a, {"since": 2006}))
+
+
 
 
 
