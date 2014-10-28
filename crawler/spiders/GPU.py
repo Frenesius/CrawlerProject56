@@ -65,7 +65,7 @@ class GPU(scrapy.Spider):
 
 
 
-
+ 
 
 
 
