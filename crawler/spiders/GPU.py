@@ -5,8 +5,7 @@ from crawler import ParseConfig
 import Config as config
 import crawler.filter.FilterDict as filter
 from crawler.neo4jdb import connection
-from py2neo.neo4j import Node
-from py2neo import neo4j, cypher
+from py2neo import neo4j, cypher, rel, node
 import py2neo
 
 
@@ -14,6 +13,7 @@ class GPU(scrapy.Spider):
     name = "GPUcrawl";
     label = "GRAPHICSCARD"
     pathName = "GPUpath"
+    relation = "GRAPHICSCARD"
     start_urls = []
     allowed_domains = ["tweakers.net"]
     path = None
@@ -31,12 +31,21 @@ class GPU(scrapy.Spider):
         :param response: Response from Scrapy spider
         :return: None
         '''
+        print "== Initializing =="
+        conn = connection.connection()              #initiates connection
+        graph_db = conn.openDb()
+
+
         nodeDict = dict()
 
-        print "         PARSING"
+        baseNode = conn.getNode(graph_db, self.label)
+        baseNode.get_properties()
+        baseNode.get_labels()
+
+        print "\tParsing config"
         p = ParseConfig.ParseConfig()
         listCrawl = p.getCrawlList(self.path)
-        print "         SECTIONS FOUND: " + str(p.sumSection())
+        print "\t\tSections Found: " + str(p.sumSection())
 
         for x in listCrawl:
             key = response.xpath(p.getKeyxPath(x, self.path) % x).extract()
@@ -44,32 +53,22 @@ class GPU(scrapy.Spider):
 
             nodeDict.update({str(key).encode('ascii', errors='ignore'): str(value).encode('ascii', errors='ignore')})
 
-        print "         DONE PARSING"
-        print "         Parsing Dict"
+        print "\tDone parsing config"
+        print "\tParsing Dict"
         self.filteredDict = filter.FilterDict().filterDictionary(nodeDict)
-        print "         SUCCESS"
+        print "\tDone Parsing Dict"
 
 
-        print "=====START \t DEBUG======="
+        print "== Adding Node to database =="
+        print "\tReading the config: %s" % conn.isRead
+        print "\tDatabase connection: %s" % conn.isConnect
 
-        '''
-        Connect to DB and add a dict as node - Done
-        Get node
-        Add relationships
-        '''
 
-        conn = connection.connection()              #initiates connection
-        graph_db = conn.openDb()
-        print "Reading the config: %s" % conn.isRead
-        print "Database connection: %s" % conn.isConnect
+        crawlNode, = graph_db.create(self.filteredDict)  #Creates Node
+        crawlNode.add_labels(str(self.label))            #Adds label to the Node
+        graph_db.create(rel(crawlNode, self.relation, baseNode))  #Created Relationship
 
-        print "Adding Node to database"
-        test, = graph_db.create(self.filteredDict)  #Creates Node
-        test.add_labels(str(self.label))            #Adds label to the Node
-
-        baseNode = conn.getNode(graph_db, self.label)
-        
-        print "=====END \t DEBUG======="
+        print "== Done :) =="
 
 
 

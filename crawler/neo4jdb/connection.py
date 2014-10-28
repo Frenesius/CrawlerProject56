@@ -1,8 +1,8 @@
 __author__ = 'j'
 from ConfigParser import SafeConfigParser
-from py2neo import *
 from py2neo import neo4j, cypher
 from crawler.spiders import Config
+import py2neo
 
 class connection:
     '''
@@ -54,7 +54,11 @@ class connection:
 
     def getNode(self, graph_db, label): #Gets node from database. label = the Label of the Hardware, always include this in self
         node = None
+        tempNode = None
+
         result = neo4j.CypherQuery(graph_db, "MATCH (n) WHERE n.Label = \""+ str(label)+"\" RETURN n").execute()
         for r in result:
-            node = r[0]
+            tempNode = r[0]
+        uri = 'http://localhost:7474/db/data/node/' + str(tempNode._id)
+        node = py2neo.neo4j.Node(uri)
         return node

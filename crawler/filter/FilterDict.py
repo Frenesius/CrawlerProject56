@@ -23,8 +23,6 @@ class FilterDict():
         filteredDict = self.filterEmpty(dictionary)
         filteredDict = self.filterUnicode(filteredDict)
 
-        self.printDict(filteredDict)
-
         return filteredDict
 
     def filterEmpty(self, dictionary):
@@ -44,11 +42,11 @@ class FilterDict():
             pattern2 = r"(\[\])"
             pattern3 = r"(\[\s\])"
             if regex.search(pattern, key) or regex.search(pattern, value):
-                print "filtered"
+                continue
             elif regex.search(pattern2, key) or regex.search(pattern2, value):
-                print "filtered"
+                continue
             elif regex.search(pattern3, key) or regex.search(pattern3, value):
-                print "filtered"
+                continue
             else:
                 newDict.update({key.encode('ascii', errors='ignore'): str(value)})
         self.timesFiltered += 1
