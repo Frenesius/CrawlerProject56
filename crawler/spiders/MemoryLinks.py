@@ -2,7 +2,7 @@ import re
 import scrapy
 from scrapy import Spider
 
-class RAMxpath(scrapy.Spider):
+class MemoryLinks(scrapy.Spider):
     name = "RAMlinks";
     start_urls = ['http://tweakers.net/categorie/545/geheugen-intern/producten/?currFilters=q1YqSExPDc6sSlWyMjQwqAUA&pageSize=100&page=1',
     'http://tweakers.net/categorie/545/geheugen-intern/producten/?currFilters=q1YqSExPDc6sSlWyMjQwqAUA&pageSize=100&page=2',
