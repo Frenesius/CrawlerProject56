@@ -50,25 +50,27 @@ class RAMxpath(scrapy.Spider):
     'http://tweakers.net/categorie/545/geheugen-intern/producten/?currFilters=q1YqSExPDc6sSlWyMjQwqAUA&pageSize=100&page=44',
     'http://tweakers.net/categorie/545/geheugen-intern/producten/?currFilters=q1YqSExPDc6sSlWyMjQwqAUA&pageSize=100&page=45',
     'http://tweakers.net/categorie/545/geheugen-intern/producten/?currFilters=q1YqSExPDc6sSlWyMjQwqAUA&pageSize=100&page=46',
-    'http://tweakers.net/categorie/545/geheugen-intern/producten/?currFilters=q1YqSExPDc6sSlWyMjQwqAUA&pageSize=100&page=47',
-    'http://tweakers.net/categorie/545/geheugen-intern/producten/?currFilters=q1YqSExPDc6sSlWyMjQwqAUA&pageSize=100&page=48']
+    'http://tweakers.net/categorie/545/geheugen-intern/producten/?currFilters=q1YqSExPDc6sSlWyMjQwqAUA&pageSize=100&page=47'
+    ]
 
     allowed_domains = ["tweakers.net"]
 
 
 
 
-    linksArr = []
-    def parse(self, response):
+    ramArr = []
+    def parse(self, response,):
 
         print "start PARSING #####################################"
         for x in range(1,101):
+
             url = response.xpath('//*[@id="compareProductListing"]/table/tr[%s]/td[3]/p[2]/a/@href' % x).extract()
             pattern = r"(\[\])"
             if re.search(pattern, str(url)):
                 continue
             else:
                 print url
+                self.ramArr.append(url)
 
         print "DONE PARSING #####################################"
-        print len(self.linksArr)
+        print len(self.ramArr)

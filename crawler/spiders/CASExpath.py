@@ -1,6 +1,6 @@
 import scrapy
 from scrapy import Spider
-
+import re
 class CASExpath(scrapy.Spider):
     name = "CASElinks";
     start_urls = ['http://tweakers.net/categorie/61/behuizingen/producten/?currFilters=q1YqSExPDc6sSlWyMjQwqAUA&pageSize=100&page=1',
@@ -30,12 +30,19 @@ class CASExpath(scrapy.Spider):
     allowed_domains = ["tweakers.net"]
 
 
-    def parse(self, response):
+    caseArr = []
+    def parse(self, response,):
 
         print "start PARSING #####################################"
         for x in range(1,101):
-            print x
+
             url = response.xpath('//*[@id="compareProductListing"]/table/tr[%s]/td[3]/p[2]/a/@href' % x).extract()
-            print url
+            pattern = r"(\[\])"
+            if re.search(pattern, str(url)):
+                continue
+            else:
+                print url
+                self.caseArr.append(url)
 
         print "DONE PARSING #####################################"
+        print len(self.caseArr)
