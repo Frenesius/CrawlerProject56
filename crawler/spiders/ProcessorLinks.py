@@ -1,7 +1,7 @@
 import scrapy
 from scrapy import Spider
 import re
-class CPUxpath(scrapy.Spider):
+class ProcessorLinks(scrapy.Spider):
     name = "CPUlinks";
     start_urls = ['http://tweakers.net/categorie/46/processors/producten/?currFilters=q1YqSExPDc6sSlWyMjQwqAUA&pageSize=100&page=1',
                   'http://tweakers.net/categorie/46/processors/producten/?currFilters=q1YqSExPDc6sSlWyMjQwqAUA&pageSize=100&page=2',
