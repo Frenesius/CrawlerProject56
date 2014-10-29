@@ -10,10 +10,19 @@ import py2neo
 
 
 class GPU(scrapy.Spider):
-    name = "GPUcrawl";
-    label = "GRAPHICSCARD"
-    pathName = "GPUpath"
-    relation = "GRAPHICSCARD"
+    '''
+    Always include
+        - name
+        - label
+        - pathName
+        - relation
+
+    '''
+    name = "GPUcrawl";          #name to crawl
+    label = "GRAPHICSCARD"      #Label in database
+    pathName = "GPUpath"        #
+    relation = "GRAPHICSCARD"   #
+
     start_urls = []
     allowed_domains = ["tweakers.net"]
     path = None

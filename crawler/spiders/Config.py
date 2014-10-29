@@ -7,12 +7,12 @@ Contains all the configs to crawl
 
 
 '''
+
 #Db config path
 db_path = "configs/db_config.conf"
 
 #CPU
-cpu_urls = ["http://tweakers.net/pricewatch/394885/intel-core-i7-4790k-boxed/specificaties/",
-            ]
+cpu_urls = ["http://tweakers.net/pricewatch/394885/intel-core-i7-4790k-boxed/specificaties/"]
 
 cpu_path = "crawler/configs/CPU.conf"
 
