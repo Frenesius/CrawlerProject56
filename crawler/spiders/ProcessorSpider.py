@@ -1,6 +1,6 @@
-import GPU
+import GraphicsCardSpider
 
-class CPU(GPU.GPU):
+class ProcessorSpider(GraphicsCardSpider.GraphicsCardSpider):
     name = "CPUcrawl";
     pathName = "CPUpath"
     label = "PROCESSOR" #UITZOEKEN

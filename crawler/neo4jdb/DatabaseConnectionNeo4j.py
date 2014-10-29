@@ -4,7 +4,7 @@ from py2neo import neo4j, cypher
 from crawler.spiders import Config
 import py2neo
 
-class connection:
+class DatabaseConnectionNeo4j:
     '''
     Copied from github.com/Jiar/Neo4joctolove repo
     Configure database. Add Delete Modify
@@ -23,7 +23,6 @@ class connection:
         parser.read('crawler/configs/db_config.conf')   #Defines Path
     except:
         print "Cannot open file \"db_config.conf\". Probably wrong path."
-
     url = parser.get('DATABASE', 'url')
     username = parser.get('DATABASE', 'username')
     password = parser.get('DATABASE', 'password')
@@ -55,7 +54,6 @@ class connection:
     def getNode(self, graph_db, label): #Gets node from database. label = the Label of the Hardware, always include this in self
         node = None
         tempNode = None
-
         result = neo4j.CypherQuery(graph_db, "MATCH (n) WHERE n.Label = \""+ str(label)+"\" RETURN n").execute()
         for r in result:
             tempNode = r[0]

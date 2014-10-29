@@ -1,21 +1,19 @@
 
 import scrapy
-from scrapy import Spider
 from crawler import ParseConfig
 import Config as config
 import crawler.filter.FilterDict as filter
-from crawler.neo4jdb import connection
-from py2neo import neo4j, cypher, rel, node
-import py2neo
+from crawler.neo4jdb import DatabaseConnectionNeo4j
+from py2neo import rel, node
 
 
-class GPU(scrapy.Spider):
+class GraphicsCardSpider(scrapy.Spider):
     '''
     Always include
-        - name
-        - label
-        - pathName
-        - relation
+        - name          The name of the crawler -> used for crawling i.e ```scrapy crawl name```
+        - label         Label to get the BaseNode and give the relation the label
+        - pathName      Name of the config files
+        - relation      Relation name
 
     '''
     name = "GPUcrawl";          #name to crawl
@@ -41,7 +39,7 @@ class GPU(scrapy.Spider):
         :return: None
         '''
         print "== Initializing =="
-        conn = connection.connection()              #initiates connection
+        conn = DatabaseConnectionNeo4j.DatabaseConnectionNeo4j()              #initiates connection
         graph_db = conn.openDb()
 
         nodeDict = dict()
@@ -58,7 +56,6 @@ class GPU(scrapy.Spider):
         for x in listCrawl:
             key = response.xpath(p.getKeyxPath(x, self.path) % x).extract()
             value= response.xpath(p.getValuexPath(x, self.path) % x ).extract()
-
             nodeDict.update({str(key): str(value)})
 
         print "\tDone parsing config"
@@ -66,20 +63,12 @@ class GPU(scrapy.Spider):
         self.filteredDict = filter.FilterDict().filterDictionary(nodeDict)
         print "\tDone Parsing Dict"
 
-
         print "== Adding Node to database =="
         print "\tReading the config: %s" % conn.isRead
         print "\tDatabase connection: %s" % conn.isConnect
-
 
         crawlNode, = graph_db.create(self.filteredDict)  #Creates Node
         crawlNode.add_labels(str(self.label))            #Adds label to the Node
         graph_db.create(rel(crawlNode, self.relation, baseNode))  #Created Relationship
 
         print "== Done :) =="
-
-
-
-
-
-
