@@ -13,18 +13,12 @@ class MotherboardLinks(scrapy.Spider):
     allowed_domains = ["tweakers.net"]
 
 
-
     def parse(self, response,):
-
-        print "start PARSING #####################################" #
         for x in range(1,101):
             url = response.xpath('//*[@id="compareProductListing"]/table/tr[%s]/td[3]/p[2]/a/@href' % x).extract()
             pattern = r"(\[\])"
             if re.search(pattern, str(url)):
                 continue
             else:
-                print url #
                 self.motherboardArr.append(url)
 
-        print "DONE PARSING #####################################" #
-        print len(self.motherboardArr) #
