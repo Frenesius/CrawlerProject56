@@ -1,10 +1,10 @@
 import re
 import scrapy
-from crawler.filter.ParseLinks import ParseLinks
+from crawler.filter.LinkManager import ParseLinks
 from scrapy import Spider
 
 class MemoryLinks(scrapy.Spider):
-    name = "RAMlinks";
+    name = "RAMlinks"
     linkString ='http://tweakers.net/categorie/545/geheugen-intern/producten/?currFilters=q1YqSExPDc6sSlWyMjQwqAUA&pageSize=100&page='
     ramArr = []
 

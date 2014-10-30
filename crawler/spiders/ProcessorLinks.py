@@ -1,10 +1,10 @@
 import scrapy
 from scrapy import Spider
 import re
-from crawler.filter.ParseLinks import ParseLinks
+from crawler.filter.LinkManager import ParseLinks
 
 class ProcessorLinks(scrapy.Spider):
-    name = "CPUlinks";
+    name = "CPUlinks"
     linkString =  'http://tweakers.net/categorie/46/processors/producten/?currFilters=q1YqSExPDc6sSlWyMjQwqAUA&pageSize=100&page='
     processorArr = []
 

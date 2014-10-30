@@ -4,7 +4,7 @@ import re
 from crawler.filter.LinkManager import ParseLinks
 
 class PowersupplyLinks(scrapy.Spider):
-    name = "PSUlinks";
+    name = "PSUlinks"
     linkString = 'http://tweakers.net/categorie/664/voedingen/producten/?currFilters=q1YqSExPDc6sSlWyMjQwqAUA&pageSize=100&page='
     powerArr = []
 

@@ -6,7 +6,6 @@ import crawler.filter.DictManager as filter
 from crawler.neo4jdb import Neo4jDatabaseManager
 from py2neo import rel, node
 
-
 class SpecsSpider(scrapy.Spider):
     '''
     Always include
