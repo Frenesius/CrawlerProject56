@@ -1,7 +1,7 @@
-import GraphicsCardSpider
+import SpecsSpider
 
-class ProcessorSpider(GraphicsCardSpider.GraphicsCardSpider):
-    name = "CPUcrawl";
+class ProcessorSpider(SpecsSpider.SpecsSpider):
+    name = "CPUcrawl"
     pathName = "CPUpath"
     label = "PROCESSOR" #UITZOEKEN
     relation = "GRAPHICSCARD" #UITZOEKEN

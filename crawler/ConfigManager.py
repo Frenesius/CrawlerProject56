@@ -23,7 +23,6 @@ class ParseConfig:
     def sumSection(self):
         conf = self.config
         conf.read(self.file)
-
         sumCrawl = 0
         for x in range(1,100):
             a = "ROW"+str(x)
@@ -34,10 +33,14 @@ class ParseConfig:
         return sumCrawl
 
     def getCrawlList(self, filePath):
+        '''
+        Gives the List back of the Sections (TableRows) that needs to be crawled.
+        :param filePath: Path to the config file.
+        :return: Array with the rows.
+        '''
         try:
             conf = ConfigParser.ConfigParser()
-            file = filePath
-            conf.read(file)
+            conf.read(filePath)
         except:
             "CrawlList wrong"
         listCrawl = []
