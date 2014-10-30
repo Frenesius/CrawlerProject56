@@ -1,10 +1,10 @@
 import scrapy
 from scrapy import Spider
 import re
-from crawler.filter.ParseLinks import ParseLinks
+from crawler.filter.LinkManager import ParseLinks
 
 class GraphicsCardLinks(scrapy.Spider):
-    name = "GPUlinks";
+    name = "GPUlinks"
     linkString ='http://tweakers.net/categorie/49/videokaarten/producten/?currFilters=q1YqSExPDc6sSlWyMjQwqAUA&pageSize=100&page='
     graphicsArr = []
 
