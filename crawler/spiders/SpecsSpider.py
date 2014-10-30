@@ -1,4 +1,3 @@
-
 import scrapy
 from crawler import ConfigManager
 import Config as config
@@ -38,9 +37,9 @@ class SpecsSpider(scrapy.Spider):
         :param response: Response from Scrapy spider
         :return: None
         '''
-        self.testParse(response)
+        self.parseSource(response)
 
-    def testParse(self, response):
+    def parseSource(self, response):
         print "== Initializing =="
         conn = Neo4jDatabaseManager.DatabaseConnectionNeo4j()               #initiates connection
         graph_db = conn.openDb()                                            #initiates connection
