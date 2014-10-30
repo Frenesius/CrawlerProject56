@@ -1,6 +1,6 @@
 import scrapy
 from scrapy import Spider
-from crawler import ParseConfig
+from crawler import ConfigManager
 import Config as config
 
 class MainSpider(scrapy.Spider):
@@ -20,7 +20,7 @@ class MainSpider(scrapy.Spider):
 
     def parse(self, response):
         print "PARSING #####################################"
-        p = ParseConfig.ParseConfig()
+        p = ConfigManager.ParseConfig()
         listCrawl = p.getCrawlList(self.path)
         print "SECTIONS FOUND: " + str(p.sumSection())
 

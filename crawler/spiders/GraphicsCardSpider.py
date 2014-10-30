@@ -1,9 +1,9 @@
 
 import scrapy
-from crawler import ParseConfig
+from crawler import ConfigManager
 import Config as config
-import crawler.filter.FilterDict as filter
-from crawler.neo4jdb import DatabaseConnectionNeo4j
+import crawler.filter.DictManager as filter
+from crawler.neo4jdb import Neo4jDatabaseManager
 from py2neo import rel, node
 
 
@@ -39,7 +39,7 @@ class GraphicsCardSpider(scrapy.Spider):
         :return: None
         '''
         print "== Initializing =="
-        conn = DatabaseConnectionNeo4j.DatabaseConnectionNeo4j()              #initiates connection
+        conn = Neo4jDatabaseManager.DatabaseConnectionNeo4j()              #initiates connection
         graph_db = conn.openDb()
 
         nodeDict = dict()
@@ -49,7 +49,7 @@ class GraphicsCardSpider(scrapy.Spider):
         baseNode.get_labels()
 
         print "\tParsing config"
-        p = ParseConfig.ParseConfig()
+        p = ConfigManager.ParseConfig()
         listCrawl = p.getCrawlList(self.path)
         print "\t\tSections Found: " + str(p.sumSection())
 

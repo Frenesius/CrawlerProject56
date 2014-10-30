@@ -1,7 +1,7 @@
 import scrapy
 from scrapy import Spider
 import re
-from crawler.filter.ParseLinks import ParseLinks
+from crawler.filter.LinkManager import ParseLinks
 
 class MotherboardLinks(scrapy.Spider):
     name = "MBlinks"
