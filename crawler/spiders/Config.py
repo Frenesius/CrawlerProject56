@@ -26,6 +26,8 @@ gpu_urls = ["http://tweakers.net/pricewatch/416125/msi-geforce-gtx-970-gaming-4g
 
 gpu_path = "crawler/configs/GPU.conf"
 
+
+
 componentList = {"CPUcrawl":cpu_urls, "CPUpath": cpu_path, "GPUpath":gpu_path, "GPUcrawl":gpu_urls}
 databaseConfig = {"db_path":db_path}
 

@@ -38,6 +38,9 @@ class SpecsSpider(scrapy.Spider):
         :param response: Response from Scrapy spider
         :return: None
         '''
+        self.testParse(response)
+
+    def testParse(self, response):
         print "== Initializing =="
         conn = Neo4jDatabaseManager.DatabaseConnectionNeo4j()               #initiates connection
         graph_db = conn.openDb()                                            #initiates connection
