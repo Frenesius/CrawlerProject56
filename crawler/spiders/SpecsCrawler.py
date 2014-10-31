@@ -138,8 +138,8 @@ class HDDSpider(SpecsSpider.SpecsSpider):
 class OpticalDriveSpider(SpecsSpider.SpecsSpider):
     name = "OPTICALDRIVEcrawl"           #Name to craw, gets used to get the start_urls[]
     label = "OPTICALDRIVE"               #Name of the Label that needs to be added to the Crawled Node
-    pathName = "COPTICALDRIVEpath"       #Used to get ConfigFile
-    relation = "COPTICALDRIVE"           #Name of the relation between the BaseNode and Crawled Node
+    pathName = "OPTICALDRIVEpath"       #Used to get ConfigFile
+    relation = "OPTICALDRIVE"           #Name of the relation between the BaseNode and Crawled Node
     start_urls = []
     if name in config.componentList:
         start_urls = config.componentList[name]

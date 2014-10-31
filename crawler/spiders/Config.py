@@ -61,12 +61,16 @@ ssd_path = "crawler/configs/SSD.conf"
 
 
 
-componentList = {"PROCESSORcrawl":cpu_urls, "PROCESSORpath": cpu_path,
-                 "GPUpath":gpu_path, "GPUcrawl":gpu_urls,
-                 "MEMORYcrawl":mem_urls, "MEMORYpath":mem_path,
-                 "PSUcrawl":psu_urls ,"PSUpath":psu_path,
-                 "MOTHERBOARDcrawl":mobo_urls,"MOTHERBOARDpath":mobo_path,
-                 "CASEcrawl":case_urls,"CASEpath":case_path
+componentList = {"PROCESSORcrawl":cpu_urls, "PROCESSORpath": cpu_path,                          #CPU
+                 "GPUpath":gpu_path, "GPUcrawl":gpu_urls,                                       #GPU
+                 "MEMORYcrawl":mem_urls, "MEMORYpath":mem_path,                                 #MEMORY
+                 "PSUcrawl":psu_urls ,"PSUpath":psu_path,                                       #PSU
+                 "MOTHERBOARDcrawl":mobo_urls,"MOTHERBOARDpath":mobo_path,                      #MOTHERBOARD
+                 "CASEcrawl":case_urls,"CASEpath":case_path,                                    #CASE
+                 "HDDcrawl":hdd_urls, "HDDpath":hdd_path,                                       #HDD
+                 "SOUNDCARDcrawl":soundcard_urls,"SOUNDCARDpath":soundcard_path,                #SOUNDCARD
+                 "OPTICALDRIVEcrawl":opticaldrive_urls, "OPTICALDRIVEpath":opticaldrive_path,   #OPTICALDRIVE
+                 "SSDcrawl":ssd_urls, "SSDpath":ssd_path                                        #SSD
                  }
 
 databaseConfig = {"db_path":db_path}
