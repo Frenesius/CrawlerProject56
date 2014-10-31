@@ -43,6 +43,30 @@ case_urls = ["http://tweakers.net/pricewatch/331061/cooler-master-n300-(kkn1-clo
 case_path = "crawler/configs/CASE.conf"
 
 
+#HDD
+hdd_urls = ["http://tweakers.net/pricewatch/385624/wd-red-sata-6-gb-s-wd60efrx-6tb/specificaties/"]
+hdd_path = "crawler/configs/HDD.conf"
+
+#SOUNDCARD
+soundcard_urls = ["http://tweakers.net/pricewatch/229176/asus-xonar-essence-stx/specificaties/"]
+soundcard_path = "crawler/configs/SOUNDCARD.conf"
+
+#OPTICALDRIVE
+opticaldrive_urls = ["http://tweakers.net/pricewatch/336304/samsung-sh-224db-zwart/specificaties/"]
+opticaldrive_path = "crawler/configs/OPTICALDRIVE.conf"
+
+#SSD
+ssd_urls = ["http://tweakers.net/pricewatch/391575/crucial-mx100-256gb/specificaties/"]
+ssd_path = "crawler/configs/SSD.conf"
+
+
+
+
+
+
+
+
+
 componentList = {"PROCESSORcrawl":cpu_urls, "PROCESSORpath": cpu_path,
                  "GPUpath":gpu_path, "GPUcrawl":gpu_urls,
                  "MEMORYcrawl":mem_urls, "MEMORYpath":mem_path,
