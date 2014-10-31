@@ -18,10 +18,10 @@ class GraphicsCardSpider(SpecsSpider.SpecsSpider):
         SpecsSpider.SpecsSpider.parseSource(self, response)
 
 class ProcessorSpider(SpecsSpider.SpecsSpider):
-    name = "PROCESSORcrawl"           #name to craw, gets used to get the start_urls[]
-    label = "PROCESSOR"      #Name of the Label that needs to be added to the Crawled Node
+    name = "PROCESSORcrawl"           #Name to craw, gets used to get the start_urls[]
+    label = "PROCESSOR"               #Name of the Label that needs to be added to the Crawled Node
     pathName = "PROCESSORpath"        #Used to get ConfigFile
-    relation = "PROCESSOR"   #Name of the relation between the BaseNode and Crawled Node
+    relation = "PROCESSOR"            #Name of the relation between the BaseNode and Crawled Node
     start_urls = []
     if name in config.componentList:
         start_urls = config.componentList[name]
@@ -33,10 +33,10 @@ class ProcessorSpider(SpecsSpider.SpecsSpider):
         SpecsSpider.SpecsSpider.parseSource(self, response)
 
 class MemorySpider(SpecsSpider.SpecsSpider):
-    name = "MEMORYcrawl"           #name to craw, gets used to get the start_urls[]
-    label = "MEMORY"      #Name of the Label that needs to be added to the Crawled Node
-    pathName = "MEMORYpath"        #Used to get ConfigFile
-    relation = "MEMORY"   #Name of the relation between the BaseNode and Crawled Node
+    name = "MEMORYcrawl"            #Name to craw, gets used to get the start_urls[]
+    label = "MEMORY"                #Name of the Label that needs to be added to the Crawled Node
+    pathName = "MEMORYpath"         #Used to get ConfigFile
+    relation = "MEMORY"             #Name of the relation between the BaseNode and Crawled Node
     start_urls = []
     if name in config.componentList:
         start_urls = config.componentList[name]
@@ -48,10 +48,10 @@ class MemorySpider(SpecsSpider.SpecsSpider):
         SpecsSpider.SpecsSpider.parseSource(self, response)
 
 class PSUSpider(SpecsSpider.SpecsSpider):
-    name = "PSUcrawl"           #name to craw, gets used to get the start_urls[]
-    label = "PSU"      #Name of the Label that needs to be added to the Crawled Node
+    name = "PSUcrawl"           #Name to craw, gets used to get the start_urls[]
+    label = "PSU"               #Name of the Label that needs to be added to the Crawled Node
     pathName = "PSUpath"        #Used to get ConfigFile
-    relation = "PSU"   #Name of the relation between the BaseNode and Crawled Node
+    relation = "PSU"            #Name of the relation between the BaseNode and Crawled Node
     start_urls = []
     if name in config.componentList:
         start_urls = config.componentList[name]
@@ -63,7 +63,7 @@ class PSUSpider(SpecsSpider.SpecsSpider):
         SpecsSpider.SpecsSpider.parseSource(self, response)
 
 class MotherboardSpider(SpecsSpider.SpecsSpider):
-    name = "MOTHERBOARDcrawl"           #name to craw, gets used to get the start_urls[]
+    name = "MOTHERBOARDcrawl"           #Name to craw, gets used to get the start_urls[]
     label = "MOTHERBOARD"               #Name of the Label that needs to be added to the Crawled Node
     pathName = "MOTHERBOARDpath"        #Used to get ConfigFile
     relation = "MOTHERBOARD"            #Name of the relation between the BaseNode and Crawled Node
@@ -78,10 +78,68 @@ class MotherboardSpider(SpecsSpider.SpecsSpider):
         SpecsSpider.SpecsSpider.parseSource(self, response)
 
 class CaseSpider(SpecsSpider.SpecsSpider):
-    name = "CASEcrawl"           #name to craw, gets used to get the start_urls[]
+    name = "CASEcrawl"           #Name to craw, gets used to get the start_urls[]
     label = "CASE"               #Name of the Label that needs to be added to the Crawled Node
     pathName = "CASEpath"        #Used to get ConfigFile
     relation = "CASE"            #Name of the relation between the BaseNode and Crawled Node
+    start_urls = []
+    if name in config.componentList:
+        start_urls = config.componentList[name]
+        path = config.componentList[pathName]
+    else:
+        print("ERROR: key does not exist in dictonairy")
+
+    def parse(self, response):
+        SpecsSpider.SpecsSpider.parseSource(self, response)
+
+
+class SoundcardSpider(SpecsSpider.SpecsSpider):
+    name = "SOUNDCARDcrawl"           #Name to craw, gets used to get the start_urls[]
+    label = "SOUNDCARD"               #Name of the Label that needs to be added to the Crawled Node
+    pathName = "SOUNDCARDpath"        #Used to get ConfigFile
+    relation = "SOUNDCARD"            #Name of the relation between the BaseNode and Crawled Node
+    start_urls = []
+    if name in config.componentList:
+        start_urls = config.componentList[name]
+        path = config.componentList[pathName]
+    else:
+        print("ERROR: key does not exist in dictonairy")
+
+    def parse(self, response):
+        SpecsSpider.SpecsSpider.parseSource(self, response)
+class SSDSpider(SpecsSpider.SpecsSpider):
+    name = "SSDcrawl"           #Name to craw, gets used to get the start_urls[]
+    label = "SSD"               #Name of the Label that needs to be added to the Crawled Node
+    pathName = "SSDpath"        #Used to get ConfigFile
+    relation = "SSD"            #Name of the relation between the BaseNode and Crawled Node
+    start_urls = []
+    if name in config.componentList:
+        start_urls = config.componentList[name]
+        path = config.componentList[pathName]
+    else:
+        print("ERROR: key does not exist in dictonairy")
+
+    def parse(self, response):
+        SpecsSpider.SpecsSpider.parseSource(self, response)
+class HDDSpider(SpecsSpider.SpecsSpider):
+    name = "HDDcrawl"           #Name to craw, gets used to get the start_urls[]
+    label = "HDD"               #Name of the Label that needs to be added to the Crawled Node
+    pathName = "HDDpath"        #Used to get ConfigFile
+    relation = "HDD"            #Name of the relation between the BaseNode and Crawled Node
+    start_urls = []
+    if name in config.componentList:
+        start_urls = config.componentList[name]
+        path = config.componentList[pathName]
+    else:
+        print("ERROR: key does not exist in dictonairy")
+
+    def parse(self, response):
+        SpecsSpider.SpecsSpider.parseSource(self, response)
+class OpticalDriveSpider(SpecsSpider.SpecsSpider):
+    name = "OPTICALDRIVEcrawl"           #Name to craw, gets used to get the start_urls[]
+    label = "OPTICALDRIVE"               #Name of the Label that needs to be added to the Crawled Node
+    pathName = "COPTICALDRIVEpath"       #Used to get ConfigFile
+    relation = "COPTICALDRIVE"           #Name of the relation between the BaseNode and Crawled Node
     start_urls = []
     if name in config.componentList:
         start_urls = config.componentList[name]
