@@ -64,9 +64,9 @@ class PSUSpider(SpecsSpider.SpecsSpider):
 
 class MotherboardSpider(SpecsSpider.SpecsSpider):
     name = "MOTHERBOARDcrawl"           #name to craw, gets used to get the start_urls[]
-    label = "MOTHERBOARD"      #Name of the Label that needs to be added to the Crawled Node
+    label = "MOTHERBOARD"               #Name of the Label that needs to be added to the Crawled Node
     pathName = "MOTHERBOARDpath"        #Used to get ConfigFile
-    relation = "MOTHERBOARD"   #Name of the relation between the BaseNode and Crawled Node
+    relation = "MOTHERBOARD"            #Name of the relation between the BaseNode and Crawled Node
     start_urls = []
     if name in config.componentList:
         start_urls = config.componentList[name]

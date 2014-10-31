@@ -13,7 +13,6 @@ db_path = "configs/db_config.conf"
 
 #CPU
 cpu_urls = ["http://tweakers.net/pricewatch/394885/intel-core-i7-4790k-boxed/specificaties/"]
-
 cpu_path = "crawler/configs/CPU.conf"
 
 #GPU
@@ -23,7 +22,6 @@ gpu_urls = ["http://tweakers.net/pricewatch/416125/msi-geforce-gtx-970-gaming-4g
             "http://tweakers.net/pricewatch/416136/evga-geforce-gtx-970-superclocked-acx-20-4gb/specificaties/",
             "http://tweakers.net/pricewatch/416180/gigabyte-gv-n970g1-gaming-4gd/specificaties/",
             "http://tweakers.net/pricewatch/362247/sapphire-r9-290-4gb-gddr5-oc-tri-x/specificaties/"]
-
 gpu_path = "crawler/configs/GPU.conf"
 
 #MOBO
@@ -58,10 +56,6 @@ opticaldrive_path = "crawler/configs/OPTICALDRIVE.conf"
 #SSD
 ssd_urls = ["http://tweakers.net/pricewatch/391575/crucial-mx100-256gb/specificaties/"]
 ssd_path = "crawler/configs/SSD.conf"
-
-
-
-
 
 
 
