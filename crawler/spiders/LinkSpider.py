@@ -4,8 +4,8 @@ from crawler.filter.LinkManager import ParseLinks
 
 
 class LinkSpider(scrapy.Spider):
-    name = " "
-    linkString = ''
+    name = ""
+    linkString = ' '
     linksArr = []
     start_urls = None
     allowed_domains = ["tweakers.net"]
