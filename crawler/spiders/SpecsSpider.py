@@ -14,10 +14,10 @@ class SpecsSpider(scrapy.Spider):
         - relation      Relation name
 
     '''
-    name = None           #name to craw, gets used to get the start_urls[]
-    label = None      #Name of the Label that needs to be added to the Crawled Node
-    pathName = None        #Used to get ConfigFile
-    relation = None   #Name of the relation between the BaseNode and Crawled Node
+    name = None           #Name to craw, gets used to get the start_urls[]
+    label = None          #Name of the Label that needs to be added to the Crawled Node
+    pathName = None       #Used to get ConfigFile
+    relation = None       #Name of the relation between the BaseNode and Crawled Node
 
     start_urls = []
     allowed_domains = ["tweakers.net"]
@@ -29,7 +29,8 @@ class SpecsSpider(scrapy.Spider):
         path = config.componentList[pathName]
     else:
         print("ERROR: key does not exist in dictonairy")
-
+    for x in range(len(start_urls)):
+        print start_urls[x]
     def parse(self, response):
         '''
         Parses the crawled data.

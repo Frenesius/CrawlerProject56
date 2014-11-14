@@ -4,8 +4,7 @@ import crawler.filter.DictManager as DictMan
 
 class LinkSpider(scrapy.Spider):
     name = " "
-    linkString = " "
-    linksConf1 = " "
+    linkString = None
     linksArr = []
     start_urls = None
     allowed_domains = ["tweakers.net"]
