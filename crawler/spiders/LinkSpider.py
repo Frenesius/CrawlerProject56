@@ -1,6 +1,6 @@
 import re
 import scrapy
-
+import crawler.filter.DictManager as DictMan
 
 class LinkSpider(scrapy.Spider):
     name = " "
@@ -21,9 +21,11 @@ class LinkSpider(scrapy.Spider):
                 continue
             else:
                 self.linksArr.append(url)
+        dictManager = DictMan.FilterDict()
+        filteredArr = dictManager.filterArrUnicode(self.linksArr)
+
         f = open('crawler/link-config/' + linksConf1, 'w')
-        for x in range(len(self.linksArr)):
-            f.write(str(self.linksArr[x]) + "\n")
+        for x in range(len(filteredArr)):
+            f.write(str(filteredArr[x]) + "\n")
         f.close()
-    print len(linksArr)
 

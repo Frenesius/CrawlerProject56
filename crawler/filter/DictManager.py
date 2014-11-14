@@ -83,3 +83,11 @@ class FilterDict():
             filteredDict.update({tempKey2: tempValue2})
             y+=1
         return filteredDict
+
+    def filterArrUnicode(self, arr):
+        filteredArr = []
+        for x in arr:
+            tempKey = str(x).replace("[u'", "")
+            tempKey2 = str(tempKey).replace("']", "")
+            filteredArr.append(tempKey2)
+        return filteredArr
