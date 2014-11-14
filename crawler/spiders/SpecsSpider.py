@@ -29,8 +29,7 @@ class SpecsSpider(scrapy.Spider):
         path = config.componentList[pathName]
     else:
         print("ERROR: key does not exist in dictonairy")
-    for x in range(len(start_urls)):
-        print start_urls[x]
+
     def parse(self, response):
         '''
         Parses the crawled data.

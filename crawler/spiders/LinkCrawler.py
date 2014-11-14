@@ -11,7 +11,7 @@ class CaseLinks(LinkSpider.LinkSpider):
         LinkSpider.LinkSpider().altParse(response, self.linksConf)
 
 class MotherboardLinks(LinkSpider.LinkSpider):
-    name = "MBlinks"
+    name = "MOTHERBOARDlinks"
     linksConf = "MOTHERBOARDLink"
     linkString = 'http://tweakers.net/categorie/47/moederborden/producten/?currFilters=q1YqSExPDc6sSlWyMjQwqAUA&pageSize=100&page='
     parseLinks = ParseLinks()
@@ -21,7 +21,7 @@ class MotherboardLinks(LinkSpider.LinkSpider):
         LinkSpider.LinkSpider().altParse(response, self.linksConf)
 
 class MemoryLinks(LinkSpider.LinkSpider):
-    name = "RAMlinks"
+    name = "MEMORYlinks"
     linksConf = "MEMORYLink"
     linkString ='http://tweakers.net/categorie/545/geheugen-intern/producten/?currFilters=q1YqSExPDc6sSlWyMjQwqAUA&pageSize=100&page='
     parseLinks = ParseLinks()
@@ -51,7 +51,7 @@ class ProcessorLinks(LinkSpider.LinkSpider):
         LinkSpider.LinkSpider().altParse(response, self.linksConf)
 
 class PowerSupplyLinks(LinkSpider.LinkSpider):
-    name = "PSUlinks"
+    name = "POWERUNITlinks"
     linksConf = "PSULink"
     linkString = 'http://tweakers.net/categorie/664/voedingen/producten/?currFilters=q1YqSExPDc6sSlWyMjQwqAUA&pageSize=100&page='
     parseLinks = ParseLinks()
@@ -60,3 +60,39 @@ class PowerSupplyLinks(LinkSpider.LinkSpider):
     def parse(self, response,):
         LinkSpider.LinkSpider().altParse(response, self.linksConf)
 
+class HDDLinks(LinkSpider.LinkSpider):
+    name = "HDDlinks"
+    linksConf = "HDDLink"
+    linkString = 'http://tweakers.net/categorie/50/interne-harde-schijven/producten/?currFilters=q1YqSExPDc6sSlWyMjQwqAUA&pageSize=100&page='
+    parseLinks = ParseLinks()
+    start_urls = parseLinks.parseLinks(linkString, 40)
+    allowed_domains = ["tweakers.net"]
+    def parse(self, response,):
+        LinkSpider.LinkSpider().altParse(response, self.linksConf)
+class SSDLinks(LinkSpider.LinkSpider):
+    name = "SSDlinks"
+    linksConf = "SSDLink"
+    linkString = 'http://tweakers.net/categorie/674/solid-state-drives/producten/?currFilters=q1YqSExPDc6sSlWyMjQwqAUA&pageSize=100&page='
+    parseLinks = ParseLinks()
+    start_urls = parseLinks.parseLinks(linkString, 25)
+    allowed_domains = ["tweakers.net"]
+    def parse(self, response,):
+        LinkSpider.LinkSpider().altParse(response, self.linksConf)
+class SoundCardLinks(LinkSpider.LinkSpider):
+    name = "SOUNDCARDlinks"
+    linksConf = "SOUNDCARDLink"
+    linkString = 'http://tweakers.net/categorie/53/geluidskaarten/producten/?currFilters=q1YqSExPDc6sSlWyMjQwqAUA&pageSize=100&page='
+    parseLinks = ParseLinks()
+    start_urls = parseLinks.parseLinks(linkString, 3)
+    allowed_domains = ["tweakers.net"]
+    def parse(self, response,):
+        LinkSpider.LinkSpider().altParse(response, self.linksConf)
+class OpticalDriveLinks(LinkSpider.LinkSpider):
+    name = "OPTICALDRIVElinks"
+    linksConf = "OPTICALDRIVELink"
+    linkString = 'http://tweakers.net/categorie/634/optische-drives/producten/?currFilters=q1YqSExPDc6sSlWyMjQwqAUA&pageSize=100&page='
+    parseLinks = ParseLinks()
+    start_urls = parseLinks.parseLinks(linkString, 3)
+    allowed_domains = ["tweakers.net"]
+    def parse(self, response,):
+        LinkSpider.LinkSpider().altParse(response, self.linksConf)
