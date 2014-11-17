@@ -26,7 +26,6 @@ class ParseLinks():
         links = []
         f = open('crawler/link-config/' + path, 'r')
         for line in f:
-            print line
             links.append(line.strip("\n"))
         return links
 

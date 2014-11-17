@@ -53,7 +53,9 @@ opticaldrive_path = "crawler/configs/OPTICALDRIVE.conf"
 ssd_urls = linkManager.getCrawlLinks("SSDLink")
 ssd_path = "crawler/configs/SSD.conf"
 
-
+#TEST
+test_urls = linkManager.getCrawlLinks("TESTLink")
+test_path = "crawler/configs/TEST.conf"
 
 
 
@@ -66,7 +68,8 @@ componentList = {"PROCESSORcrawl":cpu_urls, "PROCESSORpath": cpu_path,          
                  "HDDcrawl":hdd_urls, "HDDpath":hdd_path,                                       #HDD
                  "SOUNDCARDcrawl":soundcard_urls,"SOUNDCARDpath":soundcard_path,                #SOUNDCARD
                  "OPTICALDRIVEcrawl":opticaldrive_urls, "OPTICALDRIVEpath":opticaldrive_path,   #OPTICALDRIVE
-                 "SSDcrawl":ssd_urls, "SSDpath":ssd_path                                        #SSD
+                 "SSDcrawl":ssd_urls, "SSDpath":ssd_path,                                       #SSD
+                 "TESTcrawl":test_urls, "TESTpath":test_path                                    #TEST
                  }
 
 databaseConfig = {"db_path":db_path}
