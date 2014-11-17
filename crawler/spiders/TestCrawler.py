@@ -65,23 +65,27 @@ class TestSpider(scrapy.Spider):
         '''
         Checks if EAN exists
         '''
-
+        eanInDict = None
         TestEan = None
-        if self.filteredDict.get("EAN", 0) == 0:
+        if self.filteredDict.get("EAN", 0) == 0:    #If the EAN does not exist in Dict, it returns 0
             print "NO EAN"
+            eanInDict = False
 
-        else:
+        else:                                       #If EAN exists it goes into this thing
+            eanInDict = True
             TestEan = self.filteredDict['EAN']
-        conn.findNodeByEAN(graph_db, TestEan)
+            print conn.findNodeByEAN(graph_db, TestEan)
+            time.sleep(1)
 
-
-
-        time.sleep(1)
-
+        if conn.findNodeByEAN(graph_db, TestEan) == False and eanInDict == True:
+            print "Creating node"
+            crawlNode, = graph_db.create(self.filteredDict)                     #Creates Node.
+            crawlNode.add_labels(str(self.label))                               #Adds label to the Node.
+            graph_db.create(rel(crawlNode, self.relation, baseNode))            #Creates Relationship.
+        else:
+            print "Node exists, skipping"
         print "================================"
-        # crawlNode, = graph_db.create(self.filteredDict)                     #Creates Node.
-        # crawlNode.add_labels(str(self.label))                               #Adds label to the Node.
-        # graph_db.create(rel(crawlNode, self.relation, baseNode))            #Creates Relationship.
+
 
         print "== Done :) =="
 
