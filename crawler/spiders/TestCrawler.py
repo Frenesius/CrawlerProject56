@@ -5,6 +5,7 @@ import Config as config
 import crawler.filter.DictManager as filter
 from crawler.neo4jdb import Neo4jDatabaseManager
 from py2neo import rel, node
+import time
 
 class TestSpider(scrapy.Spider):
     '''
@@ -48,27 +49,41 @@ class TestSpider(scrapy.Spider):
         baseNode.get_properties()                                           #Need to ask for properties to use the BaseNode (Workaround)
         baseNode.get_labels()                                               #Need to ask for labels to use the BaseNode (Workaround)
 
-        print "\tParsing config"
         configManager = ConfigManager.ParseConfig()                                     #Gets the config and fills the variables
         listCrawl = configManager.getCrawlList(self.path)                               #A list with all the xpaths
-        print "\t\tSections Found: " + str(configManager.sumSection())                  #Shows how many Sections are found in the Config.
+                #Shows how many Sections are found in the Config.
 
         for x in listCrawl:
             key = response.xpath(configManager.getKeyxPath(x, self.path) % x).extract()         #Gets the key from the source. xPath is from the config.
             value= response.xpath(configManager.getValuexPath(x, self.path) % x ).extract()     #Gets the value from the source. xPath is from the config.
             nodeDict.update({str(key): str(value)})                                             #Adds Key:Value to the dict.
-        print "\tDone parsing config"
-
-        print "\tParsing Dict"
         self.filteredDict = filter.FilterDict().filterDictionary(nodeDict)          #Filters the dict on empty values, '/xa0s' values and unicode.
-        print "\tDone Parsing Dict"
 
-        print "== Adding Node to database =="
-        print "\tReading the config: %s" % conn.isRead
-        print "\tDatabase connection: %s" % conn.isConnect
 
-        crawlNode, = graph_db.create(self.filteredDict)                     #Creates Node.
-        crawlNode.add_labels(str(self.label))                               #Adds label to the Node.
-        graph_db.create(rel(crawlNode, self.relation, baseNode))            #Creates Relationship.
+        print "================================"
+
+        '''
+        Checks if EAN exists
+        '''
+
+        TestEan = None
+        if self.filteredDict.get("EAN", 0) == 0:
+            print "NO EAN"
+
+        else:
+            TestEan = self.filteredDict['EAN']
+        conn.findNodeByEAN(graph_db, TestEan)
+
+
+
+        time.sleep(1)
+
+        print "================================"
+        # crawlNode, = graph_db.create(self.filteredDict)                     #Creates Node.
+        # crawlNode.add_labels(str(self.label))                               #Adds label to the Node.
+        # graph_db.create(rel(crawlNode, self.relation, baseNode))            #Creates Relationship.
 
         print "== Done :) =="
+
+
+
