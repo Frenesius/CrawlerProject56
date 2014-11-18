@@ -57,7 +57,7 @@ class TestSpider(scrapy.Spider):
             key = response.xpath(configManager.getKeyxPath(x, self.path) % x).extract()         #Gets the key from the source. xPath is from the config.
             value= response.xpath(configManager.getValuexPath(x, self.path) % x ).extract()     #Gets the value from the source. xPath is from the config.
             nodeDict.update({str(key): str(value)})                                             #Adds Key:Value to the dict.
-        self.filteredDict = filter.FilterDict().filterDictionary(nodeDict)          #Filters the dict on empty values, '/xa0s' values and unicode.
+        self.filteredDict = filter.FilterDict().filterDictionary(nodeDict)                      #Filters the dict on empty values, '/xa0s' values and unicode.
 
 
         print "================================"
@@ -65,23 +65,21 @@ class TestSpider(scrapy.Spider):
         '''
         Checks if EAN exists
         '''
-        eanInDict = None
+        eanInDict = False
         TestEan = None
         if self.filteredDict.get("EAN", 0) == 0:    #If the EAN does not exist in Dict, it returns 0
             print "NO EAN"
             eanInDict = False
-
         else:                                       #If EAN exists it goes into this thing
             eanInDict = True
             TestEan = self.filteredDict['EAN']
             print conn.findNodeByEAN(graph_db, TestEan)
-            time.sleep(1)
 
-        if conn.findNodeByEAN(graph_db, TestEan) == False and eanInDict == True:
+        if conn.findNodeByEAN(graph_db, TestEan) == False and eanInDict == True:    #Checks if EAN is in Dict and if EAN does not exist in DB
             print "Creating node"
-            crawlNode, = graph_db.create(self.filteredDict)                     #Creates Node.
-            crawlNode.add_labels(str(self.label))                               #Adds label to the Node.
-            graph_db.create(rel(crawlNode, self.relation, baseNode))            #Creates Relationship.
+            crawlNode, = graph_db.create(self.filteredDict)                         #Creates Node.
+            crawlNode.add_labels(str(self.label))                                   #Adds label to the Node.
+            graph_db.create(rel(crawlNode, self.relation, baseNode))                #Creates Relationship.
         else:
             print "Node exists, skipping"
         print "================================"

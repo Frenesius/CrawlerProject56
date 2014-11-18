@@ -69,8 +69,21 @@ class SpecsSpider(scrapy.Spider):
         print "\tReading the config: %s" % conn.isRead
         print "\tDatabase connection: %s" % conn.isConnect
 
-        crawlNode, = graph_db.create(self.filteredDict)                     #Creates Node.
-        crawlNode.add_labels(str(self.label))                               #Adds label to the Node.
-        graph_db.create(rel(crawlNode, self.relation, baseNode))            #Creates Relationship.
+        eanInDict = False
+        eanNumber = None
+        if self.filteredDict.get("EAN", 0) == 0:    #If the EAN does not exist in Dict, it returns 0
+            print "!!\tEAN not found in Dict\t!!"
+            eanInDict = False
+        else:                                       #If EAN exists it goes into this thing
+            eanInDict = True
+            eanNumber = self.filteredDict['EAN']
+
+        if conn.findNodeByEAN(graph_db, eanNumber) == False and eanInDict == True:    #Checks if EAN is in Dict and if EAN does not exist in DB
+            print "Creating node"
+            crawlNode, = graph_db.create(self.filteredDict)                         #Creates Node.
+            crawlNode.add_labels(str(self.label))                                   #Adds label to the Node.
+            graph_db.create(rel(crawlNode, self.relation, baseNode))                #Creates Relationship.
+        else:
+            print "!!\tNode exists, skipping\t!!"
 
         print "== Done :) =="
