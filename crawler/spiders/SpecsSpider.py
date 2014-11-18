@@ -94,8 +94,7 @@ class SpecsSpider(scrapy.Spider):
             print "!!\tNode exists, skipping\t!!"
 
         try :
-            tempEan = str(self.filteredDict['EAN']).replace("/specificaties/","")
-            self.urlEanDict[self.start_urls[self.countUrl]] =  tempEan #Adds the url:EAN to dict, COUNTURL HAS TO BE 0
+            self.urlEanDict[str(self.start_urls[self.countUrl]).replace("specificaties/", "")] =  self.filteredDict['EAN'] #Adds the url:EAN to dict, COUNTURL HAS TO BE 0
         except:
             pass
         print self.countUrl,"/",len(self.start_urls)
