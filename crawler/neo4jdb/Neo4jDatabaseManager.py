@@ -68,7 +68,7 @@ class DatabaseConnectionNeo4j:
         :param EAN: The EAN number in dictionary
         :return:Boolean if the Node exists
         '''
-        found = False
+        found = None
         tempNode = None
         result = neo4j.CypherQuery(graph_db, "MATCH (n) WHERE n.EAN = \""+ str(EAN)+"\" RETURN n").execute()
         for r in result:

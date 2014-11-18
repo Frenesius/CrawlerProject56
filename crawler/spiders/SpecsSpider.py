@@ -4,6 +4,7 @@ import Config as config
 import crawler.filter.DictManager as filter
 from crawler.neo4jdb import Neo4jDatabaseManager
 from py2neo import rel, node
+import json
 
 class SpecsSpider(scrapy.Spider):
     '''
@@ -19,10 +20,14 @@ class SpecsSpider(scrapy.Spider):
     pathName = None       #Used to get ConfigFile
     relation = None       #Name of the relation between the BaseNode and Crawled Node
 
+    urlEanDict = {}
+    countUrl = 0
+
     start_urls = []
     allowed_domains = ["tweakers.net"]
     path = None
     filteredDict = {}
+    count = 0
 
     if name in config.componentList:
         start_urls = config.componentList[name]
@@ -69,7 +74,7 @@ class SpecsSpider(scrapy.Spider):
         print "\tReading the config: %s" % conn.isRead
         print "\tDatabase connection: %s" % conn.isConnect
 
-        eanInDict = False
+        eanInDict = None
         eanNumber = None
         if self.filteredDict.get("EAN", 0) == 0:    #If the EAN does not exist in Dict, it returns 0
             print "!!\tEAN not found in Dict\t!!"
@@ -86,4 +91,14 @@ class SpecsSpider(scrapy.Spider):
         else:
             print "!!\tNode exists, skipping\t!!"
 
+        self.urlEanDict[self.start_urls[self.countUrl]] =  self.filteredDict['EAN'] #Adds the url:EAN to dict
+        self.countUrl += 1
+
+        if len(self.start_urls)-1 == self.countUrl:                                 #at the end of the crawling process writes to file
+            with open('crawler/price-config/'+self.label+'.json', 'wb') as fp:
+                json.dump(self.urlEanDict, fp)
+
         print "== Done :) =="
+
+
+
