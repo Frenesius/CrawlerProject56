@@ -21,13 +21,14 @@ class SpecsSpider(scrapy.Spider):
     relation = None       #Name of the relation between the BaseNode and Crawled Node
 
     urlEanDict = {}
-    countUrl = 0
+
+    countUrl = -1
+    JSONfilename = None
 
     start_urls = []
     allowed_domains = ["tweakers.net"]
     path = None
     filteredDict = {}
-    count = 0
 
     if name in config.componentList:
         start_urls = config.componentList[name]
@@ -42,10 +43,11 @@ class SpecsSpider(scrapy.Spider):
         :param response: Response from Scrapy spider
         :return: None
         '''
-        self.parseSource(response)
+        self.parseSource(response, self.JSONfilename)
 
-    def parseSource(self, response):
+    def parseSource(self, response, JSONfilename):
         print "== Initializing =="
+        self.countUrl += 1
         conn = Neo4jDatabaseManager.DatabaseConnectionNeo4j()               #initiates connection
         graph_db = conn.openDb()                                            #initiates connection
 
@@ -91,12 +93,15 @@ class SpecsSpider(scrapy.Spider):
         else:
             print "!!\tNode exists, skipping\t!!"
 
-        self.urlEanDict[self.start_urls[self.countUrl]] =  self.filteredDict['EAN'] #Adds the url:EAN to dict
-        self.countUrl += 1
-
-        if len(self.start_urls)-1 == self.countUrl:                                 #at the end of the crawling process writes to file
-            with open('crawler/price-config/'+self.label+'.json', 'wb') as fp:
+        try :
+            self.urlEanDict[self.start_urls[self.countUrl]] =  self.filteredDict['EAN'] #Adds the url:EAN to dict, COUNTURL HAS TO BE 0
+        except:
+            pass
+        print self.countUrl,"/",len(self.start_urls)
+        if len(self.start_urls) - 1 == self.countUrl:                                 #at the end of the crawling process writes to file
+            with open(str('crawler/price-config/'+JSONfilename+'.json'), 'wb') as fp:
                 json.dump(self.urlEanDict, fp)
+
 
         print "== Done :) =="
 

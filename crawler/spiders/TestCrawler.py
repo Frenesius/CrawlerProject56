@@ -17,6 +17,8 @@ class TestSpider(scrapy.Spider):
     '''
     name = "TESTcrawl"           #Name to craw, gets used to get the start_urls[]
     label = "PERIPHERALS"        #Name of the Label that needs to be added to the Crawled Node
+    label2 = "TEST"        #Name of the Label that needs to be added to the Crawled Node
+
     pathName = "TESTpath"        #Used to get ConfigFile
     relation = "TEST"            #Name of the relation between the BaseNode and Crawled Node
 
@@ -91,10 +93,11 @@ class TestSpider(scrapy.Spider):
 
         self.urlEanDict[self.start_urls[self.countUrl]] =  self.filteredDict['EAN'] #adds stuff to dict
         self.countUrl += 1
-        print self.urlEanDict
         if len(self.start_urls)-1 == self.countUrl:                                 #at the end of the crawling process writes to file
-            with open('crawler/price-config/TEST.json', 'wb') as fp:
+            with open('crawler/price-config/'+self.label2+'.json', 'wb') as fp:
                 json.dump(self.urlEanDict, fp)
+                print "\tWritten to Json"
+        print 'crawler/price-config/'+self.label2+'.json'
         print "== Done :) =="
 
 
