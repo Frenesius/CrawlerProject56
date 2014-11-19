@@ -56,7 +56,6 @@ class ParseConfig:
         conf = ConfigParser.ConfigParser()
         file = filePath
         conf.read(file)
-
         if conf.has_option("ROW"+str(int), "xpathvalue"):
             customPath = conf.get("ROW"+str(int), "xpathvalue")
         else:
@@ -67,9 +66,53 @@ class ParseConfig:
         conf = ConfigParser.ConfigParser()
         file = filePath
         conf.read(file)
-
         if conf.has_option("ROW"+str(int), "xpathkey"):
             customPath = conf.get("ROW"+str(int), "xpathkey")
         else:
             customPath = conf.get("DEFAULT", "xpathkey")
         return customPath
+
+    def getxPathPriceCrawler(self, int, filePath):
+        conf = ConfigParser.ConfigParser()
+        file = filePath
+        conf.read(file)
+        pathDict = {
+            'xpathshopname':None,
+            'xpathshopscore':None,
+            'xpathdelivery':None,
+            'xpathbareprice':None,
+            'xpathshopprice':None,
+            'xpathclickout':None,
+            }
+        #####
+        if conf.has_option("ROW"+str(int), "xpathshopname"):
+            pathDict['xpathshopname'] = conf.get("ROW"+str(int), "xpathshopname")
+        else:
+            pathDict['xpathshopname'] = conf.get("DEFAULT", "xpathshopname")
+        #####
+        if conf.has_option("ROW"+str(int), "xpathshopscore"):
+            pathDict['xpathshopscore'] = conf.get("ROW"+str(int), "xpathshopscore")
+        else:
+            pathDict['xpathshopscore'] = conf.get("DEFAULT", "xpathshopscore")
+        #####
+        if conf.has_option("ROW"+str(int), "xpathdelivery"):
+            pathDict['xpathdelivery'] = conf.get("ROW"+str(int), "xpathdelivery")
+        else:
+            pathDict['xpathdelivery'] = conf.get("DEFAULT", "xpathdelivery")
+        #####
+        if conf.has_option("ROW"+str(int), "xpathbareprice"):
+            pathDict['xpathbareprice'] = conf.get("ROW"+str(int), "xpathbareprice")
+        else:
+            pathDict['xpathbareprice'] = conf.get("DEFAULT", "xpathbareprice")
+        #####
+        if conf.has_option("ROW"+str(int), "xpathshopprice"):
+            pathDict['xpathshopprice'] = conf.get("ROW"+str(int), "xpathshopprice")
+        else:
+            pathDict['xpathshopprice'] = conf.get("DEFAULT", "xpathshopprice")
+        #####
+        if conf.has_option("ROW"+str(int), "xpathclickout"):
+            pathDict['xpathclickout'] = conf.get("ROW"+str(int), "xpathclickout")
+        else:
+            pathDict['xpathclickout'] = conf.get("DEFAULT", "xpathclickout")
+        #####
+        return pathDict

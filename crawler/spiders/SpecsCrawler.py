@@ -143,7 +143,7 @@ class HDDSpider(SpecsSpider.SpecsSpider):
         print("ERROR: key does not exist in dictonairy")
 
     def parse(self, response):
-        SpecsSpider.SpecsSpider.parseSource(self, response)
+        SpecsSpider.SpecsSpider.parseSource(self, response, self.JSONfilename)
 class OpticalDriveSpider(SpecsSpider.SpecsSpider):
     name = "OPTICALDRIVEcrawl"           #Name to craw, gets used to get the start_urls[]
     label = "OPTICALDRIVE"               #Name of the Label that needs to be added to the Crawled Node

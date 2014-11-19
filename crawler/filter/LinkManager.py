@@ -1,4 +1,6 @@
 import ConfigParser
+import json
+
 class ParseLinks():
     def __init__(self):
         pass
@@ -32,3 +34,24 @@ class ParseLinks():
     def printDebug(self, arr):
         for x in range(len(arr)):
             print arr[x]
+
+    def getPriceConfigDict(self, path):
+        json_data=open(path)
+        a = json_data.readline()
+        data = json.loads(a)
+        json_data.close()
+        return data
+
+    def getPriceCrawlLinks(self, path):
+        dict = self.getPriceConfigDict(path)
+        LinksList = []
+        for key, value in dict.iteritems():
+            LinksList.append(str(key))
+        return LinksList
+
+    def getEANList(self, path):
+        dict = self.getPriceConfigDict(path)
+        EANList = []
+        for key, value in dict.iteritems():
+            EANList.append(str(value))
+        return EANList

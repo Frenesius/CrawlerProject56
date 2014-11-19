@@ -73,3 +73,14 @@ componentList = {"PROCESSORcrawl":cpu_urls, "PROCESSORpath": cpu_path,          
                  }
 
 databaseConfig = {"db_path":db_path}
+#########################
+
+#SOUNDCARD
+
+soundcard_path_price = "crawler/configs/price/SOUNDCARD.conf"
+soundcard_urls_price = linkManager.getPriceCrawlLinks("crawler/price-config/SOUNDCARD.json")
+soundcard_EAN_price = linkManager.getEANList("crawler/price-config/SOUNDCARD.json")
+
+
+price_configs = {"SOUNDCARDpath":soundcard_path_price, "SOUNDCARDprice":soundcard_urls_price, "SOUNDCARDEAN":soundcard_EAN_price,
+}

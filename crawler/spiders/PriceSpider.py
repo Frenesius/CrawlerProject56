@@ -14,19 +14,23 @@ class SpecsSpider(scrapy.Spider):
         - relation      Relation name
 
     '''
-    name = None           #Name to craw, gets used to get the start_urls[]
-    label = None          #Name of the Label that needs to be added to the Crawled Node
-    pathName = None       #Used to get ConfigFile
+    name = "SOUNDCARDprice"           #Name to craw, gets used to get the start_urls[]
+    #label = None          #Name of the Label that needs to be added to the Crawled Node
+    pathName = "SOUNDCARDpath"      #Used to get ConfigFile
     relation = None       #Name of the relation between the BaseNode and Crawled Node
-
+    arrEanIdentifier = "SOUNDCARDEAN"
     start_urls = []
     allowed_domains = ["tweakers.net"]
     path = None
+    JSONpath = "crawler/price-config/SOUNDCARD.json"
     filteredDict = {}
+    arrEan = []
+    y = -1
 
-    if name in config.componentList:
-        start_urls = config.componentList[name]
-        path = config.componentList[pathName]
+    if name in config.price_configs:
+        start_urls = config.price_configs[name]
+        path = config.price_configs[pathName]
+        arrEan = config.price_configs[arrEanIdentifier]
     else:
         print("ERROR: key does not exist in dictonairy")
 
@@ -40,50 +44,52 @@ class SpecsSpider(scrapy.Spider):
         self.parseSource(response)
 
     def parseSource(self, response):
+        print "START"
         print "== Initializing =="
+        self.y += 1
+        nodeEAN = None
         conn = Neo4jDatabaseManager.DatabaseConnectionNeo4j()               #initiates connection
         graph_db = conn.openDb()                                            #initiates connection
 
         nodeDict = dict()                                                   #Makes a dictionary for the node
-
-        baseNode = conn.getNode(graph_db, self.label)                       #Gets the BaseNode from the database
-        baseNode.get_properties()                                           #Need to ask for properties to use the BaseNode (Workaround)
-        baseNode.get_labels()                                               #Need to ask for labels to use the BaseNode (Workaround)
+        #Try to get shopname node, fails? create
+        # baseNode = conn.getNode(graph_db, self.label)                       #Gets the BaseNode from the database
+        # baseNode.get_properties()                                           #Need to ask for properties to use the BaseNode (Workaround)
+        # baseNode.get_labels()                                               #Need to ask for labels to use the BaseNode (Workaround)
 
         print "\tParsing config"
         configManager = ConfigManager.ParseConfig()                                     #Gets the config and fills the variables
         listCrawl = configManager.getCrawlList(self.path)                               #A list with all the xpaths
+
         print "\t\tSections Found: " + str(configManager.sumSection())                  #Shows how many Sections are found in the Config.
 
         for x in listCrawl:
-            key = response.xpath(configManager.getKeyxPath(x, self.path) % x).extract()         #Gets the key from the source. xPath is from the config.
-            value= response.xpath(configManager.getValuexPath(x, self.path) % x ).extract()     #Gets the value from the source. xPath is from the config.
-            nodeDict.update({str(key): str(value)})                                             #Adds Key:Value to the dict.
+
+            tempDict = configManager.getxPathPriceCrawler(x, self.path)
+            xpathshopname = response.xpath(str(tempDict['xpathshopname']% x)).extract()
+            xpathshopscore = response.xpath(str(tempDict['xpathshopscore']% x)).extract()
+            xpathdelivery = response.xpath(str(tempDict['xpathdelivery']% x)).extract()
+            xpathbareprice = response.xpath(str(tempDict['xpathbareprice']% x)).extract()
+            xpathshopprice = response.xpath(str(tempDict['xpathshopprice']% x)).extract()
+            xpathclickout = response.xpath(str(tempDict['xpathclickout']% x)).extract()
+            nodeDict.update(
+                {
+                   "xpathshopname":xpathshopname,
+                   "xpathshopscore":xpathshopscore,
+                   "xpathdelivery":xpathdelivery,
+                   "xpathbareprice":xpathbareprice,
+                   "xpathshopprice":xpathshopprice,
+                   "xpathclickout":xpathclickout,
+                   "EAN":self.arrEan[self.y]
+                }
+            )
         print "\tDone parsing config"
 
-        print "\tParsing Dict"
-        self.filteredDict = filter.FilterDict().filterDictionary(nodeDict)          #Filters the dict on empty values, '/xa0s' values and unicode.
+        self.filteredDict = filter.FilterDict().filterUnicode(nodeDict)          #Filters the dict on empty values, '/xa0s' values and unicode.
         print "\tDone Parsing Dict"
 
         print "== Adding Node to database =="
         print "\tReading the config: %s" % conn.isRead
         print "\tDatabase connection: %s" % conn.isConnect
-
-        eanInDict = False
-        eanNumber = None
-        if self.filteredDict.get("EAN", 0) == 0:    #If the EAN does not exist in Dict, it returns 0
-            print "!!\tEAN not found in Dict\t!!"
-            eanInDict = False
-        else:                                       #If EAN exists it goes into this thing
-            eanInDict = True
-            eanNumber = self.filteredDict['EAN']
-
-        if conn.findNodeByEAN(graph_db, eanNumber) == False and eanInDict == True:    #Checks if EAN is in Dict and if EAN does not exist in DB
-            print "Creating node"
-            crawlNode, = graph_db.create(self.filteredDict)                         #Creates Node.
-            crawlNode.add_labels(str(self.label))                                   #Adds label to the Node.
-            graph_db.create(rel(crawlNode, self.relation, baseNode))                #Creates Relationship.
-        else:
-            print "!!\tNode exists, skipping\t!!"
 
         print "== Done :) =="
