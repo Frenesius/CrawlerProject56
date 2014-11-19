@@ -66,6 +66,8 @@ class SpecsSpider(scrapy.Spider):
             key = response.xpath(configManager.getKeyxPath(x, self.path) % x).extract()         #Gets the key from the source. xPath is from the config.
             value= response.xpath(configManager.getValuexPath(x, self.path) % x ).extract()     #Gets the value from the source. xPath is from the config.
             nodeDict.update({str(key): str(value)})                                             #Adds Key:Value to the dict.
+            if len(listCrawl) == x:
+                nodeDict.update({"url":str(self.start_urls[self.countUrl]).replace("specificaties/","")})
         print "\tDone parsing config"
 
         print "\tParsing Dict"
