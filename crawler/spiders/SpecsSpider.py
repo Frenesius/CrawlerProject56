@@ -46,7 +46,7 @@ class SpecsSpider(scrapy.Spider):
         self.parseSource(response, self.JSONfilename)
 
     def parseSource(self, response, JSONfilename):
-        print "== Initializing =="
+        print "\033[95m     == Initializing =="
         self.countUrl += 1
         conn = Neo4jDatabaseManager.DatabaseConnectionNeo4j()               #initiates connection
         graph_db = conn.openDb()                                            #initiates connection
@@ -72,18 +72,18 @@ class SpecsSpider(scrapy.Spider):
         self.filteredDict = filter.FilterDict().filterDictionary(nodeDict)          #Filters the dict on empty values, '/xa0s' values and unicode.
         print "\tDone Parsing Dict"
 
-        print "== Adding Node to database =="
-        print "\tReading the config: %s" % conn.isRead
-        print "\tDatabase connection: %s" % conn.isConnect
+        print "\033[95m     == Adding Node to database =="
+        print "             \tReading the config: %s" % conn.isRead
+        print "             \tDatabase connection: %s" % conn.isConnect
 
         eanInDict = None
         eanNumber = None
-        if self.filteredDict.get("EAN", 0) == 0:    #If the EAN does not exist in Dict, it returns 0
-            print "!!\tEAN not found in Dict\t!!"
-            eanInDict = False
-        else:                                       #If EAN exists it goes into this thing
+        if "EAN" in self.filteredDict:    #If the EAN does not exist in Dict, it returns 0
             eanInDict = True
             eanNumber = self.filteredDict['EAN']
+        else:                                       #If EAN exists it goes into this thing
+            print "!!\tEAN not found in Dict\t!!"
+            eanInDict = False
 
         if conn.findNodeByEAN(graph_db, eanNumber) == False and eanInDict == True:    #Checks if EAN is in Dict and if EAN does not exist in DB
             print "Creating node"
@@ -96,14 +96,15 @@ class SpecsSpider(scrapy.Spider):
         try :
             self.urlEanDict[str(self.start_urls[self.countUrl]).replace("specificaties/", "")] =  self.filteredDict['EAN'] #Adds the url:EAN to dict, COUNTURL HAS TO BE 0
         except:
-            pass
-        print self.countUrl,"/",len(self.start_urls)
+            print "Failed to add EAN to new Dict"
+
+        print '\033[31m', self.countUrl,"/",len(self.start_urls), '\033[30m'
         if len(self.start_urls) - 1 == self.countUrl:                                 #at the end of the crawling process writes to file
             with open(str('crawler/price-config/'+JSONfilename+'.json'), 'wb') as fp:
                 json.dump(self.urlEanDict, fp)
 
 
-        print "== Done :) =="
+        print "\033[95m   == Done :) =="
 
 
 
