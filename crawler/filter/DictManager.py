@@ -91,3 +91,11 @@ class FilterDict():
             tempKey2 = str(tempKey).replace("']", "")
             filteredArr.append(tempKey2)
         return filteredArr
+
+    def checkEmptyDicts(self, dict):
+        isEmpty = None
+        if len(str(dict['xpathshopname'])) != 5:
+            isEmpty = False
+        else:
+            isEmpty = True
+        return isEmpty

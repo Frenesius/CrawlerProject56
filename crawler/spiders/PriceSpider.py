@@ -72,17 +72,24 @@ class SpecsSpider(scrapy.Spider):
             xpathbareprice = response.xpath(str(tempDict['xpathbareprice']% x)).extract()
             xpathshopprice = response.xpath(str(tempDict['xpathshopprice']% x)).extract()
             xpathclickout = response.xpath(str(tempDict['xpathclickout']% x)).extract()
-            nodeDict.update(
-                {
-                   "xpathshopname":xpathshopname,
-                   "xpathshopscore":xpathshopscore,
-                   "xpathdelivery":xpathdelivery,
-                   "xpathbareprice":xpathbareprice,
-                   "xpathshopprice":xpathshopprice,
-                   "xpathclickout":xpathclickout,
-                   "EAN":self.arrEan[self.y]
-                }
-            )
+
+            nodeDict["xpathshopname"] = xpathshopname,
+            nodeDict["xpathshopscore"] = xpathshopscore,
+            nodeDict["xpathdelivery"] = xpathdelivery,
+            nodeDict["xpathbareprice"] = xpathbareprice,
+            nodeDict["xpathshopprice"] = xpathshopprice,
+            nodeDict["xpathclickout"] = xpathclickout,
+            nodeDict["EAN"] = self.arrEan[self.y]
+
+            if filter.FilterDict().checkEmptyDicts(nodeDict) == True:
+                pass
+            else:
+                self.filteredDict = filter.FilterDict().filterUnicode(nodeDict)
+                print "====================================="
+                print self.filteredDict
+
+
+
         print "\tDone parsing config"
 
         self.filteredDict = filter.FilterDict().filterUnicode(nodeDict)          #Filters the dict on empty values, '/xa0s' values and unicode.
@@ -91,5 +98,5 @@ class SpecsSpider(scrapy.Spider):
         print "== Adding Node to database =="
         print "\tReading the config: %s" % conn.isRead
         print "\tDatabase connection: %s" % conn.isConnect
-
+        print self.filteredDict
         print "== Done :) =="
