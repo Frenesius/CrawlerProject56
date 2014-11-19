@@ -102,4 +102,28 @@ class DatabaseConnectionNeo4j:
             print "EAN not found!"
         return node
 
+    def getNodeByName(self, graph_db, name):
+        '''
+        Finds node by EAN number
+        :param graph_db:The graph_db service
+        :param EAN: The EAN number in dictionary
+        :return:Node
+        '''
+        tempNode = None
+        node = None
+        result = neo4j.CypherQuery(graph_db, "MATCH (n) WHERE n.name = \""+ str(name)+"\" RETURN n").execute()
+        for r in result:
+            tempNode = r[0]
+        try:
+            uri = 'http://localhost:7474/db/data/node/' + str(tempNode._id) #Node does exist, dont create node
+            node = py2neo.neo4j.Node(uri)
+        except:
+            #Exception is given when the EAN does not exist
+            print "EAN not found!"
+        return node
+
+
+
+
+
 

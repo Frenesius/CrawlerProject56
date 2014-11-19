@@ -4,6 +4,7 @@ import Config as config
 import crawler.filter.DictManager as filter
 from crawler.neo4jdb import Neo4jDatabaseManager
 from py2neo import rel, node
+import time
 
 class SpecsSpider(scrapy.Spider):
     '''
@@ -44,59 +45,78 @@ class SpecsSpider(scrapy.Spider):
         self.parseSource(response)
 
     def parseSource(self, response):
-        print "START"
         print "== Initializing =="
         self.y += 1
-        nodeEAN = None
         conn = Neo4jDatabaseManager.DatabaseConnectionNeo4j()               #initiates connection
         graph_db = conn.openDb()                                            #initiates connection
-
         nodeDict = dict()                                                   #Makes a dictionary for the node
-        #Try to get shopname node, fails? create
-        # baseNode = conn.getNode(graph_db, self.label)                       #Gets the BaseNode from the database
-        # baseNode.get_properties()                                           #Need to ask for properties to use the BaseNode (Workaround)
-        # baseNode.get_labels()                                               #Need to ask for labels to use the BaseNode (Workaround)
 
         print "\tParsing config"
         configManager = ConfigManager.ParseConfig()                                     #Gets the config and fills the variables
         listCrawl = configManager.getCrawlList(self.path)                               #A list with all the xpaths
 
-        print "\t\tSections Found: " + str(configManager.sumSection())                  #Shows how many Sections are found in the Config.
-
         for x in listCrawl:
-
             tempDict = configManager.getxPathPriceCrawler(x, self.path)
-            xpathshopname = response.xpath(str(tempDict['xpathshopname']% x)).extract()
-            xpathshopscore = response.xpath(str(tempDict['xpathshopscore']% x)).extract()
-            xpathdelivery = response.xpath(str(tempDict['xpathdelivery']% x)).extract()
-            xpathbareprice = response.xpath(str(tempDict['xpathbareprice']% x)).extract()
-            xpathshopprice = response.xpath(str(tempDict['xpathshopprice']% x)).extract()
-            xpathclickout = response.xpath(str(tempDict['xpathclickout']% x)).extract()
-
-            nodeDict["xpathshopname"] = xpathshopname,
-            nodeDict["xpathshopscore"] = xpathshopscore,
-            nodeDict["xpathdelivery"] = xpathdelivery,
-            nodeDict["xpathbareprice"] = xpathbareprice,
-            nodeDict["xpathshopprice"] = xpathshopprice,
-            nodeDict["xpathclickout"] = xpathclickout,
+            nodeDict["xpathshopname"] = response.xpath(str(tempDict['xpathshopname']% x)).extract()
+            nodeDict["xpathshopscore"] = response.xpath(str(tempDict['xpathshopscore']% x)).extract()
+            nodeDict["xpathdelivery"] = response.xpath(str(tempDict['xpathdelivery']% x)).extract()
+            nodeDict["xpathbareprice"] = response.xpath(str(tempDict['xpathbareprice']% x)).extract()
+            nodeDict["xpathshopprice"] = response.xpath(str(tempDict['xpathshopprice']% x)).extract()
+            nodeDict["xpathclickout"] = response.xpath(str(tempDict['xpathclickout']% x)).extract()
             nodeDict["EAN"] = self.arrEan[self.y]
 
             if filter.FilterDict().checkEmptyDicts(nodeDict) == True:
                 pass
             else:
                 self.filteredDict = filter.FilterDict().filterUnicode(nodeDict)
-                print "====================================="
                 print self.filteredDict
+                componentNode = conn.getNodeByEAN(graph_db, str(nodeDict["EAN"]))           #Gets the BaseNode from the database
+                componentNode.get_properties()                                           #Need to ask for properties to use the BaseNode (Workaround)
+                componentNode.get_labels()                                                #Need to ask for labels to use the BaseNode (Workaround)
+                try:
+                    shopNode = conn.getNodeByName(graph_db, str(nodeDict["xpathshopname"]))
+                    shopNode.get_properties()                                           #Need to ask for properties to use the BaseNode (Workaround)
+                    shopNode.get_labels()                                                #Need to ask for labels to use the BaseNode (Workaround)
+                except:
+                    print "Shop not found!\nCreating new shop."
+
+                    graph_db.create({"name": str(nodeDict["xpathshopname"])})
+                    newShop = conn.getNodeByName(graph_db, str(nodeDict["xpathshopname"]))
+                    newShop.add_labels("SHOP", str(nodeDict["xpathshopname"]))
+                try:
+                    shopNode = conn.getNodeByEAN(graph_db, str(nodeDict["EAN"]))
+                    shopNode.get_properties()                                           #Need to ask for properties to use the BaseNode (Workaround)
+                    shopNode.get_labels()                                                #Need to ask for labels to use the BaseNode (Workaround)
+                except:
+                    print "NOOPOE"
+                    time.wait(2)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
         print "\tDone parsing config"
 
-        self.filteredDict = filter.FilterDict().filterUnicode(nodeDict)          #Filters the dict on empty values, '/xa0s' values and unicode.
         print "\tDone Parsing Dict"
 
         print "== Adding Node to database =="
         print "\tReading the config: %s" % conn.isRead
         print "\tDatabase connection: %s" % conn.isConnect
-        print self.filteredDict
         print "== Done :) =="

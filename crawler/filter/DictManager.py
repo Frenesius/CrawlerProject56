@@ -94,7 +94,7 @@ class FilterDict():
 
     def checkEmptyDicts(self, dict):
         isEmpty = None
-        if len(str(dict['xpathshopname'])) != 5:
+        if len(str(dict['xpathshopname'])) > 6:
             isEmpty = False
         else:
             isEmpty = True
