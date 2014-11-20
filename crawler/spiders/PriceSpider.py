@@ -101,7 +101,7 @@ class SpecsSpider(scrapy.Spider):
                 print "Creating relation"
                 print componentNode._properties
                 print shopNode._properties
-                graph_db.create(rel(shopNode, "SELLS", componentNode))
+                graph_db.create(rel(shopNode, "SELLS", componentNode, {timestamp:str(self.filteredDict["xpathbareprice"])}))
 
                 print "Writing to Mysql"
                 mysqlManager.insertPrice(db, str(self.filteredDict["EAN"]), str(self.filteredDict["xpathshopname"]), str(self.filteredDict["xpathdelivery"]), str(self.filteredDict["xpathbareprice"]), str(self.filteredDict["xpathshopprice"]), str(self.filteredDict["xpathclickout"]), timestamp)
