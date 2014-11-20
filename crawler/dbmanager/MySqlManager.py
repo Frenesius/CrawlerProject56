@@ -1,5 +1,8 @@
 __author__ = 'j'
 import MySQLdb
+import datetime
+from time import  strftime
+
 class MySqlManager:
     host = "localhost"
     user = "user1"
@@ -7,9 +10,13 @@ class MySqlManager:
     db = "hardwareprice"
     DATABASE_NAME = "hardwareprice"
     TABLE_PRICE = "hardwareprice"
-    TABLE_PRICE_COLUMN1 = "ean"
-    TABLE_PRICE_COLUMN2 = "price"
-    TABLE_PRICE_COLUMN3 = "timestamp"
+    TABLE_PRICE_EAN = "ean"
+    TABLE_PRICE_SHOPNAME = "shopname"
+    TABLE_PRICE_DELIVERY = "delivery"
+    TABLE_PRICE_PRICEEX = "priceex"
+    TABLE_PRICE_PRICEINC = "priceinc"
+    TABLE_PRICE_LINKSHOP = "linkshop"
+    TABLE_PRICE_TIMESTAMP = "timestamp"
 
 
     def __init__(self):
@@ -22,21 +29,23 @@ class MySqlManager:
         return db
 
 
-    def insertPrice(self, db, EAN, price, timestamp):
+    def insertPrice(self, db, EAN, shopname, delivery, priceex, priceinc, linkshop, timestamp):
         isExecuted = False
         try:
             a = MySqlManager()
             cursor = db.cursor()
-            query = "INSERT INTO "+a.TABLE_PRICE+" ("+a.TABLE_PRICE_COLUMN1+", "+a.TABLE_PRICE_COLUMN2+", "+a.TABLE_PRICE_COLUMN3+")\
-                VALUES ('"+EAN+"', '"+price+"', '"+timestamp+"')"
+            priceex = str(priceex).replace(",", ".")
+            priceinc = str(priceinc).replace(",", ".")
+            query = "INSERT INTO " \
+                    +a.TABLE_PRICE+" ("+a.TABLE_PRICE_EAN+", "+a.TABLE_PRICE_SHOPNAME+", "+a.TABLE_PRICE_DELIVERY+", "+a.TABLE_PRICE_PRICEEX+", "+a.TABLE_PRICE_PRICEINC+", "+a.TABLE_PRICE_LINKSHOP+", "+a.TABLE_PRICE_TIMESTAMP+") " \
+                                "VALUES ('"+EAN+"', '"+shopname+"', '"+delivery+"', '"+priceex+"', '"+priceinc+"', '"+linkshop+"', '"+timestamp+"')"
             cursor.execute(query)
-            b.commit()
+            db.commit()
             isExecuted = True
         except:
-            isExecuted = False
+            print "ERROR"
         return isExecuted
-
-
-
-
-
+    def getTimestamp(self):
+        timestamp = ""
+        timestamp = strftime("%Y-%m-%d %H:%M:%S")
+        return timestamp

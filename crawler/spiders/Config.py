@@ -78,9 +78,15 @@ databaseConfig = {"db_path":db_path}
 #SOUNDCARD
 
 soundcard_path_price = "crawler/configs/price/SOUNDCARD.conf"
-soundcard_urls_price = linkManager.getPriceCrawlLinks("crawler/price-config/SOUNDCARD.json")
-soundcard_EAN_price = linkManager.getEANList("crawler/price-config/SOUNDCARD.json")
+soundcard_json_price = "crawler/price-config/SOUNDCARD.json"
+soundcard_urls_price = linkManager.getPriceCrawlLinks(soundcard_json_price)
+soundcard_EAN_price = linkManager.getEANList(soundcard_json_price)
+
+price_configs = {
+    "SOUNDCARDpath":soundcard_path_price, "SOUNDCARDprice":soundcard_urls_price, "SOUNDCARDEAN":soundcard_EAN_price, "SOUNDCARDjson":soundcard_json_price
 
 
-price_configs = {"SOUNDCARDpath":soundcard_path_price, "SOUNDCARDprice":soundcard_urls_price, "SOUNDCARDEAN":soundcard_EAN_price,
+
+
+
 }

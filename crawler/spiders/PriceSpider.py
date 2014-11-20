@@ -5,8 +5,6 @@ import crawler.filter.DictManager as filter
 from crawler.dbmanager import Neo4jDatabaseManager
 from crawler.dbmanager import MySqlManager
 from py2neo import rel, node
-import time
-import MySQLdb
 
 class SpecsSpider(scrapy.Spider):
     '''
@@ -18,7 +16,6 @@ class SpecsSpider(scrapy.Spider):
 
     '''
     name = "SOUNDCARDprice"           #Name to craw, gets used to get the start_urls[]
-    #label = None          #Name of the Label that needs to be added to the Crawled Node
     pathName = "SOUNDCARDpath"      #Used to get ConfigFile
     arrEanIdentifier = "SOUNDCARDEAN"
     relation = None       #Name of the relation between the BaseNode and Crawled Node
@@ -27,7 +24,7 @@ class SpecsSpider(scrapy.Spider):
     allowed_domains = ["tweakers.net"]
     path = None
 
-    JSONpath = "crawler/price-config/SOUNDCARD.json"
+    JSONpath = "SOUNDCARDjson"
     filteredDict = {}
     arrEan = []
     y = -1
@@ -37,6 +34,7 @@ class SpecsSpider(scrapy.Spider):
         start_urls = config.price_configs[name]
         path = config.price_configs[pathName]
         arrEan = config.price_configs[arrEanIdentifier]
+        JSONpath = config.price_configs[JSONpath]
     else:
         print("ERROR: key does not exist in dictonairy")
 
@@ -47,13 +45,17 @@ class SpecsSpider(scrapy.Spider):
         :param response: Response from Scrapy spider
         :return: None
         '''
-        self.parseSource(response)
+        self.altParse(response)
 
-    def parseSource(self, response):
+    def altParse(self, response):
         print "== Initializing =="
-        self.y += 1
+        mysqlManager = MySqlManager.MySqlManager()
+        db = mysqlManager.openDb()
         conn = Neo4jDatabaseManager.DatabaseConnectionNeo4j()               #initiates connection
         graph_db = conn.openDb()                                            #initiates connection
+
+        timestamp = mysqlManager.getTimestamp()
+        self.y += 1
         nodeDict = dict()                                                   #Makes a dictionary for the node
 
         print "\tParsing config"
@@ -74,17 +76,16 @@ class SpecsSpider(scrapy.Spider):
                 pass
             else:
                 self.filteredDict = filter.FilterDict().filterPriceDict(nodeDict)
-                print self.filteredDict
                 componentNode = conn.getNodeByEAN(graph_db, str(nodeDict["EAN"]))         #Gets the BaseNode from the database
                 componentNode.get_properties()                                            #Need to ask for properties to use the BaseNode (Workaround)
                 componentNode.get_labels()                                                #Need to ask for labels to use the BaseNode (Workaround)
+                shopNode = None
                 try:
                     shopNode = conn.getNodeByName(graph_db, str(nodeDict["xpathshopname"]))
                     shopNode.get_properties()                                             #Need to ask for properties to use the BaseNode (Workaround)
                     shopNode.get_labels()                                                 #Need to ask for labels to use the BaseNode (Workaround)
                 except:
                     print "Shop not found!\nCreating new shop."
-
                     graph_db.create({"name": str(nodeDict["xpathshopname"])})
                     newShop = conn.getNodeByName(graph_db, str(nodeDict["xpathshopname"]))
                     newShop.add_labels("SHOP", str(nodeDict["xpathshopname"]))
@@ -95,6 +96,11 @@ class SpecsSpider(scrapy.Spider):
                 except:
                     print "!! ShopNode not found !!"
 
+                print "Creating relation"
+                graph_db.create(rel(componentNode, "SELLS", shopNode))
+
+                print "Writing to Mysql"
+                mysqlManager.insertPrice(db, str(self.filteredDict["EAN"]), str(self.filteredDict["xpathshopname"]), str(self.filteredDict["xpathdelivery"]), str(self.filteredDict["xpathbareprice"]), str(self.filteredDict["xpathshopprice"]), str(self.filteredDict["xpathclickout"]), timestamp)
 
 
 
