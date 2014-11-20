@@ -20,6 +20,10 @@ class FilterDict():
         filteredDict = self.filterUnicode(filteredDict)
 
         return filteredDict
+    def filterPriceDict(self, dict):
+        newDict = {}
+        newDict = self.filterEuroSign(self.filterUnicode(dict))
+        return newDict
 
     def filterEmpty(self, dictionary):
         '''
@@ -84,6 +88,18 @@ class FilterDict():
             y+=1
         return filteredDict
 
+    def filterEuroSign(self, dict):
+        filteredDict = {}
+        y = 0
+        for x in dict:
+            key =  dict.keys()[y]
+            value =  dict.values()[y]
+            tempKey2 = str(key).replace("\\u20ac ", "")
+            tempValue2 = str(value).replace("\\u20ac ", "")
+            filteredDict.update({tempKey2: tempValue2})
+            y+=1
+        return filteredDict
+
     def filterArrUnicode(self, arr):
         filteredArr = []
         for x in arr:
@@ -91,6 +107,7 @@ class FilterDict():
             tempKey2 = str(tempKey).replace("']", "")
             filteredArr.append(tempKey2)
         return filteredArr
+
 
     def checkEmptyDicts(self, dict):
         isEmpty = None

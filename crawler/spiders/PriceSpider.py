@@ -2,9 +2,11 @@ import scrapy
 from crawler import ConfigManager
 import Config as config
 import crawler.filter.DictManager as filter
-from crawler.neo4jdb import Neo4jDatabaseManager
+from crawler.dbmanager import Neo4jDatabaseManager
+from crawler.dbmanager import MySqlManager
 from py2neo import rel, node
 import time
+import MySQLdb
 
 class SpecsSpider(scrapy.Spider):
     '''
@@ -18,15 +20,18 @@ class SpecsSpider(scrapy.Spider):
     name = "SOUNDCARDprice"           #Name to craw, gets used to get the start_urls[]
     #label = None          #Name of the Label that needs to be added to the Crawled Node
     pathName = "SOUNDCARDpath"      #Used to get ConfigFile
-    relation = None       #Name of the relation between the BaseNode and Crawled Node
     arrEanIdentifier = "SOUNDCARDEAN"
+    relation = None       #Name of the relation between the BaseNode and Crawled Node
+
     start_urls = []
     allowed_domains = ["tweakers.net"]
     path = None
+
     JSONpath = "crawler/price-config/SOUNDCARD.json"
     filteredDict = {}
     arrEan = []
     y = -1
+
 
     if name in config.price_configs:
         start_urls = config.price_configs[name]
@@ -68,15 +73,15 @@ class SpecsSpider(scrapy.Spider):
             if filter.FilterDict().checkEmptyDicts(nodeDict) == True:
                 pass
             else:
-                self.filteredDict = filter.FilterDict().filterUnicode(nodeDict)
+                self.filteredDict = filter.FilterDict().filterPriceDict(nodeDict)
                 print self.filteredDict
-                componentNode = conn.getNodeByEAN(graph_db, str(nodeDict["EAN"]))           #Gets the BaseNode from the database
-                componentNode.get_properties()                                           #Need to ask for properties to use the BaseNode (Workaround)
+                componentNode = conn.getNodeByEAN(graph_db, str(nodeDict["EAN"]))         #Gets the BaseNode from the database
+                componentNode.get_properties()                                            #Need to ask for properties to use the BaseNode (Workaround)
                 componentNode.get_labels()                                                #Need to ask for labels to use the BaseNode (Workaround)
                 try:
                     shopNode = conn.getNodeByName(graph_db, str(nodeDict["xpathshopname"]))
-                    shopNode.get_properties()                                           #Need to ask for properties to use the BaseNode (Workaround)
-                    shopNode.get_labels()                                                #Need to ask for labels to use the BaseNode (Workaround)
+                    shopNode.get_properties()                                             #Need to ask for properties to use the BaseNode (Workaround)
+                    shopNode.get_labels()                                                 #Need to ask for labels to use the BaseNode (Workaround)
                 except:
                     print "Shop not found!\nCreating new shop."
 
@@ -86,10 +91,13 @@ class SpecsSpider(scrapy.Spider):
                 try:
                     shopNode = conn.getNodeByEAN(graph_db, str(nodeDict["EAN"]))
                     shopNode.get_properties()                                           #Need to ask for properties to use the BaseNode (Workaround)
-                    shopNode.get_labels()                                                #Need to ask for labels to use the BaseNode (Workaround)
+                    shopNode.get_labels()                                               #Need to ask for labels to use the BaseNode (Workaround)
                 except:
-                    print "NOOPOE"
-                    time.wait(2)
+                    print "!! ShopNode not found !!"
+
+
+
+
 
 
 

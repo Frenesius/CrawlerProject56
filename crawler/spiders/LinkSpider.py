@@ -2,6 +2,7 @@ import re
 import scrapy
 import crawler.filter.DictManager as DictMan
 
+
 class LinkSpider(scrapy.Spider):
     name = " "
     linkString = " "

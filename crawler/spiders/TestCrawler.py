@@ -3,7 +3,7 @@ import scrapy
 from crawler import ConfigManager
 import Config as config
 import crawler.filter.DictManager as filter
-from crawler.neo4jdb import Neo4jDatabaseManager
+from crawler.dbmanager import Neo4jDatabaseManager
 from py2neo import rel, node
 import time
 import json
