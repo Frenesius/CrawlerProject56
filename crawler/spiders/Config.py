@@ -140,7 +140,7 @@ MOTHERBOARD_EAN_price = linkManager.getEANList(MOTHERBOARD_json_price)
 
 price_configs = {
     "SOUNDCARDpath":soundcard_path_price, "SOUNDCARDprice":soundcard_urls_price, "SOUNDCARDEAN":soundcard_EAN_price, "SOUNDCARDjson":soundcard_json_price,
-    "GPUpath":GPU_path_price, "GPUprice":soundcard_urls_price, "GPUEAN":soundcard_EAN_price, "GPUjson":soundcard_json_price,
+    "GPUpath":GPU_path_price, "GPUprice":GPU_urls_price, "GPUEAN":GPU_EAN_price, "GPUjson":GPU_json_price,
     "CPUpath":CPU_path_price, "CPUprice":CPU_urls_price, "CPUEAN":CPU_EAN_price, "CPUjson":CPU_json_price,
     "HDDpath":HDD_path_price, "HDDprice":HDD_urls_price, "HDDEAN":HDD_EAN_price, "HDDjson":HDD_json_price,
     "SSDpath":SSD_path_price, "SSDprice":SSD_urls_price, "SSDEAN":SSD_EAN_price, "SSDjson":SSD_json_price,

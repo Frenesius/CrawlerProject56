@@ -36,13 +36,17 @@ class ParseLinks():
             print arr[x]
 
     def getPriceConfigDict(self, path):
-        json_data=open(path)
+        a = ""
+        print "\t\t ==========getPriceConfigDict"
+        json_data = open(path)
         a = json_data.readline()
+        print a
         data = json.loads(a)
         json_data.close()
         return data
 
     def getPriceCrawlLinks(self, path):
+        print "\t\t==============getPriceCrawlLinks"
         dict = self.getPriceConfigDict(path)
         LinksList = []
         for key, value in dict.iteritems():
@@ -50,6 +54,7 @@ class ParseLinks():
         return LinksList
 
     def getEANList(self, path):
+        print "\t\t=================getEANList"
         dict = self.getPriceConfigDict(path)
         EANList = []
         for key, value in dict.iteritems():

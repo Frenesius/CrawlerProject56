@@ -18,7 +18,6 @@ class MySqlManager:
     TABLE_PRICE_LINKSHOP = "linkshop"
     TABLE_PRICE_TIMESTAMP = "timestamp"
 
-
     def __init__(self):
         pass
     def openDb(self):
@@ -27,7 +26,6 @@ class MySqlManager:
                       passwd= self.passwd, # your password
                       db= self.db) # name of the data base
         return db
-
 
     def insertPrice(self, db, EAN, shopname, delivery, priceex, priceinc, linkshop, timestamp):
         isExecuted = False

@@ -6,7 +6,7 @@ from crawler.dbmanager import Neo4jDatabaseManager
 from crawler.dbmanager import MySqlManager
 from py2neo import rel, node
 
-class SpecsSpider(scrapy.Spider):
+class PriceSpider(scrapy.Spider):
     '''
     Always include
         - name          The name of the crawler -> used for crawling i.e ```scrapy crawl name```
@@ -15,26 +15,25 @@ class SpecsSpider(scrapy.Spider):
         - relation      Relation name
 
     '''
-    name = "SOUNDCARDprice"           #Name to craw, gets used to get the start_urls[]
-    pathName = "SOUNDCARDpath"      #Used to get ConfigFile
-    arrEanIdentifier = "SOUNDCARDEAN"
-    relation = None       #Name of the relation between the BaseNode and Crawled Node
+    name = None                      #Name to craw, gets used to get the start_urls[]
+    pathName = None                  #Used to get ConfigFile
+    arrEanIdentifier = None
+    relation = None                  #Name of the relation between the BaseNode and Crawled Node
 
     start_urls = []
     allowed_domains = ["tweakers.net"]
     path = None
 
-    JSONpath = "SOUNDCARDjson"
+    JSONpath = None
+    JSONpathLocation = None
     filteredDict = {}
     arrEan = []
     y = -1
-
-
     if name in config.price_configs:
         start_urls = config.price_configs[name]
         path = config.price_configs[pathName]
         arrEan = config.price_configs[arrEanIdentifier]
-        JSONpath = config.price_configs[JSONpath]
+        JSONpath = config.price_configs[JSONpathLocation]
     else:
         print("ERROR: key does not exist in dictonairy")
 
@@ -49,13 +48,13 @@ class SpecsSpider(scrapy.Spider):
 
     def altParse(self, response):
         print "== Initializing =="
-        mysqlManager = MySqlManager.MySqlManager()
-        db = mysqlManager.openDb()
+        mysqlManager = MySqlManager.MySqlManager()                          #initiates connection
+        db = mysqlManager.openDb()                                          #initiates connection
         conn = Neo4jDatabaseManager.DatabaseConnectionNeo4j()               #initiates connection
         graph_db = conn.openDb()                                            #initiates connection
 
-        timestamp = mysqlManager.getTimestamp()
-        self.y += 1
+        timestamp = mysqlManager.getTimestamp()                             #Gets the timestamp
+        self.y += 1                                                         #Needed to iterate trough the EAN array
         nodeDict = dict()                                                   #Makes a dictionary for the node
 
         print "\tParsing config"
@@ -76,22 +75,22 @@ class SpecsSpider(scrapy.Spider):
                 pass
             else:
                 self.filteredDict = filter.FilterDict().filterPriceDict(nodeDict)
-                componentNode = conn.getNodeByEAN(graph_db, str(nodeDict["EAN"]))         #Gets the BaseNode from the database
-                componentNode.get_properties()                                            #Need to ask for properties to use the BaseNode (Workaround)
-                componentNode.get_labels()                                                #Need to ask for labels to use the BaseNode (Workaround)
+                componentNode = conn.getNodeByEAN(graph_db, str(self.filteredDict["EAN"]))         #Gets the BaseNode from the database
+                componentNode.get_properties()                                                     #Need to ask for properties to use the BaseNode (Workaround)
+                componentNode.get_labels()                                                         #Need to ask for labels to use the BaseNode (Workaround)
                 shopNode = None
                 try:
-                    shopNode = conn.getNodeByName(graph_db, str(nodeDict["xpathshopname"]))
+                    shopNode = conn.getNodeByName(graph_db, str(self.filteredDict["xpathshopname"]))
                     shopNode.get_properties()                                             #Need to ask for properties to use the BaseNode (Workaround)
                     shopNode.get_labels()                                                 #Need to ask for labels to use the BaseNode (Workaround)
 
                 except:
                     print "Shop not found!\nCreating new shop."
-                    graph_db.create({"name": str(nodeDict["xpathshopname"])})
-                    newShop = conn.getNodeByName(graph_db, str(nodeDict["xpathshopname"]))
-                    newShop.add_labels("SHOP", str(nodeDict["xpathshopname"]))
+                    graph_db.create({"name": str(self.filteredDict["xpathshopname"])})                   #Created the shop with the crawled name
+                    newShop = conn.getNodeByName(graph_db, str(self.filteredDict["xpathshopname"]))      #Gets the node of the shop that's just created
+                    newShop.add_labels("SHOP", str(self.filteredDict["xpathshopname"]))                  #Adds label to shopname
                 try:
-                    shopNode = conn.getNodeByName(graph_db, str(nodeDict["xpathshopname"]))
+                    shopNode = conn.getNodeByName(graph_db, str(self.filteredDict["xpathshopname"]))
                     shopNode.get_properties()                                           #Need to ask for properties to use the BaseNode (Workaround)
                     shopNode.get_labels()                                               #Need to ask for labels to use the BaseNode (Workaround)
 
@@ -101,35 +100,10 @@ class SpecsSpider(scrapy.Spider):
                 print "Creating relation"
                 print componentNode._properties
                 print shopNode._properties
-                graph_db.create(rel(shopNode, "SELLS", componentNode, {timestamp:str(self.filteredDict["xpathbareprice"])}))
+                graph_db.create(rel(shopNode, self.relation, componentNode, {timestamp:str(self.filteredDict["xpathbareprice"])}))
 
                 print "Writing to Mysql"
                 mysqlManager.insertPrice(db, str(self.filteredDict["EAN"]), str(self.filteredDict["xpathshopname"]), str(self.filteredDict["xpathdelivery"]), str(self.filteredDict["xpathbareprice"]), str(self.filteredDict["xpathshopprice"]), str(self.filteredDict["xpathclickout"]), timestamp)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         print "\tDone parsing config"
 
         print "\tDone Parsing Dict"
