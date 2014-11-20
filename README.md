@@ -8,7 +8,7 @@ Dependencies
 + Python 2.7
 + Pip
 + Scrapy
-+ Py2neo
++ Py2neo 1.6.4
 + Neo4j 2.1.7
 
 
@@ -16,7 +16,7 @@ Installation
 ============
 Comming soon ...
 
-Usage
+Usage(Outdated)
 ============
 Clone the repo using ```git clone https://github.com/Frenesius/CrawlerProject56.git``` 
 Get in to the folder using ```cd``` Make Start.sh executable(run as root) ```chmod +x Start.sh```
@@ -29,3 +29,4 @@ and have fun
 
 Licence
 =============
+see Licence.md
