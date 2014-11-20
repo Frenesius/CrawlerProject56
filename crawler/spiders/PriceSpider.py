@@ -84,20 +84,24 @@ class SpecsSpider(scrapy.Spider):
                     shopNode = conn.getNodeByName(graph_db, str(nodeDict["xpathshopname"]))
                     shopNode.get_properties()                                             #Need to ask for properties to use the BaseNode (Workaround)
                     shopNode.get_labels()                                                 #Need to ask for labels to use the BaseNode (Workaround)
+
                 except:
                     print "Shop not found!\nCreating new shop."
                     graph_db.create({"name": str(nodeDict["xpathshopname"])})
                     newShop = conn.getNodeByName(graph_db, str(nodeDict["xpathshopname"]))
                     newShop.add_labels("SHOP", str(nodeDict["xpathshopname"]))
                 try:
-                    shopNode = conn.getNodeByEAN(graph_db, str(nodeDict["EAN"]))
+                    shopNode = conn.getNodeByName(graph_db, str(nodeDict["xpathshopname"]))
                     shopNode.get_properties()                                           #Need to ask for properties to use the BaseNode (Workaround)
                     shopNode.get_labels()                                               #Need to ask for labels to use the BaseNode (Workaround)
+
                 except:
                     print "!! ShopNode not found !!"
 
                 print "Creating relation"
-                graph_db.create(rel(componentNode, "SELLS", shopNode))
+                print componentNode._properties
+                print shopNode._properties
+                graph_db.create(rel(shopNode, "SELLS", componentNode))
 
                 print "Writing to Mysql"
                 mysqlManager.insertPrice(db, str(self.filteredDict["EAN"]), str(self.filteredDict["xpathshopname"]), str(self.filteredDict["xpathdelivery"]), str(self.filteredDict["xpathbareprice"]), str(self.filteredDict["xpathshopprice"]), str(self.filteredDict["xpathclickout"]), timestamp)

@@ -43,8 +43,9 @@ class MySqlManager:
             db.commit()
             isExecuted = True
         except:
-            print "ERROR"
+            print "!! Error while executing SQL query !!"
         return isExecuted
+
     def getTimestamp(self):
         timestamp = ""
         timestamp = strftime("%Y-%m-%d %H:%M:%S")
