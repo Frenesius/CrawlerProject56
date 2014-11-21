@@ -15,10 +15,10 @@ class PriceSpider(scrapy.Spider):
         - relation      Relation name
 
     '''
-    name = " "                      #Name to craw, gets used to get the start_urls[]
-    pathName = None                  #Used to get ConfigFile
-    arrEanIdentifier = None
-    relation = None                  #Name of the relation between the BaseNode and Crawled Node
+    name = " "                          #Name to craw, gets used to get the start_urls[]
+    pathName = None                     #Used to get ConfigFile
+    arrEanIdentifier = None             #Used to identify the EAN in the Config dict class
+    relation = None                     #Name of the relation between the BaseNode and Crawled Node
 
     start_urls = []
     allowed_domains = ["tweakers.net"]
@@ -28,7 +28,7 @@ class PriceSpider(scrapy.Spider):
     JSONpathLocation = None
     filteredDict = {}
     arrEan = []
-    y = -1
+    y = -1                              #Used to iterate trough the arrEan[]
     if name in config.price_configs:
         start_urls = config.price_configs[name]
         path = config.price_configs[pathName]
@@ -38,16 +38,15 @@ class PriceSpider(scrapy.Spider):
         print("ERROR: key does not exist in dictonairy")
 
     def parse(self, response):
-        '''
-        Parses the crawled data.
-        Puts data in a Dict. Filters Dict. Creates Node. Adds label. Creates Relationships.
-        :param response: Response from Scrapy spider
-        :return: None
-        '''
         self.altParse(response)
 
     def altParse(self, response):
-
+        '''
+        Parses the crawled data.
+        Gets data and puts them in the Databases with their relations.
+        :param response: Response from Scrapy spider
+        :return: None
+        '''
         mysqlManager = MySqlManager.MySqlManager()                          #initiates connection
         db = mysqlManager.openDb()                                          #initiates connection
         conn = Neo4jDatabaseManager.DatabaseConnectionNeo4j()               #initiates connection
@@ -60,7 +59,7 @@ class PriceSpider(scrapy.Spider):
         configManager = ConfigManager.ParseConfig()                                     #Gets the config and fills the variables
         listCrawl = configManager.getCrawlList(self.path)                               #A list with all the xpaths
 
-        for x in listCrawl:
+        for x in listCrawl:                                                             #Iterates through the Rows that are in the config and extracts data
             tempDict = configManager.getxPathPriceCrawler(x, self.path)
             nodeDict["xpathshopname"] = response.xpath(str(tempDict['xpathshopname']% x)).extract()
             nodeDict["xpathshopscore"] = response.xpath(str(tempDict['xpathshopscore']% x)).extract()
@@ -79,9 +78,9 @@ class PriceSpider(scrapy.Spider):
                 componentNode.get_labels()                                                         #Need to ask for labels to use the BaseNode (Workaround)
                 shopNode = None
                 try:
-                    shopNode = conn.getNodeByName(graph_db, str(self.filteredDict["xpathshopname"]))
-                    shopNode.get_properties()                                             #Need to ask for properties to use the BaseNode (Workaround)
-                    shopNode.get_labels()                                                 #Need to ask for labels to use the BaseNode (Workaround)
+                    shopNode = conn.getNodeByName(graph_db, str(self.filteredDict["xpathshopname"]))    #Tries to get the Node based on the shopname from Neo4j Database
+                    shopNode.get_properties()                                                           #Need to ask for properties to use the BaseNode (Workaround)
+                    shopNode.get_labels()                                                               #Need to ask for labels to use the BaseNode (Workaround)
 
                 except:
                     print "Shop not found!\tCreating new shop."
@@ -89,16 +88,15 @@ class PriceSpider(scrapy.Spider):
                     newShop = conn.getNodeByName(graph_db, str(self.filteredDict["xpathshopname"]))      #Gets the node of the shop that's just created
                     newShop.add_labels("SHOP", str(self.filteredDict["xpathshopname"]))                  #Adds label to shopname
                 try:
-                    shopNode = conn.getNodeByName(graph_db, str(self.filteredDict["xpathshopname"]))
-                    shopNode.get_properties()                                           #Need to ask for properties to use the BaseNode (Workaround)
-                    shopNode.get_labels()                                               #Need to ask for labels to use the BaseNode (Workaround)
+                    shopNode = conn.getNodeByName(graph_db, str(self.filteredDict["xpathshopname"]))     #Gets the BaseNode from the database
+                    shopNode.get_properties()                                                            #Need to ask for properties to use the BaseNode (Workaround)
+                    shopNode.get_labels()                                                                #Need to ask for labels to use the BaseNode (Workaround)
 
                 except:
                     print "!! ShopNode not found !!"
 
-                graph_db.create(rel(shopNode, self.relation, componentNode, {timestamp:str(self.filteredDict["xpathbareprice"])}))
-
-
+                graph_db.create(rel(shopNode, self.relation, componentNode, {timestamp:str(self.filteredDict["xpathbareprice"])}))  #Creates the relationship in Neo4jDB
+                #Writes line to the database
                 mysqlManager.insertPrice(db, str(self.filteredDict["EAN"]), str(self.filteredDict["xpathshopname"]), str(self.filteredDict["xpathdelivery"]), str(self.filteredDict["xpathbareprice"]), str(self.filteredDict["xpathshopprice"]), str(self.filteredDict["xpathclickout"]), timestamp)
 
         print str(self.y)+"/"+str(len(self.start_urls))+" Done."

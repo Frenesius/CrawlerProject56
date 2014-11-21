@@ -74,6 +74,11 @@ class FilterDict():
         return isPrinted
 
     def filterUnicode(self, dict):
+        '''
+        A workaround based function. Used to filter out the Unicode in the crawled strings.
+        :param dict: Dict that contains the crawled data.
+        :return: Dict with the filtered strings.
+        '''
         filteredDict = {}
         y = 0
         for x in dict:
@@ -89,6 +94,11 @@ class FilterDict():
         return filteredDict
 
     def filterEuroSign(self, dict):
+        '''
+        A workaround based function. Used to filter out the Euro sign in the crawled strings.
+        :param dict: Dict that contains the crawled data.
+        :return: Dict with the filtered strings.
+        '''
         filteredDict = {}
         y = 0
         for x in dict:
@@ -101,6 +111,11 @@ class FilterDict():
         return filteredDict
 
     def filterArrUnicode(self, arr):
+        '''
+        A workaround based function. Used to filter out the Unicode in the crawled strings.
+        :param arr: Array that contains the crawled data.
+        :return: Array with the filtered strings.
+        '''
         filteredArr = []
         for x in arr:
             tempKey = str(x).replace("[u'", "")
@@ -110,6 +125,11 @@ class FilterDict():
 
 
     def checkEmptyDicts(self, dict):
+        '''
+        Checks if the dict is empty.
+        :param dict: Dict that needs to be checked for empty values.
+        :return: isEmpty. Boolean. True if the Dict is empty, False when it's not.
+        '''
         isEmpty = None
         if len(str(dict['xpathshopname'])) > 6:
             isEmpty = False
