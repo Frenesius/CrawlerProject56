@@ -15,7 +15,7 @@ class PriceSpider(scrapy.Spider):
         - relation      Relation name
 
     '''
-    name = ""                      #Name to craw, gets used to get the start_urls[]
+    name = " "                      #Name to craw, gets used to get the start_urls[]
     pathName = None                  #Used to get ConfigFile
     arrEanIdentifier = None
     relation = None                  #Name of the relation between the BaseNode and Crawled Node
@@ -47,7 +47,7 @@ class PriceSpider(scrapy.Spider):
         self.altParse(response)
 
     def altParse(self, response):
-        print "== Initializing =="
+
         mysqlManager = MySqlManager.MySqlManager()                          #initiates connection
         db = mysqlManager.openDb()                                          #initiates connection
         conn = Neo4jDatabaseManager.DatabaseConnectionNeo4j()               #initiates connection
@@ -57,7 +57,6 @@ class PriceSpider(scrapy.Spider):
         self.y += 1                                                         #Needed to iterate trough the EAN array
         nodeDict = dict()                                                   #Makes a dictionary for the node
 
-        print "\tParsing config"
         configManager = ConfigManager.ParseConfig()                                     #Gets the config and fills the variables
         listCrawl = configManager.getCrawlList(self.path)                               #A list with all the xpaths
 
@@ -85,7 +84,7 @@ class PriceSpider(scrapy.Spider):
                     shopNode.get_labels()                                                 #Need to ask for labels to use the BaseNode (Workaround)
 
                 except:
-                    print "Shop not found!\nCreating new shop."
+                    print "Shop not found!\tCreating new shop."
                     graph_db.create({"name": str(self.filteredDict["xpathshopname"])})                   #Created the shop with the crawled name
                     newShop = conn.getNodeByName(graph_db, str(self.filteredDict["xpathshopname"]))      #Gets the node of the shop that's just created
                     newShop.add_labels("SHOP", str(self.filteredDict["xpathshopname"]))                  #Adds label to shopname
@@ -97,16 +96,9 @@ class PriceSpider(scrapy.Spider):
                 except:
                     print "!! ShopNode not found !!"
 
-                print "Creating relation"
                 graph_db.create(rel(shopNode, self.relation, componentNode, {timestamp:str(self.filteredDict["xpathbareprice"])}))
 
-                print "Writing to Mysql"
+
                 mysqlManager.insertPrice(db, str(self.filteredDict["EAN"]), str(self.filteredDict["xpathshopname"]), str(self.filteredDict["xpathdelivery"]), str(self.filteredDict["xpathbareprice"]), str(self.filteredDict["xpathshopprice"]), str(self.filteredDict["xpathclickout"]), timestamp)
-        print "\tDone parsing config"
 
-        print "\tDone Parsing Dict"
-
-        print "== Adding Node to database =="
-        print "\tReading the config: %s" % conn.isRead
-        print "\tDatabase connection: %s" % conn.isConnect
-        print "== Done :) =="
+        print str(self.y)+"/"+str(len(self.start_urls))+" Done."

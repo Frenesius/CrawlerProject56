@@ -29,11 +29,16 @@ class MySqlManager:
 
     def insertPrice(self, db, EAN, shopname, delivery, priceex, priceinc, linkshop, timestamp):
         isExecuted = False
+        a = " "
         try:
             a = MySqlManager()
             cursor = db.cursor()
+            priceex = str(priceex).replace(".", "")
+            priceinc = str(priceinc).replace(".", "")
             priceex = str(priceex).replace(",", ".")
             priceinc = str(priceinc).replace(",", ".")
+
+
             query = "INSERT INTO " \
                     +a.TABLE_PRICE+" ("+a.TABLE_PRICE_EAN+", "+a.TABLE_PRICE_SHOPNAME+", "+a.TABLE_PRICE_DELIVERY+", "+a.TABLE_PRICE_PRICEEX+", "+a.TABLE_PRICE_PRICEINC+", "+a.TABLE_PRICE_LINKSHOP+", "+a.TABLE_PRICE_TIMESTAMP+") " \
                                 "VALUES ('"+EAN+"', '"+shopname+"', '"+delivery+"', '"+priceex+"', '"+priceinc+"', '"+linkshop+"', '"+timestamp+"')"
@@ -41,7 +46,7 @@ class MySqlManager:
             db.commit()
             isExecuted = True
         except:
-            print "!! Error while executing SQL query !!"
+            print "!! Error while executing SQL query, check the query. Problem might be in the priceex and priceinc !!"
         return isExecuted
 
     def getTimestamp(self):
