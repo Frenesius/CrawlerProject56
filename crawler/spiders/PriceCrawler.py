@@ -25,7 +25,7 @@ class CPUCrawler(PriceSpider.PriceSpider):
         print("ERROR: key does not exist in dictonairy")
 
     def parse(self, response):
-        PriceSpider.PriceSpider().altParse(response)
+        PriceSpider.PriceSpider.altParse(self, response)
 
 class GPUCrawler(PriceSpider.PriceSpider):
     name = "GPUprice"           #Name to craw, gets used to get the start_urls[]
@@ -49,7 +49,7 @@ class GPUCrawler(PriceSpider.PriceSpider):
         print("ERROR: key does not exist in dictonairy")
 
     def parse(self, response):
-        PriceSpider.PriceSpider().altParse(response)
+        PriceSpider.PriceSpider.altParse(self, response)
 
 class HDDCrawler(PriceSpider.PriceSpider):
     name = "HDDprice"           #Name to craw, gets used to get the start_urls[]
@@ -75,7 +75,7 @@ class HDDCrawler(PriceSpider.PriceSpider):
         print("ERROR: key does not exist in dictonairy")
 
     def parse(self, response):
-        PriceSpider.PriceSpider().altParse(response)
+        PriceSpider.PriceSpider.altParse(self, response)
 
 class SSDCrawler(PriceSpider.PriceSpider):
     name = "SSDprice"           #Name to craw, gets used to get the start_urls[]
@@ -101,7 +101,7 @@ class SSDCrawler(PriceSpider.PriceSpider):
         print("ERROR: key does not exist in dictonairy")
 
     def parse(self, response):
-        PriceSpider.PriceSpider().altParse(response)
+        PriceSpider.PriceSpider.altParse(self, response)
 
 class CaseCrawler(PriceSpider.PriceSpider):
     name = "CASEprice"           #Name to craw, gets used to get the start_urls[]
@@ -127,7 +127,7 @@ class CaseCrawler(PriceSpider.PriceSpider):
         print("ERROR: key does not exist in dictonairy")
 
     def parse(self, response):
-        PriceSpider.PriceSpider().altParse(response)
+        PriceSpider.PriceSpider.altParse(self, response)
 
 class MemoryCrawler(PriceSpider.PriceSpider):
     name = "MEMORYprice"           #Name to craw, gets used to get the start_urls[]
@@ -153,7 +153,7 @@ class MemoryCrawler(PriceSpider.PriceSpider):
         print("ERROR: key does not exist in dictonairy")
 
     def parse(self, response):
-        PriceSpider.PriceSpider().altParse(response)
+        PriceSpider.PriceSpider.altParse(self, response)
 
 class SoundcardCrawler(PriceSpider.PriceSpider):
     name = "SOUNDCARDprice"           #Name to craw, gets used to get the start_urls[]
@@ -179,7 +179,7 @@ class SoundcardCrawler(PriceSpider.PriceSpider):
         print("ERROR: key does not exist in dictonairy")
 
     def parse(self, response):
-        PriceSpider.PriceSpider().altParse(response)
+        PriceSpider.PriceSpider.altParse(self, response)
 
 class OpticaldriveCrawler(PriceSpider.PriceSpider):
     name = "OPTICALDRIVEprice"           #Name to craw, gets used to get the start_urls[]
@@ -205,7 +205,7 @@ class OpticaldriveCrawler(PriceSpider.PriceSpider):
         print("ERROR: key does not exist in dictonairy")
 
     def parse(self, response):
-        PriceSpider.PriceSpider().altParse(response)
+        PriceSpider.PriceSpider.altParse(self, response)
 
 class MotherboardCrawler(PriceSpider.PriceSpider):
     name = "MOTHERBOARDprice"           #Name to craw, gets used to get the start_urls[]
@@ -231,7 +231,7 @@ class MotherboardCrawler(PriceSpider.PriceSpider):
         print("ERROR: key does not exist in dictonairy")
 
     def parse(self, response):
-        PriceSpider.PriceSpider().altParse(response)
+        PriceSpider.PriceSpider.altParse(self, response)
 
 class PSUCrawler(PriceSpider.PriceSpider):
     name = "PSUprice"           #Name to craw, gets used to get the start_urls[]
@@ -256,5 +256,5 @@ class PSUCrawler(PriceSpider.PriceSpider):
     else:
         print("ERROR: key does not exist in dictonairy")
     def parse(self, response):
-        PriceSpider.PriceSpider().altParse(response)
+        PriceSpider.PriceSpider.altParse(self, response)
 

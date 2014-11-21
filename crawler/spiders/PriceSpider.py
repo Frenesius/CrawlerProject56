@@ -15,7 +15,7 @@ class PriceSpider(scrapy.Spider):
         - relation      Relation name
 
     '''
-    name = None                      #Name to craw, gets used to get the start_urls[]
+    name = ""                      #Name to craw, gets used to get the start_urls[]
     pathName = None                  #Used to get ConfigFile
     arrEanIdentifier = None
     relation = None                  #Name of the relation between the BaseNode and Crawled Node
@@ -98,8 +98,6 @@ class PriceSpider(scrapy.Spider):
                     print "!! ShopNode not found !!"
 
                 print "Creating relation"
-                print componentNode._properties
-                print shopNode._properties
                 graph_db.create(rel(shopNode, self.relation, componentNode, {timestamp:str(self.filteredDict["xpathbareprice"])}))
 
                 print "Writing to Mysql"
