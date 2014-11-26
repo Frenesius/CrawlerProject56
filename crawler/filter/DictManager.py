@@ -130,7 +130,6 @@ class FilterDict():
         :param dict: Dict that needs to be checked for empty values.
         :return: isEmpty. Boolean. True if the Dict is empty, False when it's not.
         '''
-        isEmpty = None
         if len(str(dict['xpathshopname'])) > 6:
             isEmpty = False
         else:
