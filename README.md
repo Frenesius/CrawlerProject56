@@ -7,9 +7,9 @@ Dependencies
 ==============
 + Python 2.7
 + Pip
-+ Scrapy
++ Scrapy 0.24.4
 + Py2neo 1.6.4
-+ Neo4j 2.1.7
++ Neo4j 2.1.4
 + pymongo 2.7.2
 
 Installation
