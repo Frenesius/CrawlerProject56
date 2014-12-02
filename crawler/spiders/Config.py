@@ -14,44 +14,43 @@ db_path = "configs/db_config.conf"
 
 #CPU
 cpu_urls = linkManager.getCrawlLinks("CPULink")
-cpu_path = "crawler/configs/CPU.conf"
+cpu_path = "crawler/configs/specs/CPU.conf"
 
 #GPU
 gpu_urls = linkManager.getCrawlLinks("GPULink")
-gpu_path = "crawler/configs/GPU.conf"
+gpu_path = "crawler/configs/specs/GPU.conf"
 
 #MOBO
 mobo_urls = linkManager.getCrawlLinks("MOTHERBOARDLink")
-mobo_path = "crawler/configs/MOTHERBOARD.conf"
+mobo_path = "crawler/configs/specs/MOTHERBOARD.conf"
 
 #MEMORY
 mem_urls = linkManager.getCrawlLinks("MEMORYLink")
-mem_path = "crawler/configs/MEMORY.conf"
+mem_path = "crawler/configs/specs/MEMORY.conf"
 
 #PSU
 psu_urls = linkManager.getCrawlLinks("PSULink")
-psu_path = "crawler/configs/PSU.conf"
+psu_path = "crawler/configs/specs/PSU.conf"
 
 #CASE
 case_urls = linkManager.getCrawlLinks("CASELink")
-case_path = "crawler/configs/CASE.conf"
-
+case_path = "crawler/configs/specs/CASE.conf"
 
 #HDD
 hdd_urls = linkManager.getCrawlLinks("HDDLink")
-hdd_path = "crawler/configs/HDD.conf"
+hdd_path = "crawler/configs/specs/HDD.conf"
 
 #SOUNDCARD
 soundcard_urls = linkManager.getCrawlLinks("SOUNDCARDLink")
-soundcard_path = "crawler/configs/SOUNDCARD.conf"
+soundcard_path = "crawler/configs/specs/SOUNDCARD.conf"
 
 #OPTICALDRIVE
 opticaldrive_urls = linkManager.getCrawlLinks("OPTICALDRIVELink")
-opticaldrive_path = "crawler/configs/OPTICALDRIVE.conf"
+opticaldrive_path = "crawler/configs/specs/OPTICALDRIVE.conf"
 
 #SSD
 ssd_urls = linkManager.getCrawlLinks("SSDLink")
-ssd_path = "crawler/configs/SSD.conf"
+ssd_path = "crawler/configs/specs/SSD.conf"
 
 #TEST
 test_urls = linkManager.getCrawlLinks("TESTLink")
@@ -134,7 +133,6 @@ MOTHERBOARD_path_price = "crawler/configs/price/MOTHERBOARD.conf"
 MOTHERBOARD_json_price = "crawler/price-config/MOTHERBOARD.json"
 MOTHERBOARD_urls_price = linkManager.getPriceCrawlLinks(MOTHERBOARD_json_price)
 MOTHERBOARD_EAN_price = linkManager.getEANList(MOTHERBOARD_json_price)
-
 
 
 
