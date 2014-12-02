@@ -5,6 +5,11 @@ import crawler.filter.DictManager as filter
 from crawler.dbmanager import Neo4jDatabaseManager
 from py2neo import rel, node
 import json
+import pymongo
+import pymongo.collection as pymongoColl
+from crawler.dbmanager.MongoDbManager import MongoDbManager
+from pymongo import Connection
+
 
 class SpecsSpider(scrapy.Spider):
     '''
@@ -60,7 +65,7 @@ class SpecsSpider(scrapy.Spider):
         print "\tParsing config"
         configManager = ConfigManager.ParseConfig()                                     #Gets the config and fills the variables
         listCrawl = configManager.getCrawlList(self.path)                               #A list with all the xpaths
-        print "\t\tSections Found: " + str(configManager.sumSection())                  #Shows how many Sections are found in the Config.
+
 
         for x in listCrawl:
             key = response.xpath(configManager.getKeyxPath(x, self.path) % x).extract()         #Gets the key from the source. xPath is from the config.
@@ -94,7 +99,19 @@ class SpecsSpider(scrapy.Spider):
             graph_db.create(rel(crawlNode, self.relation, baseNode))                #Creates Relationship.
         else:
             print "!!\tNode exists, skipping\t!!"
+        print "Adding dict to mongoDb=============="
 
+        mongodbManager = MongoDbManager()
+        mongoDbClient = mongodbManager.openDb()
+        db = mongoDbClient['Hardware']
+        collection = db['hardware-collection']
+        collection.insert(self.filteredDict)
+
+
+        print "DB NAMES"
+        print mongoDbClient.database_names()
+        print mongoDbClient
+        print "Adding dict to mongoDb========="
         try :
             self.urlEanDict[str(self.start_urls[self.countUrl]).replace("specificaties/", "")] =  self.filteredDict['EAN'] #Adds the url:EAN to dict, COUNTURL HAS TO BE 0
         except:
