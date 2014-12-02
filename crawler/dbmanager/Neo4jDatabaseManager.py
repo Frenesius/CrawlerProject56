@@ -1,8 +1,9 @@
 __author__ = 'j'
-from ConfigParser import SafeConfigParser
 from py2neo import neo4j, cypher
-from crawler.spiders import Config
 import py2neo
+from py2neo import node
+from ConfigParser import SafeConfigParser
+
 
 class DatabaseConnectionNeo4j:
     '''
@@ -121,6 +122,40 @@ class DatabaseConnectionNeo4j:
             #Exception is given when the EAN does not exist
             print "EAN not found!"
         return node
+
+    def createDatabase(self, graph_db):
+        self.importDatabaseNodes(graph_db)
+        self.importDatabaseRelations(graph_db)
+
+    def deleteWholeDatabase(self, graph_db):
+           print "Preparing to delete database"
+           graph_db.clear()
+           print "Success!"
+
+    def importDatabaseNodes(self, graph_db):
+        print "Opening file . . ."
+        try:
+            file = "crawler/base-database/create_db"
+            dbFile=open(file,'r')
+        except:
+            print "Error while loading file"
+            return "Error!"
+        print "File " + dbFile.name + " opened! " + "\nin the mode : " + dbFile.mode
+        print "Creating Nodes..."
+        for line in dbFile.readlines():
+            a, = graph_db.create(eval(line))
+            a.add_labels("BASE")
+        print "Success creating nodes!"
+
+    def importDatabaseRelations(self, graph_db):
+        try:
+            file = "crawler/base-database/create_rel"
+            dbFile=open(file,'r')
+        except:
+            print "Error while loading file"
+            return "Error!"
+        for line in dbFile.readlines():
+            neo4j.CypherQuery(graph_db, line).execute()
 
 
 
