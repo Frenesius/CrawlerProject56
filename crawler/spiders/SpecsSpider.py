@@ -107,10 +107,6 @@ class SpecsSpider(scrapy.Spider):
         collection = db['hardware-collection']
         collection.insert(self.filteredDict)
 
-
-        print "DB NAMES"
-        print mongoDbClient.database_names()
-        print mongoDbClient
         print "Adding dict to mongoDb========="
         try :
             self.urlEanDict[str(self.start_urls[self.countUrl]).replace("specificaties/", "")] =  self.filteredDict['EAN'] #Adds the url:EAN to dict, COUNTURL HAS TO BE 0
