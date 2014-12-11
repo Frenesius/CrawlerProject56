@@ -51,6 +51,7 @@ class SpecsSpider(scrapy.Spider):
         self.parseSource(response, self.JSONfilename)
 
     def parseSource(self, response, JSONfilename):
+        print response
         print "\033[95m     == Initializing =="
         self.countUrl += 1
         conn = Neo4jDatabaseManager.DatabaseConnectionNeo4j()               #initiates connection
