@@ -7,11 +7,10 @@ Dependencies
 ==============
 + Python 2.7
 + Pip
-+ Scrapy 0.24.4   (pip)
-+ Py2neo 1.6.4    (pip)
-+ Neo4j 2.1.4     (apt)
-+ pymongo 2.7.2   (pip)
-+ python-mysqldb  (apt)
++ Scrapy 0.24.4
++ Py2neo 1.6.4
++ Neo4j 2.1.4
++ pymongo 2.7.2
 
 Installation
 ============
