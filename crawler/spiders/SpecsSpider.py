@@ -48,9 +48,9 @@ class SpecsSpider(scrapy.Spider):
         :param response: Response from Scrapy spider
         :return: None
         '''
-        self.parseSource(response, self.JSONfilename)
+        self.parseSource(response, self.JSONfilename, "hardware")
 
-    def parseSource(self, response, JSONfilename):
+    def parseSource(self, response, JSONfilename, hardwareSort):
         print response
         print "\033[95m     == Initializing =="
         self.countUrl += 1
@@ -100,12 +100,12 @@ class SpecsSpider(scrapy.Spider):
             graph_db.create(rel(crawlNode, self.relation, baseNode))                #Creates Relationship.
         else:
             print "!!\tNode exists, skipping\t!!"
-        print "Adding dict to mongoDb=============="
+        print "Adding dict to mongoDb=========="
 
         mongodbManager = MongoDbManager()
         mongoDbClient = mongodbManager.openDb()
         db = mongoDbClient['Hardware']
-        collection = db['hardware-collection']
+        collection = db[hardwareSort]
         collection.insert(self.filteredDict)
 
         print "Adding dict to mongoDb========="

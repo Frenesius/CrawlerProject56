@@ -16,8 +16,7 @@ class GraphicsCardSpider(SpecsSpider.SpecsSpider):
         print("ERROR: key does not exist in dictonairy")
 
     def parse(self, response):
-        SpecsSpider.SpecsSpider.parseSource(self, response, self.JSONfilename)
-
+        SpecsSpider.SpecsSpider.parseSource(self, response, self.JSONfilename, self.label)
 class ProcessorSpider(SpecsSpider.SpecsSpider):
     name = "PROCESSORcrawl"           #Name to craw, gets used to get the start_urls[]
     label = "PROCESSOR"               #Name of the Label that needs to be added to the Crawled Node
@@ -32,8 +31,7 @@ class ProcessorSpider(SpecsSpider.SpecsSpider):
         print("ERROR: key does not exist in dictonairy")
 
     def parse(self, response):
-        SpecsSpider.SpecsSpider.parseSource(self, response, self.JSONfilename)
-
+        SpecsSpider.SpecsSpider.parseSource(self, response, self.JSONfilename, self.label)
 class MemorySpider(SpecsSpider.SpecsSpider):
     name = "MEMORYcrawl"            #Name to craw, gets used to get the start_urls[]
     label = "MEMORY"                #Name of the Label that needs to be added to the Crawled Node
@@ -48,8 +46,7 @@ class MemorySpider(SpecsSpider.SpecsSpider):
         print("ERROR: key does not exist in dictonairy")
 
     def parse(self, response):
-        SpecsSpider.SpecsSpider.parseSource(self, response, self.JSONfilename)
-
+        SpecsSpider.SpecsSpider.parseSource(self, response, self.JSONfilename, self.label)
 class PSUSpider(SpecsSpider.SpecsSpider):
     name = "PSUcrawl"           #Name to craw, gets used to get the start_urls[]
     label = "PSU"               #Name of the Label that needs to be added to the Crawled Node
@@ -64,8 +61,7 @@ class PSUSpider(SpecsSpider.SpecsSpider):
         print("ERROR: key does not exist in dictonairy")
 
     def parse(self, response):
-        SpecsSpider.SpecsSpider.parseSource(self, response, self.JSONfilename)
-
+        SpecsSpider.SpecsSpider.parseSource(self, response, self.JSONfilename, self.label)
 class MotherboardSpider(SpecsSpider.SpecsSpider):
     name = "MOTHERBOARDcrawl"           #Name to craw, gets used to get the start_urls[]
     label = "MOTHERBOARD"               #Name of the Label that needs to be added to the Crawled Node
@@ -80,8 +76,7 @@ class MotherboardSpider(SpecsSpider.SpecsSpider):
         print("ERROR: key does not exist in dictonairy")
 
     def parse(self, response):
-        SpecsSpider.SpecsSpider.parseSource(self, response, self.JSONfilename)
-
+        SpecsSpider.SpecsSpider.parseSource(self, response, self.JSONfilename, self.label)
 class CaseSpider(SpecsSpider.SpecsSpider):
     name = "CASEcrawl"           #Name to craw, gets used to get the start_urls[]
     label = "CASE"               #Name of the Label that needs to be added to the Crawled Node
@@ -96,9 +91,7 @@ class CaseSpider(SpecsSpider.SpecsSpider):
         print("ERROR: key does not exist in dictonairy")
 
     def parse(self, response):
-        SpecsSpider.SpecsSpider.parseSource(self, response, self.JSONfilename)
-
-
+        SpecsSpider.SpecsSpider.parseSource(self, response, self.JSONfilename, self.label)
 class SoundcardSpider(SpecsSpider.SpecsSpider):
     name = "SOUNDCARDcrawl"           #Name to craw, gets used to get the start_urls[]
     label = "SOUNDCARD"               #Name of the Label that needs to be added to the Crawled Node
@@ -113,7 +106,7 @@ class SoundcardSpider(SpecsSpider.SpecsSpider):
         print("ERROR: key does not exist in dictonairy")
 
     def parse(self, response):
-        SpecsSpider.SpecsSpider.parseSource(self, response, self.JSONfilename)
+        SpecsSpider.SpecsSpider.parseSource(self, response, self.JSONfilename, self.label)
 class SSDSpider(SpecsSpider.SpecsSpider):
     name = "SSDcrawl"           #Name to craw, gets used to get the start_urls[]
     label = "SSD"               #Name of the Label that needs to be added to the Crawled Node
@@ -128,7 +121,7 @@ class SSDSpider(SpecsSpider.SpecsSpider):
         print("ERROR: key does not exist in dictonairy")
 
     def parse(self, response):
-        SpecsSpider.SpecsSpider.parseSource(self, response, self.JSONfilename)
+        SpecsSpider.SpecsSpider.parseSource(self, response, self.JSONfilename, self.label)
 class HDDSpider(SpecsSpider.SpecsSpider):
     name = "HDDcrawl"           #Name to craw, gets used to get the start_urls[]
     label = "HDD"               #Name of the Label that needs to be added to the Crawled Node
@@ -143,7 +136,7 @@ class HDDSpider(SpecsSpider.SpecsSpider):
         print("ERROR: key does not exist in dictonairy")
 
     def parse(self, response):
-        SpecsSpider.SpecsSpider.parseSource(self, response, self.JSONfilename)
+        SpecsSpider.SpecsSpider.parseSource(self, response, self.JSONfilename, self.label)
 class OpticalDriveSpider(SpecsSpider.SpecsSpider):
     name = "OPTICALDRIVEcrawl"           #Name to craw, gets used to get the start_urls[]
     label = "OPTICALDRIVE"               #Name of the Label that needs to be added to the Crawled Node
@@ -158,4 +151,4 @@ class OpticalDriveSpider(SpecsSpider.SpecsSpider):
         print("ERROR: key does not exist in dictonairy")
 
     def parse(self, response):
-        SpecsSpider.SpecsSpider.parseSource(self, response, self.JSONfilename)
+        SpecsSpider.SpecsSpider.parseSource(self, response, self.JSONfilename, self.label)
