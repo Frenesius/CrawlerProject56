@@ -98,5 +98,4 @@ class PriceSpider(scrapy.Spider):
                 graph_db.create(rel(shopNode, self.relation, componentNode, {timestamp:str(self.filteredDict["xpathbareprice"])}))  #Creates the relationship in Neo4jDB
                 #Writes line to the database
                 mysqlManager.insertPrice(db, str(self.filteredDict["EAN"]), str(self.filteredDict["xpathshopname"]), str(self.filteredDict["xpathdelivery"]), str(self.filteredDict["xpathbareprice"]), str(self.filteredDict["xpathshopprice"]), str(self.filteredDict["xpathclickout"]), timestamp)
-
         print str(self.y)+"/"+str(len(self.start_urls))+" Done."

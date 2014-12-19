@@ -9,3 +9,4 @@ class CheckIp(CrawlSpider):
     def parse(self, response):
         print "#########################"
         print response.xpath('//*[@id="ja-content"]/table/tr[4]/td[2]/strong/text()').extract()
+        print "#########################"
