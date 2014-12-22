@@ -1,9 +1,6 @@
 import socket
 import random
-import urllib2
-import telnetlib
-from scrapy import log
-import time
+import os
 from scrapy.contrib.downloadermiddleware.retry import RetryMiddleware
 from crawler import settings
 import urllib2
@@ -69,17 +66,9 @@ class TorProxyMiddleware(object):
     def process_request(self, request, spider):
         request.meta['proxy'] = settings.HTTP_PROXY
 
-# class RetryChangeProxyMiddleware(RetryMiddleware):
-#     def _retry(self, request, reason, spider):
-#         log.msg('Changing proxy')
-#         tn = telnetlib.Telnet('127.0.0.1', 9050)
-#         tn.read_until("Escape character is '^]'.", 2)
-#         tn.write('AUTHENTICATE "267765"\r\n')
-#         tn.read_until("250 OK", 2)
-#         tn.write("signal NEWNYM\r\n")
-#         tn.read_until("250 OK", 2)
-#         tn.write("quit\r\n")
-#         tn.close()
-#         time.sleep(3)
-#         log.msg('Proxy changed')
-#         return RetryMiddleware._retry(self, request, reason, spider)
+class RetryMiddlewareTor(RetryMiddleware):
+    def _retry(self, request, response, spider):
+        if response.status in [403]:
+            print ">>>exec \'killall -HUP tor\'"
+            os.system("killall -HUP tor")
+        return RetryMiddleware._retry(self, request, response, spider)

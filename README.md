@@ -12,6 +12,8 @@ Dependencies
 + Neo4j 2.1.4
 + pymongo 2.7.2
 + TorCtl
++ Tor
++ 
 
 Installation
 ============
@@ -19,6 +21,7 @@ Comming soon ...
 
 Usage(Outdated)
 ============
+Install Tor. 
 Clone the repo using ```git clone https://github.com/Frenesius/CrawlerProject56.git``` 
 Get in to the folder using ```cd``` Make Start.sh executable(run as root) ```chmod +x Start.sh```
 
