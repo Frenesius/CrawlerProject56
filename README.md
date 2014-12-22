@@ -11,6 +11,7 @@ Dependencies
 + Py2neo 1.6.4
 + Neo4j 2.1.4
 + pymongo 2.7.2
++ TorCtl
 
 Installation
 ============
