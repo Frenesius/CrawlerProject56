@@ -21,7 +21,6 @@ class FilterDict():
 
         return filteredDict
     def filterPriceDict(self, dict):
-        newDict = {}
         newDict = self.filterEuroSign(self.filterUnicode(dict))
         return newDict
 

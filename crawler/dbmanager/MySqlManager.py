@@ -29,19 +29,13 @@ class MySqlManager:
 
     def insertPrice(self, db, EAN, shopname, delivery, priceex, priceinc, linkshop, timestamp):
         isExecuted = False
-        a = " "
         try:
             a = MySqlManager()
             cursor = db.cursor()
-            priceex = str(priceex).replace(".", "")
-            priceinc = str(priceinc).replace(".", "")
-            priceex = str(priceex).replace(",", ".")
-            priceinc = str(priceinc).replace(",", ".")
-
 
             query = "INSERT INTO " \
                     +a.TABLE_PRICE+" ("+a.TABLE_PRICE_EAN+", "+a.TABLE_PRICE_SHOPNAME+", "+a.TABLE_PRICE_DELIVERY+", "+a.TABLE_PRICE_PRICEEX+", "+a.TABLE_PRICE_PRICEINC+", "+a.TABLE_PRICE_LINKSHOP+", "+a.TABLE_PRICE_TIMESTAMP+") " \
-                                "VALUES ('"+EAN+"', '"+shopname+"', '"+delivery+"', '"+priceex+"', '"+priceinc+"', '"+linkshop+"', '"+timestamp+"')"
+                                "VALUES ('"+str(EAN)+"', '"+str(shopname)+"', '"+str(delivery)+"', '"+str(priceex)+"', '"+str(priceinc)+"', '"+str(linkshop)+"', '"+str(timestamp)+"')"
             cursor.execute(query)
             db.commit()
             isExecuted = True
@@ -50,6 +44,5 @@ class MySqlManager:
         return isExecuted
 
     def getTimestamp(self):
-        timestamp = ""
         timestamp = strftime("%Y-%m-%d %H:%M:%S")
         return timestamp

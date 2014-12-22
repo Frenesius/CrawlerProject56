@@ -12,7 +12,7 @@ BOT_NAME = 'crawler'
 
 SPIDER_MODULES = ['crawler.spiders']
 NEWSPIDER_MODULE = 'crawler.spiders'
-# DOWNLOAD_DELAY = 3            #Proxy delay is already 3 seconds, not needed
+DOWNLOAD_DELAY = 3            #Proxy delay is already 3 seconds, not needed
 COOKIES_ENABLED = False
 
 DOWNLOADER_MIDDLEWARES = {
@@ -20,7 +20,7 @@ DOWNLOADER_MIDDLEWARES = {
     'crawler.middlewares.ProxyMiddleware': 100,
 }
 # Retry many times since proxies often fail
-RETRY_TIMES = 10000000
+RETRY_TIMES = 10000
 # Retry on most error codes since proxies fail for different reasons
 RETRY_HTTP_CODES = [500, 503, 504, 400, 403, 408]
 

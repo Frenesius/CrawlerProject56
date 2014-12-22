@@ -24,7 +24,7 @@ class LinkSpider(scrapy.Spider):
         dictManager = DictMan.FilterDict()
         filteredArr = dictManager.filterArrUnicode(self.linksArr)
 
-        f = open('crawler/link-config/' + linksConf1, 'w')
+        f = open('crawler/configs/link-config/' + linksConf1, 'w')
         for x in range(len(filteredArr)):
             f.write(str(filteredArr[x]) + "\n")
         f.close()

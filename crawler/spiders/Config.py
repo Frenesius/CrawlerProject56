@@ -76,61 +76,61 @@ databaseConfig = {"db_path":db_path}
 
 #SOUNDCARD
 soundcard_path_price = "crawler/configs/price/SOUNDCARD.conf"
-soundcard_json_price = "crawler/price-config/SOUNDCARD.json"
+soundcard_json_price = "crawler/configs/price-config/SOUNDCARD.json"
 soundcard_urls_price = linkManager.getPriceCrawlLinks(soundcard_json_price)
 soundcard_EAN_price = linkManager.getEANList(soundcard_json_price)
 
 #GPU
 GPU_path_price = "crawler/configs/price/GPU.conf"
-GPU_json_price = "crawler/price-config/GPU.json"
+GPU_json_price = "crawler/configs/price-config/GPU.json"
 GPU_urls_price = linkManager.getPriceCrawlLinks(GPU_json_price)
 GPU_EAN_price = linkManager.getEANList(GPU_json_price)
 
 #CPU
 CPU_path_price = "crawler/configs/price/CPU.conf"
-CPU_json_price = "crawler/price-config/CPU.json"
+CPU_json_price = "crawler/configs/price-config/CPU.json"
 CPU_urls_price = linkManager.getPriceCrawlLinks(CPU_json_price)
 CPU_EAN_price = linkManager.getEANList(CPU_json_price)
 
 #HDD
 HDD_path_price = "crawler/configs/price/HDD.conf"
-HDD_json_price = "crawler/price-config/HDD.json"
+HDD_json_price = "crawler/configs/price-config/HDD.json"
 HDD_urls_price = linkManager.getPriceCrawlLinks(HDD_json_price)
 HDD_EAN_price = linkManager.getEANList(HDD_json_price)
 
 #SSD
 SSD_path_price = "crawler/configs/price/SSD.conf"
-SSD_json_price = "crawler/price-config/SSD.json"
+SSD_json_price = "crawler/configs/price-config/SSD.json"
 SSD_urls_price = linkManager.getPriceCrawlLinks(SSD_json_price)
 SSD_EAN_price = linkManager.getEANList(SSD_json_price)
 
 #CASE
 CASE_path_price = "crawler/configs/price/CASE.conf"
-CASE_json_price = "crawler/price-config/CASE.json"
+CASE_json_price = "crawler/configs/price-config/CASE.json"
 CASE_urls_price = linkManager.getPriceCrawlLinks(CASE_json_price)
 CASE_EAN_price = linkManager.getEANList(CASE_json_price)
 
 #OPTICALDRIVE
 OPTICALDRIVE_path_price = "crawler/configs/price/OPTICALDRIVE.conf"
-OPTICALDRIVE_json_price = "crawler/price-config/OPTICALDRIVE.json"
+OPTICALDRIVE_json_price = "crawler/configs/price-config/OPTICALDRIVE.json"
 OPTICALDRIVE_urls_price = linkManager.getPriceCrawlLinks(OPTICALDRIVE_json_price)
 OPTICALDRIVE_EAN_price = linkManager.getEANList(OPTICALDRIVE_json_price)
 
 #MEMORY
 MEMORY_path_price = "crawler/configs/price/MEMORY.conf"
-MEMORY_json_price = "crawler/price-config/MEMORY.json"
+MEMORY_json_price = "crawler/configs/price-config/MEMORY.json"
 MEMORY_urls_price = linkManager.getPriceCrawlLinks(MEMORY_json_price)
 MEMORY_EAN_price = linkManager.getEANList(MEMORY_json_price)
 
 #PSU
 PSU_path_price = "crawler/configs/price/PSU.conf"
-PSU_json_price = "crawler/price-config/PSU.json"
+PSU_json_price = "crawler/configs/price-config/PSU.json"
 PSU_urls_price = linkManager.getPriceCrawlLinks(PSU_json_price)
 PSU_EAN_price = linkManager.getEANList(PSU_json_price)
 
 #MOTHERBOARD
 MOTHERBOARD_path_price = "crawler/configs/price/MOTHERBOARD.conf"
-MOTHERBOARD_json_price = "crawler/price-config/MOTHERBOARD.json"
+MOTHERBOARD_json_price = "crawler/configs/price-config/MOTHERBOARD.json"
 MOTHERBOARD_urls_price = linkManager.getPriceCrawlLinks(MOTHERBOARD_json_price)
 MOTHERBOARD_EAN_price = linkManager.getEANList(MOTHERBOARD_json_price)
 

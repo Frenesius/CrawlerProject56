@@ -2,9 +2,8 @@ import scrapy
 from crawler import ConfigManager
 import Config as config
 import crawler.filter.DictManager as filter
-from crawler.dbmanager import Neo4jDatabaseManager
 from crawler.dbmanager import MySqlManager
-from py2neo import rel, node
+
 
 class PriceSpider(scrapy.Spider):
     '''
@@ -49,8 +48,6 @@ class PriceSpider(scrapy.Spider):
         '''
         mysqlManager = MySqlManager.MySqlManager()                          #initiates connection
         db = mysqlManager.openDb()                                          #initiates connection
-        conn = Neo4jDatabaseManager.DatabaseConnectionNeo4j()               #initiates connection
-        graph_db = conn.openDb()                                            #initiates connection
 
         timestamp = mysqlManager.getTimestamp()                             #Gets the timestamp
         self.y += 1                                                         #Needed to iterate trough the EAN array
@@ -73,29 +70,5 @@ class PriceSpider(scrapy.Spider):
                 pass
             else:
                 self.filteredDict = filter.FilterDict().filterPriceDict(nodeDict)
-                componentNode = conn.getNodeByEAN(graph_db, str(self.filteredDict["EAN"]))         #Gets the BaseNode from the database
-                componentNode.get_properties()                                                     #Need to ask for properties to use the BaseNode (Workaround)
-                componentNode.get_labels()                                                         #Need to ask for labels to use the BaseNode (Workaround)
-                shopNode = None
-                try:
-                    shopNode = conn.getNodeByName(graph_db, str(self.filteredDict["xpathshopname"]))    #Tries to get the Node based on the shopname from Neo4j Database
-                    shopNode.get_properties()                                                           #Need to ask for properties to use the BaseNode (Workaround)
-                    shopNode.get_labels()                                                               #Need to ask for labels to use the BaseNode (Workaround)
-
-                except:
-                    print "Shop not found!\tCreating new shop."
-                    graph_db.create({"name": str(self.filteredDict["xpathshopname"])})                   #Created the shop with the crawled name
-                    newShop = conn.getNodeByName(graph_db, str(self.filteredDict["xpathshopname"]))      #Gets the node of the shop that's just created
-                    newShop.add_labels("SHOP", str(self.filteredDict["xpathshopname"]))                  #Adds label to shopname
-                try:
-                    shopNode = conn.getNodeByName(graph_db, str(self.filteredDict["xpathshopname"]))     #Gets the BaseNode from the database
-                    shopNode.get_properties()                                                            #Need to ask for properties to use the BaseNode (Workaround)
-                    shopNode.get_labels()                                                                #Need to ask for labels to use the BaseNode (Workaround)
-
-                except:
-                    print "!! ShopNode not found !!"
-
-                graph_db.create(rel(shopNode, self.relation, componentNode, {timestamp:str(self.filteredDict["xpathbareprice"])}))  #Creates the relationship in Neo4jDB
-                #Writes line to the database
                 mysqlManager.insertPrice(db, str(self.filteredDict["EAN"]), str(self.filteredDict["xpathshopname"]), str(self.filteredDict["xpathdelivery"]), str(self.filteredDict["xpathbareprice"]), str(self.filteredDict["xpathshopprice"]), str(self.filteredDict["xpathclickout"]), timestamp)
         print str(self.y)+"/"+str(len(self.start_urls))+" Done."
