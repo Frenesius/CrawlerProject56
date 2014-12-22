@@ -1,5 +1,6 @@
 import ConfigParser
 import json
+import random
 
 class ParseLinks():
     def __init__(self):
@@ -55,3 +56,7 @@ class ParseLinks():
         for key, value in dict.iteritems():
             EANList.append(str(value))
         return EANList
+
+    def randomDelay(self, startvalue, endvalue):
+        randomValue = random.randint(startvalue,endvalue)
+        return randomValue
