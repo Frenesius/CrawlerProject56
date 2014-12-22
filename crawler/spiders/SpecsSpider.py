@@ -9,7 +9,7 @@ import pymongo
 import pymongo.collection as pymongoColl
 from crawler.dbmanager.MongoDbManager import MongoDbManager
 from pymongo import Connection
-
+import crawler.filter.TorManager
 
 class SpecsSpider(scrapy.Spider):
     '''

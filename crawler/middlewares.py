@@ -64,7 +64,8 @@ class RandomUserAgentMiddleware(object):
 
 class TorProxyMiddleware(object):
     torMan = TorManager.TorManager()
-    torMan.newId()
+    if not(torMan.newId()):
+        torMan.newId()
     def process_request(self, request, spider):
         request.meta['proxy'] = settings.HTTP_PROXY
 

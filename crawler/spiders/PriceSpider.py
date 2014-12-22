@@ -3,7 +3,7 @@ from crawler import ConfigManager
 import Config as config
 import crawler.filter.DictManager as filter
 from crawler.dbmanager import MySqlManager
-
+from crawler.filter import TorManager
 
 class PriceSpider(scrapy.Spider):
     '''
@@ -71,4 +71,7 @@ class PriceSpider(scrapy.Spider):
             else:
                 self.filteredDict = filter.FilterDict().filterPriceDict(nodeDict)
                 mysqlManager.insertPrice(db, str(self.filteredDict["EAN"]), str(self.filteredDict["xpathshopname"]), str(self.filteredDict["xpathdelivery"]), str(self.filteredDict["xpathbareprice"]), str(self.filteredDict["xpathshopprice"]), str(self.filteredDict["xpathclickout"]), timestamp)
+        torMan = TorManager.TorManager()
+        if not(torMan.newId()):
+            torMan.newId()
         print str(self.y)+"/"+str(len(self.start_urls))+" Done."
