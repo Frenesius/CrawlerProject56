@@ -1,5 +1,4 @@
 import crawler.filter.LinkManager as man
-import random
 # -*- coding: utf-8 -*-
 
 # Scrapy settings for tutorial project
@@ -15,13 +14,13 @@ BOT_NAME = 'crawler'
 
 SPIDER_MODULES = ['crawler.spiders']
 NEWSPIDER_MODULE = 'crawler.spiders'
-DOWNLOAD_DELAY = man.ParseLinks().randomDelay(1,15)          #Proxy delay is already 3 seconds, not needed
+#DOWNLOAD_DELAY = man.ParseLinks().randomDelay(1,15)          #Proxy delay is already 3 seconds, not needed
 COOKIES_ENABLED = False
 
 # Retry many times since proxies often fail
 RETRY_TIMES = 10000
 # Retry on most error codes since proxies fail for different reasons
-RETRY_HTTP_CODES = [500, 503, 504, 400, 403, 408]
+RETRY_HTTP_CODES = [500, 503, 504, 400, 404, 403, 408]
 
 #LOG_LEVEL = "INFO"
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
@@ -46,9 +45,13 @@ USER_AGENT_LIST = [
 ]
 HTTP_PROXY = 'http://127.0.0.1:8123'
 DOWNLOADER_MIDDLEWARES = {
-         'crawler.middlewares.RandomUserAgentMiddleware': 400,
-         'crawler.middlewares.TorProxyMiddleware': 410,
          'scrapy.contrib.downloadermiddleware.useragent.UserAgentMiddleware': None,
+         'crawler.middlewares.RetryMiddlewareTor': 100,
+         'crawler.middlewares.RandomUserAgentMiddleware': 200,
+         'crawler.middlewares.TorProxyMiddleware': 300,
+
+
+
     # Disable compression middleware, so the actual HTML pages are cached
 }
 

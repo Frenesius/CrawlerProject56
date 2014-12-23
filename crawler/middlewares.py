@@ -67,8 +67,8 @@ class TorProxyMiddleware(object):
         request.meta['proxy'] = settings.HTTP_PROXY
 
 class RetryMiddlewareTor(RetryMiddleware):
-    def _retry(self, request, response, spider):
-        if response.status in [403]:
+    def process_response(self, request, response, spider):
+        if response.status in [str(403)]:
             print ">>>exec \'killall -HUP tor\'"
             os.system("killall -HUP tor")
-        return RetryMiddleware._retry(self, request, response, spider)
+        return response

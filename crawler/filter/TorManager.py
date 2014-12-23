@@ -9,7 +9,6 @@ class TorManager:
     def __init__(self):
         pass
 
-
     def newId(self):
         print ">>>GETTING NEW IDENTITY"
         self.forceNewId()

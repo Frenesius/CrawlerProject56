@@ -21,7 +21,8 @@ Comming soon ...
 
 Usage(Outdated)
 ============
-Install Tor. 
+Install Tor and set it up on port ```9050```.
+Install 
 Clone the repo using ```git clone https://github.com/Frenesius/CrawlerProject56.git``` 
 Get in to the folder using ```cd``` Make Start.sh executable(run as root) ```chmod +x Start.sh```
 

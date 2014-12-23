@@ -5,11 +5,8 @@ import crawler.filter.DictManager as filter
 from crawler.dbmanager import Neo4jDatabaseManager
 from py2neo import rel, node
 import json
-import pymongo
-import pymongo.collection as pymongoColl
 from crawler.dbmanager.MongoDbManager import MongoDbManager
-from pymongo import Connection
-import crawler.filter.TorManager
+from crawler.filter import TorManager
 
 class SpecsSpider(scrapy.Spider):
     '''
@@ -119,7 +116,7 @@ class SpecsSpider(scrapy.Spider):
             with open(str('crawler/price-config/'+JSONfilename+'.json'), 'wb') as fp:
                 json.dump(self.urlEanDict, fp)
 
-
+        TorManager.TorManager().forceNewId()
         print "\033[95m   == Done :) =="
 
 

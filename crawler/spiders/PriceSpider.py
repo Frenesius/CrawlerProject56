@@ -74,4 +74,5 @@ class PriceSpider(scrapy.Spider):
         torMan = TorManager.TorManager()
         if not(torMan.newId()):
             torMan.newId()
+        torMan.forceNewId()
         print str(self.y)+"/"+str(len(self.start_urls))+" Done."

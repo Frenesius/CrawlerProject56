@@ -1,7 +1,7 @@
 import re
 import scrapy
 import crawler.filter.DictManager as DictMan
-
+from crawler.filter import TorManager
 
 class LinkSpider(scrapy.Spider):
     name = " "
@@ -28,4 +28,5 @@ class LinkSpider(scrapy.Spider):
         for x in range(len(filteredArr)):
             f.write(str(filteredArr[x]) + "\n")
         f.close()
+        TorManager.TorManager().forceNewId()
 
