@@ -1,7 +1,7 @@
 __author__ = 'j'
 from scrapy.contrib.spiders import CrawlSpider
 
-class CheckIp(CrawlSpider):
+class CheckTor(CrawlSpider):
     name = "checktor"
     domain_name = "torproject.org"
     start_urls = ["https://check.torproject.org/"]

@@ -6,11 +6,14 @@ import requests
 
 
 class ParseLinks():
+
+    parseLinksAmount = 1
     def __init__(self):
         pass
 
     def parseLinks(self, linkString):
         ''' Laat het de link crawlen en dan bepalen hoeveel links er zijn'''
+        print ">>>Please wait while we get all the crawling links...."
         linkArray = []
         for x in range(1, self.getAmountPages(linkString)):
             parsedLink = linkString+ str(x)

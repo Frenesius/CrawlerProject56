@@ -1,9 +1,8 @@
 __author__ = 'j'
 
-import urllib2
-from TorCtl import TorCtl
 import socket
 import os
+
 class TorManager:
 
     def __init__(self):
@@ -15,7 +14,7 @@ class TorManager:
         success = False
         s = socket.socket()
         s.connect(('localhost', 9050))
-        s.send("TEn")
+        s.send('AUTHENTICATE "hello"\r\n')
         resp = s.recv(1024)
         if resp.startswith('250'):
             s.send("signal NEWNYM\r\n")

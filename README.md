@@ -1,5 +1,6 @@
 CrawlerProject56
 ===============
+Repository is inactive. It has been moved to a private repo.
 
 Crawler computer specs
 
@@ -13,7 +14,7 @@ Dependencies
 + pymongo 2.7.2
 + TorCtl
 + Tor
-+ 
+ 
 
 Installation
 ============
