@@ -1,14 +1,18 @@
 import ConfigParser
 import json
 import random
+from lxml import html
+import requests
+
 
 class ParseLinks():
     def __init__(self):
         pass
 
-    def parseLinks(self, linkString, amountInt):
+    def parseLinks(self, linkString):
+        ''' Laat het de link crawlen en dan bepalen hoeveel links er zijn'''
         linkArray = []
-        for x in range(1,amountInt):
+        for x in range(1, self.getAmountPages(linkString)):
             parsedLink = linkString+ str(x)
             linkArray.append(parsedLink)
         return linkArray
@@ -60,3 +64,14 @@ class ParseLinks():
     def randomDelay(self, startvalue, endvalue):
         randomValue = random.randint(startvalue,endvalue)
         return randomValue
+
+    def getAmountPages(self, linkString):
+        pages = 0
+        proxies = {'http' : 'http://127.0.0.1:8123'}
+        response = html.fromstring(requests.get(linkString + "1", proxies=proxies).text)
+        tempStr = str(response.xpath('//*[@id="compareProductListing"]/div[2]/div[2]/span/a[3]/text()')).replace("]", "").replace("[", "").replace("\'", "")
+        if (len(tempStr) == 0):
+            pages = 1
+        else:
+            pages = int(tempStr)
+        return pages
