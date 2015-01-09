@@ -115,8 +115,10 @@ class SpecsSpider(scrapy.Spider):
         if len(self.start_urls) - 1 == self.countUrl:                                 #at the end of the crawling process writes to file
             with open(str('crawler/price-config/'+JSONfilename+'.json'), 'wb') as fp:
                 json.dump(self.urlEanDict, fp)
-
+        """
+        #New ID for Tor
         TorManager.TorManager().forceNewId()
+        """
         print "\033[95m   == Done :) =="
 
 

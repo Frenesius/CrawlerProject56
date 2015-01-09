@@ -52,7 +52,8 @@ class ProxyMiddleware(object):
             print "ERROR:", detail
             return 1
         return 0
-
+"""
+#Tor settings
 class RandomUserAgentMiddleware(object):
     def process_request(self, request, spider):
         ua  = random.choice(settings.USER_AGENT_LIST)
@@ -72,3 +73,4 @@ class RetryMiddlewareTor(RetryMiddleware):
             print ">>>exec \'killall -HUP tor\'"
             os.system("killall -HUP tor")
         return response
+"""

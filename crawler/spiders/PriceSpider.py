@@ -71,8 +71,11 @@ class PriceSpider(scrapy.Spider):
             else:
                 self.filteredDict = filter.FilterDict().filterPriceDict(nodeDict)
                 mysqlManager.insertPrice(db, str(self.filteredDict["EAN"]), str(self.filteredDict["xpathshopname"]), str(self.filteredDict["xpathdelivery"]), str(self.filteredDict["xpathbareprice"]), str(self.filteredDict["xpathshopprice"]), str(self.filteredDict["xpathclickout"]), timestamp)
+        """
+        #New ID for Tor
         torMan = TorManager.TorManager()
         if not(torMan.newId()):
             torMan.newId()
         torMan.forceNewId()
+        """
         print str(self.y)+"/"+str(len(self.start_urls))+" Done."

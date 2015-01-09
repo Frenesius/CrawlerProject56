@@ -14,7 +14,7 @@ BOT_NAME = 'crawler'
 
 SPIDER_MODULES = ['crawler.spiders']
 NEWSPIDER_MODULE = 'crawler.spiders'
-#DOWNLOAD_DELAY = man.ParseLinks().randomDelay(1,15)          #Proxy delay is already 3 seconds, not needed
+DOWNLOAD_DELAY = man.ParseLinks().randomDelay(1, 15)          #Proxy delay is already 3 seconds, not needed
 COOKIES_ENABLED = False
 
 # Retry many times since proxies often fail
@@ -36,8 +36,8 @@ RETRY_HTTP_CODES = [500, 503, 504, 400, 404, 403, 408]
 #
 
 
-
-##TOR##
+"""
+#TOR
 USER_AGENT_LIST = [
     'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.7 (KHTML, like Gecko) Chrome/16.0.912.36 Safari/535.7',
     'Mozilla/5.0 (Windows NT 6.2; Win64; x64; rv:16.0) Gecko/16.0 Firefox/16.0',
@@ -54,10 +54,11 @@ DOWNLOADER_MIDDLEWARES = {
 
     # Disable compression middleware, so the actual HTML pages are cached
 }
-
-##########TEST#############
-##Proxy##
+"""
+"""
+#Proxy
 # DOWNLOADER_MIDDLEWARES = {
 #     'scrapy.contrib.downloadermiddleware.httpproxy.HttpProxyMiddleware': 110,
 #     'crawler.middlewares.ProxyMiddleware': 100,
 # }
+"""

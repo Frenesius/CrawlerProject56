@@ -28,5 +28,7 @@ class LinkSpider(scrapy.Spider):
         for x in range(len(filteredArr)):
             f.write(str(filteredArr[x]) + "\n")
         f.close()
+        """
+        #New ID for Tor
         TorManager.TorManager().forceNewId()
-
+        """

@@ -3,7 +3,7 @@ import json
 import random
 from lxml import html
 import requests
-
+import time
 
 class ParseLinks():
 
@@ -70,11 +70,14 @@ class ParseLinks():
 
     def getAmountPages(self, linkString):
         pages = 0
-        proxies = {'http' : 'http://127.0.0.1:8123'}
-        response = html.fromstring(requests.get(linkString + "1", proxies=proxies).text)
+        #proxies = {'http' : 'http://127.0.0.1:8123'} #Tor proxy
+        #html.fromstring(requests.get(linkString + "1", proxies=proxies).text) To use Tor as proxy
+        response = html.fromstring(requests.get(linkString + "1").text)
         tempStr = str(response.xpath('//*[@id="compareProductListing"]/div[2]/div[2]/span/a[3]/text()')).replace("]", "").replace("[", "").replace("\'", "")
         if (len(tempStr) == 0):
             pages = 1
         else:
             pages = int(tempStr)
+        time.sleep(2)
         return pages
+
