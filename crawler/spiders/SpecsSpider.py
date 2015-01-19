@@ -95,21 +95,21 @@ class SpecsSpider(scrapy.Spider):
             crawlNode, = graph_db.create(self.filteredDict)                         #Creates Node.
             crawlNode.add_labels(str(self.label))                                   #Adds label to the Node.
             graph_db.create(rel(crawlNode, self.relation, baseNode))                #Creates Relationship.
+            print "Adding dict to mongoDb=========="
+
+            mongodbManager = MongoDbManager()
+            mongoDbClient = mongodbManager.openDb()
+            db = mongoDbClient['Hardware']
+            collection = db[hardwareSort]
+            collection.insert(self.filteredDict)
+
+            print "Adding dict to mongoDb========="
+            try :
+                self.urlEanDict[str(self.start_urls[self.countUrl]).replace("specificaties/", "")] =  self.filteredDict['EAN'] #Adds the url:EAN to dict, COUNTURL HAS TO BE 0
+            except:
+                print "Failed to add EAN to new Dict"
         else:
             print "!!\tNode exists, skipping\t!!"
-        print "Adding dict to mongoDb=========="
-
-        mongodbManager = MongoDbManager()
-        mongoDbClient = mongodbManager.openDb()
-        db = mongoDbClient['Hardware']
-        collection = db[hardwareSort]
-        collection.insert(self.filteredDict)
-
-        print "Adding dict to mongoDb========="
-        try :
-            self.urlEanDict[str(self.start_urls[self.countUrl]).replace("specificaties/", "")] =  self.filteredDict['EAN'] #Adds the url:EAN to dict, COUNTURL HAS TO BE 0
-        except:
-            print "Failed to add EAN to new Dict"
 
         print '\033[31m', self.countUrl,"/",len(self.start_urls), '\033[30m'
         if len(self.start_urls) - 1 == self.countUrl:                                 #at the end of the crawling process writes to file

@@ -55,10 +55,9 @@ DOWNLOADER_MIDDLEWARES = {
     # Disable compression middleware, so the actual HTML pages are cached
 }
 """
-"""
+
 #Proxy
-# DOWNLOADER_MIDDLEWARES = {
-#     'scrapy.contrib.downloadermiddleware.httpproxy.HttpProxyMiddleware': 110,
-#     'crawler.middlewares.ProxyMiddleware': 100,
-# }
-"""
+DOWNLOADER_MIDDLEWARES = {
+    'scrapy.contrib.downloadermiddleware.httpproxy.HttpProxyMiddleware': 110,
+    'crawler.middlewares.ProxyMiddleware': 100,
+}

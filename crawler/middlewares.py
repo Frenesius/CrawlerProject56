@@ -1,24 +1,15 @@
 import socket
 import random
-import os
-from scrapy.contrib.downloadermiddleware.retry import RetryMiddleware
-from crawler import settings
+from crawler.filter import ProxyParser
 import urllib2
-from crawler.filter import TorManager
 
 class ProxyMiddleware(object):
     socket.setdefaulttimeout(50)
-    proxyList = [
-                "111.197.160.96",
-                "119.6.144.70:80",
-                "119.6.144.74:80",
-                "119.6.144.70:81",
-                "203.144.144.162:8080",
-                "77.120.102.5:8080",
-                "85.104.56.185:8080",
-                "202.29.97.5:3128",
-                "88.255.148.24:8080"
-    ]
+    proxyList = ProxyParser.ProxyParser().proxyList
+    print proxyList
+
+    def pickProxy(self):
+        return self.checkWorkingSingleProxy(self.proxyList)
 
     def process_request(self, request, spider):
         print ">>>Selecting proxy....."
