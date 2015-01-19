@@ -9,7 +9,10 @@ class ProxyMiddleware(object):
     print proxyList
 
     def pickProxy(self):
-        return self.checkWorkingSingleProxy(self.proxyList)
+        proxy = self.checkWorkingSingleProxy(self.proxyList)
+        if proxy == None:
+            proxy = self.checkWorkingSingleProxy(self.proxyList)
+        return proxy
 
     def process_request(self, request, spider):
         print ">>>Selecting proxy....."
@@ -20,7 +23,7 @@ class ProxyMiddleware(object):
         print ">>>Selected proxy: "+proxy
 
     def checkWorkingSingleProxy(self, proxyList):
-        randomNumber = random.randint(0,len(proxyList)-1)
+        randomNumber = random.randint(0, len(proxyList)-1)
         item = proxyList[randomNumber]
         if self.is_bad_proxy(item):
             print "Bad Proxy", item

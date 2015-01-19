@@ -71,8 +71,8 @@ class ParseLinks():
 
     def getAmountPages(self, linkString):
         pages = 0
-        proxies = {'http' : 'http://' + middlewares.ProxyMiddleware().pickProxy()}
-        html.fromstring(requests.get(linkString + "1", proxies=proxies).text)#
+        proxies = {'http' : 'http://' + str(middlewares.ProxyMiddleware().pickProxy())}
+        html.fromstring(requests.get(linkString + "1", proxies=proxies).text)
         response = html.fromstring(requests.get(linkString + "1").text)
         tempStr = str(response.xpath('//*[@id="compareProductListing"]/div[2]/div[2]/span/a[3]/text()')).replace("]", "").replace("[", "").replace("\'", "")
         if (len(tempStr) == 0):
